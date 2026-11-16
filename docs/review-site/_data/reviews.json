@@ -98,5 +98,28 @@
         "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/practices-discovery/practices-discovery-timestamp.md"
       }
     ]
+  },
+  {
+    "id": "261115-notify-me-implementation/requirements-analysis/20261116-230648158811",
+    "intent": "261115-notify-me-implementation",
+    "stage": "requirements-analysis",
+    "stage_title": "Requirements Analysis",
+    "created_at": "2026-11-16T23:06:48.158811+00:00",
+    "next_stage": "User Stories",
+    "summary": "기존 MVP와 승인된 Q-063 완료 검증·Q-064 운영 보고 및 장애 알림 요구사항을 연결했습니다. R-01은 로그아웃·세션 관리 요구사항 보완 필요를 표시합니다.",
+    "files": [
+      {
+        "title": "Notify Me 요구사항",
+        "summary": "가족·동거 가구 구성원 사이의 부탁을 잊지 않도록 등록·배정하고, 시간·장소 알림과 공유 이력으로 수행을 돕는 Notify Me MVP를 상세 설계하고 구현한다. 기존 설계 문서는 계속 기준으로 사용한다. 이번 작업에서 승인된 선택적 완료 검증과 운영자 주간 보고·즉시 장애 알림을 MVP 범위에 추가하며, 승인된 제...",
+        "url": "/reviews/261115-notify-me-implementation/requirements-analysis/20261116-230648158811/01-requirements/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/requirements-analysis/requirements.md"
+      },
+      {
+        "title": "요구사항 분석 질문 및 요약 확인",
+        "summary": "이번 단계에서 별도의 제품 범위 질문은 추가하지 않는다. 문서화된 MVP의 동작과 수용 기준은 기존 기준 문서에 정의되어 있고, 새로 승인된 Q-063·Q-064의 범위 포함 여부도 앞 단계에서 결정되었다. 아래 세부 정책은 범위 문서가 후속 상세 설계로 남겨 두었으므로 이 단계에서 임의로 확정하지 않는다.",
+        "url": "/reviews/261115-notify-me-implementation/requirements-analysis/20261116-230648158811/02-requirements-analysis-questions/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/requirements-analysis/requirements-analysis-questions.md"
+      }
+    ]
   }
 ]
