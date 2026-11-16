@@ -67,3 +67,4 @@
 
 <!-- Project-specific corrections from human feedback. -->
 <!-- Format: NEVER/ALWAYS [behavior] (learned [date]) -->
+- 문서 ID를 언급할 때는 ID 바로 옆에 해당 항목의 짧은 요약을 함께 쓴다. (learned 2026-11-16) <!-- cid:261115-notify-me-implementation:approval-handoff:fe57ad533f2dfe2ade245ec55f8d40da25ca14f2c9c81240319fb163b63a60e6 -->
