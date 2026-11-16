@@ -1,1 +1,67 @@
-[]
+[
+  {
+    "id": "261115-notify-me-implementation/reverse-engineering/20261116-103814",
+    "intent": "261115-notify-me-implementation",
+    "stage": "reverse-engineering",
+    "stage_title": "Reverse Engineering",
+    "created_at": "2026-11-16T10:38:14.872323+00:00",
+    "next_stage": "Practices Discovery",
+    "summary": "CodeKB에 게시된 Reverse Engineering 산출물 9개 문서입니다.",
+    "files": [
+      {
+        "title": "사업 개요",
+        "summary": "Notify Me는 가족·동거인·파트너가 부탁과 반복 할 일을 함께 기록하고, 적절한 시간 또는 장소에서 담당자에게 알려 주며, 완료 결과를 공유하는 가구용 리마인더 서비스다. 개인용 알림이 다루기 어려운 요청자·담당자 관계, 회차별 완료, 공동 이력을 하나의 흐름으로 다룬다.",
+        "url": "/reviews/261115-notify-me-implementation/reverse-engineering/20261116-103814/01-business-overview/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/business-overview.md"
+      },
+      {
+        "title": "아키텍처 분석",
+        "summary": "현재는 애플리케이션 코드가 없는 설계 저장소다. 아래 구조는 문서에 정해진 목표 아키텍처이며 구현 사실이 아니다. 목표는 Raspberry Pi에서 실행되는 모듈형 모놀리스와 브라우저·Android에서 재사용하는 공유 UI다.",
+        "url": "/reviews/261115-notify-me-implementation/reverse-engineering/20261116-103814/02-architecture/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/architecture.md"
+      },
+      {
+        "title": "코드 구조 분석",
+        "summary": "실행 가능한 애플리케이션 코드나 패키지 디렉터리는 발견되지 않았다. 현재 확인되는 프로젝트 산출물은 제품 가이드와 설계 문서다.",
+        "url": "/reviews/261115-notify-me-implementation/reverse-engineering/20261116-103814/03-code-structure/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/code-structure.md"
+      },
+      {
+        "title": "API 문서",
+        "summary": "구현된 HTTP endpoint, GraphQL operation, OpenAPI/AsyncAPI 명세가 없다. 저장소에는 서버 코드 및 API contract 파일도 없다. 따라서 method/path, request·response schema, status code, middleware chain을 구현 사실로...",
+        "url": "/reviews/261115-notify-me-implementation/reverse-engineering/20261116-103814/04-api-documentation/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/api-documentation.md"
+      },
+      {
+        "title": "구성요소 목록",
+        "summary": "이 저장소의 아래 항목은 코드에서 발견한 구현 구성요소가 아니라 설계에 기록된 제품·운영 경계다. 배포 가능한 소프트웨어는 아직 확인되지 않았다.",
+        "url": "/reviews/261115-notify-me-implementation/reverse-engineering/20261116-103814/05-component-inventory/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/component-inventory.md"
+      },
+      {
+        "title": "기술 스택",
+        "summary": "애플리케이션 언어, runtime, framework, DB, toolchain 및 버전은 manifest나 source로 확인되지 않았다. 코드 구현이 없는 설계 repository이므로 아래 표는 문서상 선택 또는 제안이다.",
+        "url": "/reviews/261115-notify-me-implementation/reverse-engineering/20261116-103814/06-technology-stack/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/technology-stack.md"
+      },
+      {
+        "title": "의존성 분석",
+        "summary": "코드 manifest와 lockfile이 없어 실제 외부 패키지 dependency graph는 없다. 문서상 예정된 외부 기술 및 역할은 다음과 같다.",
+        "url": "/reviews/261115-notify-me-implementation/reverse-engineering/20261116-103814/07-dependencies/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/dependencies.md"
+      },
+      {
+        "title": "코드 품질 평가",
+        "summary": "실행 가능한 애플리케이션 코드가 확인되지 않아 코드 품질 지표를 good/fair/poor로 평정할 근거가 없다. 아래는 관찰 가능한 준비 상태와 검증 한계다.",
+        "url": "/reviews/261115-notify-me-implementation/reverse-engineering/20261116-103814/08-code-quality-assessment/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/code-quality-assessment.md"
+      },
+      {
+        "title": "Reverse Engineering Timestamp",
+        "summary": "- Date: 2026-11-16",
+        "url": "/reviews/261115-notify-me-implementation/reverse-engineering/20261116-103814/09-reverse-engineering-timestamp/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/reverse-engineering-timestamp.md"
+      }
+    ]
+  }
+]
