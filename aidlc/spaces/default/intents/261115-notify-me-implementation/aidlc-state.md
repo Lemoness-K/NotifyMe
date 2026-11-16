@@ -45,6 +45,12 @@
 - **Construction Iteration**: unit-major
 - **Construction Execution**: serial
 
+- **Parked**: 2026-11-16T10:22:48Z
+
+- **Parked At Stage**: reverse-engineering
+
+- **Parked By**: person
+
 ## Phase Progress
 <!-- Status values: Pending, Active, Verified, Skipped -->
 
@@ -105,7 +111,7 @@
 - **Current Stage**: reverse-engineering
 - **Next Stage**: practices-discovery
 - **Status**: Running
-- **Last Updated**: 2026-11-16T09:18:32Z
+- **Last Updated**: 2026-11-16T10:22:48Z
 
 ## Session Resume Point
 - **Last Completed Stage**: approval-handoff
