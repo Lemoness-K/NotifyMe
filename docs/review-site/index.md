@@ -5,7 +5,7 @@ title: 문서 리뷰
 
 # AI-DLC 단계 리뷰
 
-각 단계가 끝날 때 검토가 필요한 산출물만 모아 둡니다. 문서를 열어 확인한 뒤, 다음 세션에서 피드백이나 승인 내용을 알려주세요.
+각 단계가 끝날 때 검토가 필요한 산출물만 모아 둡니다. 단계별 GitHub Issue에서 문서를 확인하고 수정 요청이나 승인을 남길 수 있습니다. 기존 Codex 승인 게이트를 이용해도 됩니다.
 
 {% assign review_packs = site.data.reviews | reverse %}
 {% if review_packs.size == 0 %}
