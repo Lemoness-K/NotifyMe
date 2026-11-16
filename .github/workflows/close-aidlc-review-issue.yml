@@ -1,0 +1,57 @@
+name: Close approved AI-DLC review issue
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+
+jobs:
+  close-approved-review:
+    if: >-
+      github.event.issue.pull_request == null &&
+      github.event.issue.state == 'open' &&
+      github.event.comment.user.login == github.repository_owner &&
+      (github.event.comment.body == '승인' || github.event.comment.body == '/approve')
+    concurrency:
+      group: aidlc-review-issue-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify AI-DLC review marker
+        id: verify
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          issue_json="$(gh api "repos/${GH_REPO}/issues/${ISSUE_NUMBER}")"
+          issue_state="$(jq -r '.state // ""' <<<"${issue_json}")"
+          issue_body="$(jq -r '.body // ""' <<<"${issue_json}")"
+          if [[ "${issue_state}" != "open" ]]; then
+            echo "is_review=false" >> "${GITHUB_OUTPUT}"
+            echo "이 이슈는 이미 닫혀 있어 그대로 둡니다."
+            exit 0
+          fi
+          if ! grep -Eq '<!-- aidlc-review:intent=[a-z0-9-]+;stage=[a-z0-9-]+;review=[a-z0-9-]+ -->' <<<"${issue_body}"; then
+            echo "is_review=false" >> "${GITHUB_OUTPUT}"
+            echo "AI-DLC 리뷰 마커가 없어 이 이슈를 열어 둡니다."
+            exit 0
+          fi
+          echo "is_review=true" >> "${GITHUB_OUTPUT}"
+
+      - name: Close approved review issue
+        if: steps.verify.outputs.is_review == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh issue close "${ISSUE_NUMBER}" --repo "${GH_REPO}" \
+            --reason completed \
+            --comment "저장소 소유자의 승인 댓글을 확인해 이 리뷰 이슈를 닫았습니다. Codex가 다시 시작되면 AI-DLC 승인 기록을 이어서 반영합니다."

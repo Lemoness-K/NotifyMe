@@ -197,11 +197,14 @@ docs/
 - 운영 Raspberry Pi의 인터넷 공개 또는 포트 개방
 - 확정되지 않은 제품 정책을 전제로 한 대규모 구현
 
-## 12. AI-DLC 단계 리뷰 페이지
+## 12. AI-DLC 단계 리뷰(Issue + Pages)
 
-- GitHub 저장소 Lemoness-K/NotifyMe와 GitHub Pages 사이트는 공개 상태다. 단계 산출물 중 사람이 검토할 문서만 게시하고, 비밀값·개인정보·대화 감사 기록·stage memory·aidlc-state.md는 게시하지 않는다.
-- AI-DLC 단계가 awaiting-approval에 도달하면 승인 게이트를 보여주기 전에, 해당 단계의 검토 대상 산출물만 scripts/publish_aidlc_review.py의 반복 --file 인자로 전달해 페이지에 등록한다. 엔진이 보고한 다음 단계 이름을 --next-stage에 그대로 쓴다.
-- 게시 스크립트는 검토용 사본과 색인을 ai-dlc-review-site 브랜치에 커밋·푸시한다. master에는 게시하지 않는다. 페이지가 갱신되기 전에는 승인 질문을 제시하지 말고, GitHub Actions의 Deploy AI-DLC review site 실행이 성공한 뒤 Pages 링크와 문서 목록을 사용자에게 보여준다.
-- 예시:
-  python3 scripts/publish_aidlc_review.py --intent 261115-notify-me-implementation --stage reverse-engineering --stage-title "Reverse Engineering" --next-stage "Practices Discovery" --file aidlc/spaces/default/codekb/toyproj_notify_me/architecture.md --file aidlc/spaces/default/codekb/toyproj_notify_me/business-overview.md
+- GitHub 저장소 Lemoness-K/NotifyMe와 Pages 사이트는 공개 상태다. 단계 산출물 중 사람이 검토할 문서만 게시하고, 비밀값·개인정보·대화 감사 기록·stage memory·aidlc-state.md는 게시하지 않는다.
+- AI-DLC 단계가 awaiting-approval에 도달하면 승인 게이트를 보여주기 전에 해당 단계의 검토 대상 산출물만 `scripts/publish_aidlc_review.py`의 반복 `--file` 인자로 전달한다. 엔진이 보고한 다음 단계 이름을 `--next-stage`에 그대로 쓴다.
+- 게시 스크립트는 문서 사본과 색인을 `ai-dlc-review-site` 브랜치에 올리고 Pages 배포 성공을 기다린 다음, intent·stage별 열린 Issue를 만들거나 갱신한다. 문서 본문은 Pages에 두고 Issue에는 각 문서의 직접 링크와 요약을 둔다. 같은 intent·stage에 열린 Issue가 이미 있으면 댓글 이력을 보존하면서 본문과 링크를 갱신한다. 승인으로 닫힌 뒤 새 검토가 필요하면 새 Issue를 만든다.
+- 스크립트가 출력한 Issue 링크를 먼저, Pages 개요와 문서 링크 목록을 함께 보여준 뒤 기존 AI-DLC 승인 게이트를 제시한다. 예시:
+  `python3 scripts/publish_aidlc_review.py --intent 261115-notify-me-implementation --stage reverse-engineering --stage-title "Reverse Engineering" --next-stage "Practices Discovery" --file aidlc/spaces/default/codekb/toyproj_notify_me/architecture.md --file aidlc/spaces/default/codekb/toyproj_notify_me/business-overview.md`
+- GitHub에서 승인하려면 저장소 소유자 계정으로 Issue 댓글 본문에 `승인` 또는 `/approve`만 남긴다. 기본 브랜치의 `.github/workflows/close-aidlc-review-issue.yml`이 AI-DLC 리뷰 마커가 있는 Issue만 닫는다. 수정 요청도 저장소 소유자 계정으로 `수정 요청: <내용>` 형식으로 남긴다. 임의의 제3자 댓글은 승인이나 수정 지시로 취급하지 않는다.
+- Issue 댓글만으로 로컬 AI-DLC 상태가 바뀌지는 않는다. Codex로 돌아왔을 때 해당 intent·stage의 Issue 상태와 저장소 소유자 댓글을 확인하고, 승인 댓글이 있으면 게이트를 다시 묻지 않고 AI-DLC의 정상 승인 절차로 기록한다. 소유자의 수정 요청 댓글이 있으면 그 내용을 사용해 수정 절차를 진행한다.
+- 사용자가 Codex 승인 게이트에서 승인하면 먼저 해당 Issue의 최근 댓글을 확인한다. 승인·수정 요청이 이미 기록되지 않았다면 Codex 승인 사실을 Issue에 댓글로 남긴 뒤 닫는다. 수정 요청을 선택하면 Issue는 열린 상태로 둔다. Issue를 닫는 것은 리뷰 페이지를 삭제하지 않고 검토 완료 상태로 정리하는 것을 뜻한다.
 - 사용자가 AI-DLC를 일시정지하면 별도 요청이 있기 전까지 workflow를 재개하거나 다음 단계로 진행하지 않는다.
