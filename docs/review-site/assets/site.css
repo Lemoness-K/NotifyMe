@@ -1,0 +1,167 @@
+:root {
+  color-scheme: light;
+  --ink: #202a35;
+  --muted: #667382;
+  --line: #d9e0e7;
+  --paper: #ffffff;
+  --canvas: #f4f7fa;
+  --accent: #176b87;
+  --accent-soft: #e7f3f7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font: 16px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+a {
+  color: var(--accent);
+}
+
+.site-header {
+  padding: 18px max(24px, calc((100vw - 900px) / 2));
+  background: #172b3b;
+}
+
+.site-header a {
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.site-header span {
+  margin-left: 8px;
+  color: #c8dce6;
+  font-weight: 500;
+}
+
+.page {
+  width: min(900px, calc(100% - 32px));
+  margin: 36px auto;
+  padding: clamp(22px, 5vw, 48px);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: 0 12px 36px rgb(25 49 68 / 7%);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+}
+
+.review-pack {
+  margin-top: 28px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.review-pack h2 {
+  margin: 4px 0 10px;
+}
+
+.eyebrow,
+.source-path,
+.next-stage,
+.privacy-note,
+.site-footer {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.eyebrow {
+  margin: 0;
+}
+
+.next-stage {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+}
+
+.document-list {
+  margin: 18px 0 0;
+  padding-left: 22px;
+}
+
+.document-list li {
+  padding: 8px 0;
+}
+
+.document-list a {
+  font-weight: 650;
+}
+
+.document-list p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.empty-state {
+  padding: 20px;
+  border-radius: 10px;
+  background: var(--canvas);
+}
+
+.privacy-note {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.site-footer {
+  padding: 0 16px 32px;
+  text-align: center;
+}
+
+.document .prose img {
+  max-width: 100%;
+}
+
+.document .prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.document .prose th,
+.document .prose td {
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+}
+
+.back-link {
+  margin-top: 0;
+}
+
+code {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .page {
+    width: calc(100% - 20px);
+    margin: 14px auto;
+    padding: 20px;
+  }
+
+  .review-pack {
+    padding: 18px;
+  }
+}

@@ -196,3 +196,12 @@ docs/
 - 실제 사용자 개인정보를 이용한 테스트
 - 운영 Raspberry Pi의 인터넷 공개 또는 포트 개방
 - 확정되지 않은 제품 정책을 전제로 한 대규모 구현
+
+## 12. AI-DLC 단계 리뷰 페이지
+
+- GitHub 저장소 Lemoness-K/NotifyMe와 GitHub Pages 사이트는 공개 상태다. 단계 산출물 중 사람이 검토할 문서만 게시하고, 비밀값·개인정보·대화 감사 기록·stage memory·aidlc-state.md는 게시하지 않는다.
+- AI-DLC 단계가 awaiting-approval에 도달하면 승인 게이트를 보여주기 전에, 해당 단계의 검토 대상 산출물만 scripts/publish_aidlc_review.py의 반복 --file 인자로 전달해 페이지에 등록한다. 엔진이 보고한 다음 단계 이름을 --next-stage에 그대로 쓴다.
+- 게시 스크립트는 검토용 사본과 색인을 ai-dlc-review-site 브랜치에 커밋·푸시한다. master에는 게시하지 않는다. 페이지가 갱신되기 전에는 승인 질문을 제시하지 말고, GitHub Actions의 Deploy AI-DLC review site 실행이 성공한 뒤 Pages 링크와 문서 목록을 사용자에게 보여준다.
+- 예시:
+  python3 scripts/publish_aidlc_review.py --intent 261115-notify-me-implementation --stage reverse-engineering --stage-title "Reverse Engineering" --next-stage "Practices Discovery" --file aidlc/spaces/default/codekb/toyproj_notify_me/architecture.md --file aidlc/spaces/default/codekb/toyproj_notify_me/business-overview.md
+- 사용자가 AI-DLC를 일시정지하면 별도 요청이 있기 전까지 workflow를 재개하거나 다음 단계로 진행하지 않는다.

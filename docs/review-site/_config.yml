@@ -1,0 +1,8 @@
+title: Notify Me · AI-DLC Review
+description: Stage artifacts prepared for review
+url: https://lemoness-k.github.io
+baseurl: /NotifyMe
+markdown: kramdown
+kramdown:
+  input: GFM
+permalink: pretty
