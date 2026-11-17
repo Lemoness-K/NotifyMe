@@ -236,5 +236,64 @@
         "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/requirements-analysis/requirements-analysis-questions.md"
       }
     ]
+  },
+  {
+    "id": "261115-notify-me-implementation/requirements-analysis/20261117-100145011480",
+    "intent": "261115-notify-me-implementation",
+    "stage": "requirements-analysis",
+    "stage_title": "Requirements Analysis",
+    "created_at": "2026-11-17T10:01:45.011480+00:00",
+    "next_stage": "User Stories",
+    "summary": "검토가 필요한 AI-DLC 단계 산출물입니다.",
+    "files": [
+      {
+        "title": "Notify Me 요구사항",
+        "summary": "가족·동거 가구 구성원 사이의 부탁을 잊지 않도록 등록·배정하고, 시간·장소 알림과 공유 이력으로 수행을 돕는 Notify Me MVP를 상세 설계하고 구현한다. 기존 설계 문서는 계속 기준으로 사용한다. 이번 작업에서 승인된 선택적 완료 검증과 운영자 주간 보고·즉시 장애 알림을 MVP 범위에 추가하며, 승인된 제...",
+        "url": "/reviews/261115-notify-me-implementation/requirements-analysis/20261117-100145011480/01-requirements/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/requirements-analysis/requirements.md"
+      },
+      {
+        "title": "Notify Me 마스터 설계",
+        "summary": "- 문서 상태: 초안 v0.77",
+        "url": "/reviews/261115-notify-me-implementation/requirements-analysis/20261117-100145011480/02-00-master-design/",
+        "source_path": "docs/00-master-design.md"
+      },
+      {
+        "title": "Notify Me 제품 요구사항",
+        "summary": "- 문서 상태: 초안",
+        "url": "/reviews/261115-notify-me-implementation/requirements-analysis/20261117-100145011480/03-01-product-requirements/",
+        "source_path": "docs/01-product-requirements.md"
+      },
+      {
+        "title": "도메인과 논리 데이터 설계",
+        "summary": "- 상태: 초안",
+        "url": "/reviews/261115-notify-me-implementation/requirements-analysis/20261117-100145011480/04-02-domain-and-data-design/",
+        "source_path": "docs/02-domain-and-data-design.md"
+      },
+      {
+        "title": "시스템 아키텍처",
+        "summary": "- 상태: 초안",
+        "url": "/reviews/261115-notify-me-implementation/requirements-analysis/20261117-100145011480/05-03-system-architecture/",
+        "source_path": "docs/03-system-architecture.md"
+      },
+      {
+        "title": "앱 설정과 선택 기능 설계",
+        "summary": "- 상태: 초안",
+        "url": "/reviews/261115-notify-me-implementation/requirements-analysis/20261117-100145011480/06-05-settings-and-feature-configuration/",
+        "source_path": "docs/05-settings-and-feature-configuration.md"
+      },
+      {
+        "title": "Notify Me 사용자 결정 및 질문 등록부",
+        "summary": "- 문서 상태: 기준 문서 v1.13",
+        "url": "/reviews/261115-notify-me-implementation/requirements-analysis/20261117-100145011480/07-decision-register/",
+        "source_path": "docs/decision-register.md"
+      },
+      {
+        "title": "전체 ID 추적성과 기능 설계 커버리지 및 후속 작업",
+        "summary": "- 상태: 설계 준비 목록",
+        "url": "/reviews/261115-notify-me-implementation/requirements-analysis/20261117-100145011480/08-09-feature-design-coverage-and-backlog/",
+        "source_path": "docs/09-feature-design-coverage-and-backlog.md"
+      }
+    ]
   }
 ]
