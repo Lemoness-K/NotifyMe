@@ -1,0 +1,42 @@
+---
+layout: review
+title: "Notify Me 도메인 설계 결정"
+source_path: "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/domain-design/decisions.md"
+permalink: "/reviews/261115-notify-me-implementation/domain-design/20261117-233756386849/02-decisions/"
+---
+
+# Notify Me 도메인 설계 결정
+
+각 결정은 컴포넌트 명세에 대응한다.
+
+## Sources
+
+요구사항 `requirements.md`, 사용자 스토리 `stories.md`, CodeKB `architecture.md`와 `component-inventory.md`, `team-practices.md`와 프로젝트 결정 등록부를 기준으로 했다. 아래는 이번 단계 검토용 ADR이다. 승인 이후 프로젝트 기준 ADR로 연결할 때 기존 번호와 추적표를 함께 확인한다.
+
+## ADR-039: 리마인더와 회차의 소유권 통합
+
+- **Context** — 담당자 배정, 반복 편집, 보관, 완료 취소는 서로 영향을 준다. 한 회차는 담당자가 여럿이어도 업무 상태 하나를 갖는다. 근거는 D-013, D-030, D-032, D-060, D-063, D-091이다.
+- **Decision** — ReminderLifecycle이 업무 정의와 반복·회차·완료를 소유한다. 알림 대상 계획은 DeviceSynchronization이 소유한다.
+- **Consequences** — 업무 상태 전이는 한 경계에서 검증할 수 있다. 배정이나 일정 변경이 설치에도 영향을 줄 때는 애플리케이션 명령 진입점에서 명시적으로 조정한다.
+- **Alternatives Rejected** — 반복과 완료를 별개 데이터 소유자로 나누면 일정 계산을 독립적으로 교체하기 쉽지만 회차 전이 및 이력 일관성을 여러 모듈이 책임진다. 계산 로직의 내부 분리는 가능하다.
+
+## ADR-040: 중앙 설정 카탈로그와 범위별 값 소유
+
+- **Context** — D-019와 D-093은 단일 설정 카탈로그와 동일 계정의 설치 간 공유를 요구한다. 기존 프로필과 OS에는 각자의 기준 값이 있다.
+- **Decision** — SettingsManagement는 카탈로그와 가구·사용자 설정 데이터를 소유한다. 프로필 값은 계정·가구 프로필에서 읽고, 설치 상태와 Reminder 업무 데이터는 해당 경계에 둔다.
+- **Consequences** — 앱은 한 곳에서 설정 정의를 찾을 수 있다. 반경 정책 변경처럼 다른 컴포넌트의 업무 값까지 바뀌는 경우 권한과 변경을 한 서버 트랜잭션에서 조정해야 한다.
+- **Alternatives Rejected** — 범용 설정 테이블은 값 읽기 코드가 단순하지만 OS와 계정 값 복제, 그리고 Reminder 버전과 분리된 값 변경을 허용하게 된다.
+
+## ADR-041: 사용자 이력과 동기화 피드의 공통 소유
+
+- **Context** — D-037, D-049, D-058은 상세 이력, 기기 변경 신호 재시도와 최소 삭제 표지에 서로 다른 목적과 보존 규칙을 부여한다.
+- **Decision** — AuditChangeHistory가 가구 변경 순서, 사용자 감사 이력과 설치 동기화 피드를 관리한다. 호출자는 업무 변경과 필요한 기록을 함께 저장하고 DeviceSynchronization은 발행 대기 기록으로 변경 신호를 보낸다.
+- **Consequences** — 업무 변경 시 기록 누락과 부분 저장을 줄일 수 있다. 독립된 조회와 보존 정책을 유지해야 하며 신호 발행은 업무 변경과 별도로 실패하거나 재시도할 수 있다.
+- **Alternatives Rejected** — 각 기능에서 개별 관리하면 첫 구현이 짧지만 가구 revision과 삭제 처리가 여러 곳에 생긴다. 감사 기록을 그대로 기기에 제공하면 사용자 이력 데이터가 기기 동기화에 불필요하게 포함된다.
+
+## ADR-042: 설치 동기화와 OS 실행 분리
+
+- **Context** — D-006, D-044~D-052, D-090에 따라 서버 계획, 설치 파일과 OS 권한·기능 상태가 서로 다르게 변한다.
+- **Decision** — DeviceSynchronization은 설치와 대상 계획을 관리한다. PlatformCapabilities는 계획을 가져와 OS 상태를 맞추고, 인정한 기기 이벤트를 다시 동기화 경계에 제출한다. 장소 알림 표시는 기기에서 처리한다.
+- **Consequences** — Android 기능 교체나 후속 플랫폼 연결을 제한된 경계에서 다룰 수 있다. 서버가 계획을 만들고 설치가 적용하는 사이 상태가 달라질 수 있으므로 계약에서 버전과 재동기화 의미를 정해야 한다.
+- **Alternatives Rejected** — 한 모듈에서 양쪽을 관리하면 첫 흐름을 직관적으로 볼 수 있지만 OS 코드와 서버 권한·대상 정책이 함께 변한다.
