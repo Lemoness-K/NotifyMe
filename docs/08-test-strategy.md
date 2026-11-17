@@ -43,7 +43,7 @@
 |---|---|---|
 | Unit | 개발 루프 | Reminder 상태 전이, 다중 담당자 완료 의미, 담당자 기본 선택, 반복 회차 산출, 월말·존재하지 않는 날짜, DST, 24시간 알림 cutoff, 구성원 누구나 현재 반복 `PENDING` 회차만 건너뛰고 규칙·다른 회차를 유지하는 상태 전이, 멱등 key, 권한 결정 |
 | API·DB integration | 개발 루프 | NestJS endpoint, Firebase identity fake, 임시 SQLite migration·FK·unique constraint·transaction, household tenant 격리, Admin 최소 수, 초대 수락, Assignment 변경, 목록 query가 `requester_user_id`로 필터하며 assignee와 무관하게 미할당 회차를 포함하고 완료·보관 데이터는 제외하는지, 담당자 여부와 무관한 household 구성원의 현재 회차 skip 권한, 비반복·비현재·비`PENDING` 회차 거부, Occurrence skip의 USER actor·시각 기록과 RecurrenceRule·다음 회차 불변, skip 이후 ChangeFeed/Outbox 및 DeviceTrigger 취소, tombstone; 위치 event 만료 purge(`PR-AC-016`, `D-043`), session·installation 폐기 |
-| Web UI 흐름 | PR 또는 기능 완성 시 | 생성·요청자/담당자 변경·목록 세 보기 순서와 필터(담당자 기준/요청자 기준/가구 전체), `PR-AC-063`의 폭별 보기 선택 UI 전환 및 선택 상태, `PR-AC-064`의 `할 일` 기본 진입과 `할 일`·`이력`·`보관함` 주요 내비게이션/모바일 하단 메뉴, 완료·보관·이력의 대표 사용자 흐름; `PR-AC-043`의 320·360·tablet·desktop viewport와 가로 overflow, 키보드·터치, `NFR-UX-003`의 색상 외 상태 인식 |
+| Web UI 흐름 | PR 또는 기능 완성 시 | 생성·요청자/담당자 변경·목록 세 보기 순서와 필터(담당자 기준/요청자 기준/가구 전체), `PR-AC-063`의 가용 폭에 따른 보기 선택 UI 전환 및 선택 상태, `PR-AC-064`의 `할 일` 기본 진입과 `할 일`·`이력`·`보관함` 주요 내비게이션/모바일 하단 메뉴, 완료·보관·이력의 대표 사용자 흐름; 320·360 CSS px, 태블릿·데스크톱 등은 대표 뷰포트 테스트 값이며 최소 지원 크기 경계가 아니다. 각 뷰포트에서 가로 overflow, 키보드·터치, `NFR-UX-003`의 색상 외 상태 인식을 확인한다. CSS px은 PPI나 물리 픽셀 수를 뜻하지 않는다. |
 | Android adapter | Kotlin 변경 루프는 JVM unit; 주기적 통합 검증은 emulator/실기기 | 권한·알림 채널 상태와 OS 설정 바로가기, 알람 예약·취소, geofence reconcile, 최초 등록/재등록 callback, stale revision, 동기화된 SKIPPED 회차의 callback 억제, 재부팅, force-stop 후 복귀, 서버 미연결 상태 |
 | 운영 smoke | 배포 전 또는 운영 변경 시 | HTTPS·RPi/ARM64·기기 sync·실제 Android 권한과 백그라운드 동작; DDNS DNS, inbound TCP 80/443과 인증서 challenge 사전 확인 및 외부망 접속 |
 
