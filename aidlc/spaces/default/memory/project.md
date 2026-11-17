@@ -16,6 +16,14 @@
 - Do not present an open question or assumption as a confirmed product decision. If a change would alter product scope or an unresolved policy, record the impact and ask the user at the appropriate approval gate.
 - Keep project documents in Korean and preserve stable requirement and decision IDs. For design interviews, register each `Q-NNN` and its source before asking; group at most five independent questions at a time and leave unanswered items open.
 
+- 각 AI-DLC 단계가 승인되면 승인된 단계의 산출물만 커밋해 저장소 기본 브랜치로 향하는 PR을 만들고, PR 링크를 사용자에게 제공한다. 아직 승인되지 않은 다음 단계 산출물은 해당 PR에 포함하지 않는다. (learned 2026-11-17) <!-- cid:261115-notify-me-implementation:user-stories:3271c705b26a58d65798d0f3b351555fcd9dc02cd970963f03dbcb2a4b420262 -->
+
+## Requirements Provenance
+
+- Record every formal FR/NFR with independent type (`FR`/`NFR`), origin (`User`/`Derived`/`AI`), lifecycle status (`Proposed`/`Approved`/`Rejected`/`Deferred`), source or derivation, acceptance/verification reference, and downstream traceability. `Derived` requires an approved source and an explanation of logical necessity. Keep these lifecycle statuses distinct from traceability coverage statuses.
+- Keep optional AI-originated product suggestions in the project-wide `docs/requirement-proposals.md` catalog as `AFR-NNN` entries. Include background/evidence, expected effect, related requirements, affected features, status, decision provenance, and any promotion link. Until the user explicitly approves a proposal, exclude it from formal FR/NFR, the requirements `traceability.json`, and downstream implementation scope.
+- On explicit approval, promote an AFR to a new formal FR/NFR ID without reusing or renumbering existing IDs, preserve the AFR link, and update affected source documents and the canonical ID trace table. Rejected or deferred proposals remain in the catalog as history and do not become formal requirements.
+
 ## Walking Skeleton
 
 - The product is a shared household reminder app: members create requests and reminders, receive time- or location-based notifications, and share completion history.
@@ -57,14 +65,19 @@
 <!-- Format: NEVER [behavior] (affirmed [date]) -->
 <!-- Example: NEVER throw exceptions across service layer boundaries (affirmed 2026-05-17) -->
 
+None (affirmed 2026-11-16)
+
 ## Mandated
 
 <!-- Populated by practices-discovery affirmation gate. -->
 <!-- Format: ALWAYS [behavior] (affirmed [date]) -->
 <!-- Example: ALWAYS use Result<T,E> for fallible operations in service layer (affirmed 2026-05-17) -->
 
+None (affirmed 2026-11-16)
+
 ## Corrections
 
 <!-- Project-specific corrections from human feedback. -->
 <!-- Format: NEVER/ALWAYS [behavior] (learned [date]) -->
 - 문서 ID를 언급할 때는 ID 바로 옆에 해당 항목의 짧은 요약을 함께 쓴다. (learned 2026-11-16) <!-- cid:261115-notify-me-implementation:approval-handoff:fe57ad533f2dfe2ade245ec55f8d40da25ca14f2c9c81240319fb163b63a60e6 -->
+- Requirements Analysis에서는 FR/NFR의 상위 ID를 탐색용 그룹으로 두고, 독립적으로 구현하거나 합격 여부를 판단할 수 있는 동작은 안정된 하위 ID로 분리한다. 서로 밀접한 규칙은 함께 묶을 수 있지만, 별도 추적이 필요한 세부 동작과 검증 기준은 각각 명시한다. (learned 2026-11-17) <!-- cid:261115-notify-me-implementation:requirements-analysis:874db7fce62cc4d1718da048952ea1e13a95cf69864bea27857a17e227df3fd8 -->

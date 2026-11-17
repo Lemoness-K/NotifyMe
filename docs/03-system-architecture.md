@@ -2,9 +2,9 @@
 
 - 상태: 초안
 - 작성일: 2026-09-12
-- 최근 갱신일: 2026-11-10
-- 관련 결정: `D-001`~`D-078`
-- 관련 요구사항: `F-HH-001`~`F-HH-006`, `F-CLI-001`~`F-CLI-005`, `F-REM-007`~`F-REM-008`, `F-LIST-004`~`F-LIST-005`, `F-REC-003`~`F-REC-006`, `F-REC-008`, `F-HIS-003`, `F-SET-001`~`F-SET-007`, `F-TRG-001`~`F-TRG-005`, `F-NOT-001`~`F-NOT-009`, `F-OPS-001`~`F-OPS-006`, `PR-AC-044`~`PR-AC-057`, `PR-AC-060`~`PR-AC-062`, `PR-AC-066`~`PR-AC-067`, `NFR-REL-001`~`NFR-REL-007`, `NFR-SEC-003`~`NFR-SEC-006`, `NFR-TIME-001`~`NFR-TIME-004`, `NFR-I18N-001`~`NFR-I18N-002`
+- 최근 갱신일: 2026-11-17
+- 관련 결정: `D-001`~`D-078`, `D-093`
+- 관련 요구사항: `F-HH-001`~`F-HH-006`, `F-CLI-001`~`F-CLI-005`, `F-REM-007`~`F-REM-008`, `F-LIST-004`~`F-LIST-005`, `F-REC-003`~`F-REC-006`, `F-REC-008`, `F-HIS-003`, `F-SET-001`~`F-SET-007`, `F-TRG-001`~`F-TRG-005`, `F-NOT-001`~`F-NOT-009`, `F-OPS-001`~`F-OPS-006`, `PR-AC-022`~`PR-AC-024`, `PR-AC-044`~`PR-AC-057`, `PR-AC-060`~`PR-AC-062`, `PR-AC-066`~`PR-AC-067`, `PR-AC-051`~`PR-AC-052`, `NFR-REL-001`~`NFR-REL-007`, `NFR-SEC-003`~`NFR-SEC-006`, `NFR-TIME-001`~`NFR-TIME-004`, `NFR-I18N-001`~`NFR-I18N-002`
 
 ## 1. 목적과 상태 구분
 
@@ -29,7 +29,7 @@
 | `D-008` | 공유 UI와 네이티브 기능 경계가 승인됐다. |
 | `D-010` | API 인가는 역할보다 household membership을 우선 검사한다. |
 | `D-018` | 설정을 가구 scope에 저장하고 새 장소 Reminder의 기본값으로 제공한다. |
-| `D-019` | 선택 설정과 기능 수명주기를 설정 카탈로그에 등록한다. |
+| `D-019` | 설정값은 네 owner scope로 분류하고 metadata는 중앙 catalog에, 값은 각 owner에 둔다. |
 | `D-020` | API는 household membership role로 설정 변경 권한을 검사한다. 일상 reminder 권한은 두 역할에 동일하다. |
 | `D-021` | 역할 변경과 membership 종료를 household 단위 transaction으로 직렬화한다. |
 | `D-022` | 사용자·가구·membership와 `household_id` tenant 경계를 유지하되 MVP UI는 단일 가구 context를 사용한다. |
@@ -114,7 +114,7 @@ household 선택·전환 화면은 제공하지 않는다. API와 저장소는 U
 - UI는 React Router framework mode의 Vite SPA mode(`ssr: false`)로 build한다. 브라우저용 정적 asset과 Capacitor WebView용 asset은 같은 build 산출물을 사용하며, UI는 Node.js API와 HTTP 계약으로 통신한다(`D-054`). 정적 Web hosting의 SPA route fallback은 배포 설정에서 제공한다.
 - 공유 UI는 사용자 선택 locale에 맞는 번역 resource를 로드하고 날짜·시간·숫자 표시를 클라이언트에서 처리한다. MVP resource bundle은 `ko-KR`, `en-US`이며 새 언어 resource를 추가해도 API나 domain schema를 바꾸지 않도록 한다(`D-065`, `D-066`).
 - 브라우저는 업무 관리용 Web client로 지원하지만 OS native background alarm·geofence는 등록된 플랫폼 adapter가 있는 설치에서만 제공한다. 웹에서 해당 기능이 없으면 capability 상태와 대체 가능한 사용 방법을 안내한다.
-- 앱 메뉴의 Settings 화면은 공통 UI로 제공하고 household, user, installation scope를 분리한다(`D-019`).
+- 앱 메뉴의 Settings 화면은 공통 UI로 제공해 `HOUSEHOLD`, `USER`, `INSTALLATION` 흐름을 구분한다. `REMINDER` 값은 Reminder 생성·수정 흐름에서 관리한다(`D-019`).
 - Android shell은 TypeScript bridge와 capability별 Kotlin adapter module을 통해 FCM 수신, 로컬 알림, 시간 예약, geofence, 권한 및 시스템 설정 기능을 제공한다.
 - 각 native capability module은 UI와 다른 native module에 직접 의존하지 않고 versioned, typed port/event contract를 공유한다. 지오펜스 adapter는 원하는 목록과 OS 등록 상태를 reconcile하고 전이 event를 로컬 영속 큐에 기록한다.
 - 브라우저는 responsive CRUD client다. `D-004`, `D-005`에 정의한 백그라운드 알림 기능은 브라우저 자체의 지원 여부를 가정하지 않고 native installation capability를 사용한다.
@@ -166,10 +166,13 @@ ID token의 issuer와 subject를 검증해 내부 `User.id`에 매핑하고, 권
 
 ### 3.4 설정 카탈로그와 scope
 
-- Web/API는 household 설정과 user 설정을 별도 endpoint, 접근 범위, revision으로 관리한다.
-- 기능 모듈이 소유하는 설정 schema와 검증 선언을 중앙 Settings Catalog에 등록한다. MVP 카탈로그는 정적 코드 등록으로 시작하며 동적 plugin engine은 도입하지 않는다.
-- 공통 Settings UI는 catalog entry를 household·user section으로 묶는다. 설치 권한·OS 상태는 편집 가능한 preference로 가장하지 않고 device status로 표시한다.
+- 설정 metadata의 기준은 [설정·선택 기능 설계 §4·§7](./05-settings-and-feature-configuration.md#4-설정-카탈로그)이다. 구현은 같은 선언을 정적 `Settings Catalog` registry 한 곳에 등록하며, feature module은 고유 의미와 validator 구현을 소유한다.
+- API와 domain은 `HOUSEHOLD`, `USER`, `INSTALLATION`, `REMINDER`를 서로 다른 소유 경계로 취급한다. `HouseholdSettings`와 `UserSettings`는 별도 endpoint/revision으로 관리하고, `Household.default_time_zone`과 `User.time_zone`은 각각 Household·User profile에서 제공한다.
+- Household 값은 `household_id`, User 값은 `user_id`에 묶는다. 같은 User의 설치들은 User 값을 읽으며, household 값은 구성원 기기에서 공통으로 읽는다.
+- `INSTALLATION` OS 권한·채널의 원본은 해당 기기의 OS다. 앱은 설치별 capability와 sync 상태를 보여주고 OS 설정을 서버의 계정·가구 설정으로 복제하지 않는다.
+- `REMINDER` 값은 Reminder/Trigger/RecurrenceRule 업무 데이터와 해당 API revision에 둔다. 이 값은 전역 Household/User 설정 endpoint로 보내지 않는다.
 - 각 선택 기능은 기본값, 입력 제약, 의존성, 비활성화 동작과 retirement migration을 정의한다. 기능을 끄거나 제거해도 데이터를 조용히 삭제하지 않는다(`D-019`).
+- catalog는 metadata index이지 runtime value store가 아니다. environment별 실행 설정과 secrets는 배포 설정·비밀 관리 경계에서 다루며 앱 Settings Catalog에 포함하지 않는다.
 - household 설정 변경은 actor와 revision을 기록하고 `ADMIN` role을 검사한다(`D-020`).
 - 마지막 Admin의 역할 인계·퇴장 검사는 household 단위 transaction 안에서 수행해 동시 요청으로 Admin 0명이 되는 것을 막는다(`D-021`).
 

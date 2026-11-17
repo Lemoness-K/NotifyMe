@@ -3,7 +3,7 @@
 - 상태: 승인됨
 - 날짜: 2026-11-09
 - 결정: `D-066`
-- 관련 결정: `D-019`, `D-065`
+- 관련 결정: `D-019`, `D-065`, `D-093`
 - 관련 요구사항: `PR-AC-052`, `NFR-I18N-001`, `NFR-I18N-002`
 - 관련 문서: [마스터 설계](../00-master-design.md), [제품 요구사항](../01-product-requirements.md), [설정 설계](../05-settings-and-feature-configuration.md), [시간대·지역화 설계](./ADR-033-time-zones-and-localization.md)
 
@@ -14,7 +14,8 @@
 ## 결정
 
 - MVP UI 및 시스템 생성 문구는 한국어(`ko-KR`)와 영어(`en-US`)로 제공한다.
-- 기본 언어는 한국어(`ko-KR`)이며, 각 사용자는 개인 설정에서 언어를 선택할 수 있다.
+- 각 사용자는 개인 설정에서 언어를 선택할 수 있고, 선택값은 서버에 저장해 다른 설치와 동기화한다.
+- 유효한 저장 사용자 locale은 기기 locale보다 우선한다. 유효한 저장값이 없으면 지원되는 기기 locale을 사용하며, 지원 locale이 아니면 기본 locale `ko-KR`로 fallback한다(`D-093`).
 - 지원하지 않는 기기 locale은 기본 locale `ko-KR`로 fallback한다.
 - 날짜·시간·숫자 등 표시는 선택한 locale과 User의 IANA time zone을 함께 따른다.
 - 서버 API와 도메인 값은 locale-neutral하게 유지한다. 사용자가 작성한 Reminder 제목·내용은 자동 번역하지 않는다(`D-065`).
@@ -28,5 +29,5 @@
 ## 구현 확인 사항
 
 - MVP에서 `ko-KR`과 `en-US` 언어 선택기가 노출되고 사용자별 설정이 기기 간 동기화된다.
-- 앱 재설치·새 기기 로그인 시 서버의 locale 설정을 복구하고, 저장된 locale이 없으면 `ko-KR`을 사용한다.
+- 앱 재설치·새 기기 로그인 시 서버의 locale 설정을 복구한다. 유효한 저장 locale이 없으면 지원되는 기기 locale을 처음 적용하고, 기기 locale도 지원되지 않으면 `ko-KR`을 사용한다(`D-093`).
 - API error code, enum, 시스템 알림 문구를 각 locale로 표현하되 사용자가 입력한 제목·내용은 바꾸지 않는다.

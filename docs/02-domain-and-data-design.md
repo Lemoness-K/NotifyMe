@@ -2,9 +2,9 @@
 
 - 상태: 초안
 - 작성일: 2026-09-12
-- 최근 갱신일: 2026-11-10
-- 관련 결정: `D-008`, `D-010`~`D-050`, `D-053`~`D-056`, `D-058`~`D-073`, `D-075`~`D-076`, `D-085`~`D-087`, `D-090`
-- 관련 요구사항: `F-HH-001`~`F-HH-006`, `F-REM-001`~`F-REM-008`, `F-REC-001`~`F-REC-008`, `F-TRG-001`~`F-TRG-005`, `F-SET-001`~`F-SET-007`, `F-HIS-001`~`F-HIS-005`, `F-LIST-004`~`F-LIST-005`, `PR-AC-044`~`PR-AC-055`, `PR-AC-060`~`PR-AC-061`, `PR-AC-066`~`PR-AC-068`, `NFR-SEC-001`, `NFR-SEC-006`, `NFR-REL-001`~`NFR-REL-007`, `NFR-TIME-001`~`NFR-TIME-004`, `NFR-I18N-001`~`NFR-I18N-002`
+- 최근 갱신일: 2026-11-17
+- 관련 결정: `D-008`, `D-010`~`D-050`, `D-053`~`D-056`, `D-058`~`D-073`, `D-075`~`D-076`, `D-085`~`D-087`, `D-090`, `D-093`
+- 관련 요구사항: `F-HH-001`~`F-HH-006`, `F-REM-001`~`F-REM-008`, `F-REC-001`~`F-REC-008`, `F-TRG-001`~`F-TRG-005`, `F-SET-001`~`F-SET-007`, `F-HIS-001`~`F-HIS-005`, `F-LIST-004`~`F-LIST-005`, `PR-AC-023`, `PR-AC-044`~`PR-AC-055`, `PR-AC-060`~`PR-AC-061`, `PR-AC-066`~`PR-AC-068`, `NFR-SEC-001`, `NFR-SEC-006`, `NFR-REL-001`~`NFR-REL-007`, `NFR-TIME-001`~`NFR-TIME-004`, `NFR-I18N-001`~`NFR-I18N-002`
 - 관련 문서: [마스터 설계](./00-master-design.md), [시스템 아키텍처](./03-system-architecture.md), [알림과 스케줄링](./04-notification-and-scheduling.md), [설정·선택 기능 설계](./05-settings-and-feature-configuration.md), [보안·개인정보 설계](./07-security-and-privacy.md)
 
 ## 1. 목적과 결정 상태
@@ -104,10 +104,12 @@ MVP에서는 household 하나만 생성하고 앱이 이를 기본 context로 �
 
 ### 4.1.1 HouseholdSettings와 UserSettings
 
-- `HouseholdSettings`: 가구 구성원에게 공통 적용되는 정책이다. 장소 반경 최소·최대·기본값(`D-018`), `max_location_duration_min`(초기 60분, 설정 범위 10~1,440분, `D-085`), `weekly_calendar_convention`(초기 `MONDAY_START`, enum `MONDAY_START | SUNDAY_START | ISO_8601`, `D-086`)을 포함한다. Admin만 수정할 수 있다(`D-020`).
-- `UserSettings`: 로그인한 사용자에게만 적용되는 앱 표시·언어 선호다. `locale`(초기 `ko-KR`, MVP 허용값 `ko-KR | en-US`) 등을 둔다. 사용자 `time_zone`은 프로필에 별도로 저장한다. Android 알림 채널, 표시·소리, 방해 금지와 잠금 화면 노출은 설치별 Android OS 설정이 결정하며 서버의 UserSettings로 복제하지 않는다(`D-026`, `D-065`, `D-066`, `D-073`).
-- 두 설정은 별도 scope와 revision으로 저장한다. 하나의 scope를 읽거나 수정해도 다른 scope의 값을 덮어쓰지 않는다.
-- 구체적인 저장 표현, 버전과 기본값 상속은 [설정·선택 기능 설계](./05-settings-and-feature-configuration.md)에서 정의한다.
+- `HouseholdSettings`: household 구성원에게 공통 적용되는 정책과 기본값이다. 장소 반경 최소·최대·기본값(`D-018`), `max_location_duration_min`(초기 60분, 10~1,440분, `D-085`), `weekly_calendar_convention`(초기 `MONDAY_START`, `D-086`)을 포함한다. Admin만 수정할 수 있다(`D-020`). `Household.default_time_zone`도 `HOUSEHOLD` 소유지만 Household 프로필에 기존 필드로 저장한다(`D-065`).
+- `UserSettings`: `user_id`에 귀속되는 계정별 표시·언어 선호다. `locale`(초기 `ko-KR`, 허용값 `ko-KR | en-US`)를 저장하고 같은 User의 설치가 읽는다. `User.time_zone` 프로필 값도 같은 계정에 적용하며 household 기본 시간대와 구별한다.
+- `INSTALLATION` 값은 `DeviceInstallation`/`SyncState`의 설치별 관측 metadata와 OS가 소유하는 권한·알림 채널 설정으로 나눈다. OS의 표시·소리·방해 금지·잠금 화면 노출을 서버 `UserSettings`나 `HouseholdSettings`로 복제하지 않는다(`D-026`, `D-073`).
+- `REMINDER` 값은 해당 `Reminder`, `Trigger`, `RecurrenceRule`의 업무 데이터에 둔다. 예를 들어 실제 `Trigger.radius_m`와 `DWELL`/`AFTER_EXIT` duration, 생성 시 저장한 반복 convention은 전역 설정 aggregate가 아니라 Reminder에 귀속된다. 완료 검증 on/off와 검증자도 Reminder 범위다(`D-017`, `D-085`, `D-086`, `D-091`).
+- 네 범위 값은 각각 하나의 소유 위치를 가진다. 기본값을 업무 entity에 복사한 값은 그 시점의 Reminder schedule 값이며, 원래 scope의 활성 설정값을 중복 저장한 것으로 다루지 않는다.
+- 구체적인 카탈로그 metadata, API 저장 표현, 버전과 기본값 적용은 [설정·선택 기능 설계](./05-settings-and-feature-configuration.md)에서 정의한다.
 
 `ADMIN`은 구성원 초대·제거·역할 변경을 관리한다. Reminder CRUD 권한은 requester/assignee 또는 역할로 제한하지 않는다.
 
