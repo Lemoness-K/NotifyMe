@@ -324,5 +324,40 @@
         "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/user-stories/user-stories-assessment.md"
       }
     ]
+  },
+  {
+    "id": "261115-notify-me-implementation/refined-mockups/20261117-223829714164",
+    "intent": "261115-notify-me-implementation",
+    "stage": "refined-mockups",
+    "stage_title": "Refined Mockups",
+    "created_at": "2026-11-17T22:38:29.714164+00:00",
+    "next_stage": "Domain Design",
+    "summary": "반응형 화면 목업, 컴포넌트 상호작용 명세, 디자인 시스템 매핑과 WCAG 2.1 AA 체크리스트를 검토합니다. 제품 책임자 검토에는 목업만으로 시각적 구성을 판단하기 어렵다는 R-01 주요 우려가 기록되어 있습니다.",
+    "files": [
+      {
+        "title": "Notify Me — 반응형 화면 목업",
+        "summary": "- 기준 입력: `wireframes` ([저충실도 화면 구성](../../ideation/rough-mockups/wireframes.md)), `user-flow` ([핵심 사용자 흐름](../../ideation/rough-mockups/user-flow.md)), `stories` ([사용자 스토리](../u...",
+        "url": "/reviews/261115-notify-me-implementation/refined-mockups/20261117-223829714164/01-mockups/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/refined-mockups/mockups.md"
+      },
+      {
+        "title": "Notify Me — 화면 상호작용 명세",
+        "summary": "- `wireframes`: [저충실도 화면 구성](../../ideation/rough-mockups/wireframes.md)",
+        "url": "/reviews/261115-notify-me-implementation/refined-mockups/20261117-223829714164/02-interaction-spec/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/refined-mockups/interaction-spec.md"
+      },
+      {
+        "title": "Notify Me — 디자인 시스템 매핑",
+        "summary": "- `wireframes`: [저충실도 화면 구성](../../ideation/rough-mockups/wireframes.md)",
+        "url": "/reviews/261115-notify-me-implementation/refined-mockups/20261117-223829714164/03-design-system-mapping/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/refined-mockups/design-system-mapping.md"
+      },
+      {
+        "title": "Notify Me — 접근성 체크리스트",
+        "summary": "- 목표: 사용자 화면을 WCAG 2.1 AA 성공 기준에 맞춰 설계하고, 구현 단계에서 수동·자동 검증한다. 이 체크리스트는 설계 요구이며 아직 구현 적합성 결과를 뜻하지 않는다.",
+        "url": "/reviews/261115-notify-me-implementation/refined-mockups/20261117-223829714164/04-accessibility-checklist/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/refined-mockups/accessibility-checklist.md"
+      }
+    ]
   }
 ]
