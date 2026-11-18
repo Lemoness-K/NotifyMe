@@ -35,7 +35,7 @@
 3. NestJS API와 Prisma·SQLite의 integration test. 실제 migration을 임시 SQLite 파일에 적용하고 test fixture로 초기화한다.
 4. Kotlin native module을 수정한 경우 해당 module의 JVM unit test
 
-이 명령은 외부 Firebase, FCM, 실제 Android 계정, 운영 RPi에 접속하지 않는다. 실패 코드를 반환하고 실패한 suite와 관련 로그를 요약한다. 실행 시간이 긴 브라우저 E2E, Android emulator·실기기, RPi 배포, 백업 복구 검증은 매 루프의 필수 통과 조건에 넣지 않는다. 임의의 전체 coverage percentage를 gate로 삼기보다 변경한 동작과 위험 사례에 직접 검증을 둔다.
+이 명령은 외부 Firebase, FCM, 실제 Android 계정, 운영 RPi에 접속하지 않는다. 실패 코드를 반환하고 실패한 suite와 관련 로그를 요약한다. 실행 시간이 긴 브라우저 E2E, Android emulator·실기기, RPi 배포, 백업 복구 검증은 매 루프의 필수 통과 조건에 넣지 않는다. 승인된 전체 라인 커버리지 기준은 80%이며 조립된 프로젝트의 전체 테스트로 확인한다. 변경한 동작과 위험 사례는 커버리지 수치와 별도로 직접 검증한다.
 
 ## 4. 테스트 수준과 핵심 범위
 

@@ -1,0 +1,43 @@
+name: Notify Me U1
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'prisma/**'
+      - 'tests/**'
+      - 'package*.json'
+      - 'index.html'
+      - '*config.ts'
+      - 'tsconfig*.json'
+      - 'deploy/u1/**'
+      - '.github/workflows/u1-app-ci.yml'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'prisma/**'
+      - 'tests/**'
+      - 'package*.json'
+      - 'index.html'
+      - '*config.ts'
+      - 'tsconfig*.json'
+      - 'deploy/u1/**'
+      - '.github/workflows/u1-app-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-u1:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run verify:u1

@@ -1,0 +1,284 @@
+{
+  "stage": "code-generation",
+  "unit": "u1-core-flow",
+  "upstream_ids": [
+    "AC1.1.1",
+    "AC1.1.2",
+    "AC1.1.3",
+    "AC1.2.1",
+    "AC1.2.2",
+    "AC1.3.1",
+    "AC1.3.2",
+    "AC1.3.3",
+    "AC1.6.1",
+    "AC1.6.2",
+    "AC2.1.1",
+    "AC2.1.2",
+    "AC2.1.3",
+    "AC4.6.1",
+    "AC4.6.2",
+    "AC4.6.3",
+    "AC4.6.4",
+    "AC5.6.1",
+    "AC5.6.2",
+    "AC5.6.3",
+    "AC5.6.4",
+    "AC6.3.1",
+    "AC6.3.2",
+    "AC6.3.3",
+    "AC6.3.4",
+    "NFR5.1",
+    "NFR5.2",
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR2.1",
+    "NFR2.3",
+    "NFR5.3",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR4.1",
+    "NFR4.2",
+    "BR1.1",
+    "BR1.2",
+    "BR1.3",
+    "BR1.4",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR3.1",
+    "BR3.2"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.1.1",
+      "status": "OK",
+      "target": "src/server/provider.ts"
+    },
+    {
+      "id": "AC1.1.2",
+      "status": "OK",
+      "target": "src/server/auth.ts"
+    },
+    {
+      "id": "AC1.1.3",
+      "status": "OK",
+      "target": "src/server/auth.ts"
+    },
+    {
+      "id": "AC1.2.1",
+      "status": "OK",
+      "target": "src/server/http.ts"
+    },
+    {
+      "id": "AC1.2.2",
+      "status": "OK",
+      "target": "src/server/repository.ts"
+    },
+    {
+      "id": "AC1.3.1",
+      "status": "OK",
+      "target": "src/server/auth.ts"
+    },
+    {
+      "id": "AC1.3.2",
+      "status": "OK",
+      "target": "src/server/auth.ts"
+    },
+    {
+      "id": "AC1.3.3",
+      "status": "OK",
+      "target": "src/server/bootstrap-admin.ts"
+    },
+    {
+      "id": "AC1.6.1",
+      "status": "OK",
+      "target": "src/server/repository.ts"
+    },
+    {
+      "id": "AC1.6.2",
+      "status": "OK",
+      "target": "src/server/repository.ts"
+    },
+    {
+      "id": "AC2.1.1",
+      "status": "OK",
+      "target": "src/server/repository.ts"
+    },
+    {
+      "id": "AC2.1.2",
+      "status": "OK",
+      "target": "src/server/reminders.ts"
+    },
+    {
+      "id": "AC2.1.3",
+      "status": "OK",
+      "target": "src/web/App.tsx"
+    },
+    {
+      "id": "AC4.6.1",
+      "status": "OK",
+      "target": "src/server/http.ts"
+    },
+    {
+      "id": "AC4.6.2",
+      "status": "OK",
+      "target": "tests/e2e/u1/core-flow.spec.ts"
+    },
+    {
+      "id": "AC4.6.3",
+      "status": "N/A",
+      "target": "U4 Android FCM 변경 신호 처리"
+    },
+    {
+      "id": "AC4.6.4",
+      "status": "OK",
+      "target": "src/web/App.tsx"
+    },
+    {
+      "id": "AC5.6.1",
+      "status": "OK",
+      "target": "src/web/styles.css"
+    },
+    {
+      "id": "AC5.6.2",
+      "status": "OK",
+      "target": "tests/e2e/u1/core-flow.spec.ts"
+    },
+    {
+      "id": "AC5.6.3",
+      "status": "OK",
+      "target": "tests/e2e/u1/core-flow.spec.ts"
+    },
+    {
+      "id": "AC5.6.4",
+      "status": "OK",
+      "target": "src/web/App.tsx"
+    },
+    {
+      "id": "AC6.3.1",
+      "status": "OK",
+      "target": "src/web/messages.ts"
+    },
+    {
+      "id": "AC6.3.2",
+      "status": "N/A",
+      "target": "U2 사용자 계정의 locale·표시 시간대 적용"
+    },
+    {
+      "id": "AC6.3.3",
+      "status": "OK",
+      "target": "src/server/reminders.ts"
+    },
+    {
+      "id": "AC6.3.4",
+      "status": "OK",
+      "target": "src/server/errors.ts"
+    },
+    {
+      "id": "NFR5.1",
+      "status": "Deferred",
+      "target": "Performance Validation · 승인된 Raspberry Pi 환경의 p95 측정"
+    },
+    {
+      "id": "NFR5.2",
+      "status": "Deferred",
+      "target": "Performance Validation · DS-014의 메모리·쓰기 예산"
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "src/server/auth.ts"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "src/server/repository.ts"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "src/server/repository.ts"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "src/server/http.ts"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "src/server/http.ts"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "deploy/u1/notify-me.service.example"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "tests/u1/storage-model.test.ts"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "OK",
+      "target": "src/server/repository.ts"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "src/server/time.ts"
+    },
+    {
+      "id": "NFR4.2",
+      "status": "OK",
+      "target": "src/server/time.ts"
+    },
+    {
+      "id": "BR1.1",
+      "status": "OK",
+      "target": "src/server/auth.ts"
+    },
+    {
+      "id": "BR1.2",
+      "status": "OK",
+      "target": "src/server/auth.ts"
+    },
+    {
+      "id": "BR1.3",
+      "status": "OK",
+      "target": "src/server/repository.ts"
+    },
+    {
+      "id": "BR1.4",
+      "status": "OK",
+      "target": "src/server/auth.ts"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "src/server/reminders.ts"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "src/server/repository.ts"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "src/server/repository.ts"
+    },
+    {
+      "id": "BR3.1",
+      "status": "OK",
+      "target": "src/web/App.tsx"
+    },
+    {
+      "id": "BR3.2",
+      "status": "OK",
+      "target": "src/server/errors.ts"
+    }
+  ]
+}

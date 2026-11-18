@@ -1,0 +1,142 @@
+{
+  "stage": "code-generation",
+  "unit": "u1-core-flow",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".gitignore"
+    },
+    {
+      "path": "docs/08-test-strategy.md"
+    },
+    {
+      "path": ".github/workflows/u1-app-ci.yml"
+    },
+    {
+      "path": "deploy/u1/Caddyfile.example"
+    },
+    {
+      "path": "deploy/u1/notify-me.service.example"
+    },
+    {
+      "path": "docs/u1-local-run.md"
+    },
+    {
+      "path": "index.html"
+    },
+    {
+      "path": "package-lock.json"
+    },
+    {
+      "path": "package.json"
+    },
+    {
+      "path": "playwright.config.ts"
+    },
+    {
+      "path": "prisma.config.ts"
+    },
+    {
+      "path": "prisma/migrations/202611180001_u1/migration.sql"
+    },
+    {
+      "path": "prisma/migrations/migration_lock.toml"
+    },
+    {
+      "path": "prisma/schema.prisma"
+    },
+    {
+      "path": "src/server/auth.ts"
+    },
+    {
+      "path": "src/server/bootstrap-admin.ts"
+    },
+    {
+      "path": "src/server/config.ts"
+    },
+    {
+      "path": "src/server/errors.ts"
+    },
+    {
+      "path": "src/server/http.ts"
+    },
+    {
+      "path": "src/server/main.ts"
+    },
+    {
+      "path": "src/server/provider.ts"
+    },
+    {
+      "path": "src/server/reminders.ts"
+    },
+    {
+      "path": "src/server/repository.ts"
+    },
+    {
+      "path": "src/server/storage.ts"
+    },
+    {
+      "path": "src/server/time.ts"
+    },
+    {
+      "path": "src/web/App.tsx"
+    },
+    {
+      "path": "src/web/client.ts"
+    },
+    {
+      "path": "src/web/main.tsx"
+    },
+    {
+      "path": "src/web/messages.ts"
+    },
+    {
+      "path": "src/web/styles.css"
+    },
+    {
+      "path": "tests/e2e/u1/core-flow.spec.ts"
+    },
+    {
+      "path": "tests/u1/auth-session.test.ts"
+    },
+    {
+      "path": "tests/u1/fixtures.ts"
+    },
+    {
+      "path": "tests/u1/http.test.ts"
+    },
+    {
+      "path": "tests/u1/provider.test.ts"
+    },
+    {
+      "path": "tests/u1/reminder-rules.test.ts"
+    },
+    {
+      "path": "tests/u1/repository.test.ts"
+    },
+    {
+      "path": "tests/u1/runtime.test.ts"
+    },
+    {
+      "path": "tests/u1/storage-model.test.ts"
+    },
+    {
+      "path": "tests/u1/web-interactions.test.tsx"
+    },
+    {
+      "path": "tests/u1/web.test.ts"
+    },
+    {
+      "path": "tsconfig.build.json"
+    },
+    {
+      "path": "tsconfig.json"
+    },
+    {
+      "path": "vite.config.ts"
+    },
+    {
+      "path": "vitest.config.ts"
+    }
+  ]
+}

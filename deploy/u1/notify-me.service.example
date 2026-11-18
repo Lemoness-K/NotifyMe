@@ -1,0 +1,21 @@
+[Unit]
+Description=Notify Me
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=notify-me
+Group=notify-me
+WorkingDirectory=/opt/notify-me
+EnvironmentFile=/etc/notify-me/runtime.env
+ExecStart=/usr/bin/node /opt/notify-me/dist/server/main.js
+Restart=on-failure
+StateDirectory=notify-me
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+
+[Install]
+WantedBy=multi-user.target

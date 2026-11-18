@@ -1,0 +1,80 @@
+{
+  "stage": "nfr-design",
+  "unit": "u1-core-flow",
+  "upstream_ids": [
+    "NFR5.1",
+    "NFR5.2",
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR2.1",
+    "NFR2.3",
+    "NFR5.3",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR4.1",
+    "NFR4.2"
+  ],
+  "coverage": [
+    {
+      "id": "NFR5.1",
+      "status": "OK",
+      "target": "performance-design.md Measurement · 대상 Pi p95 확인"
+    },
+    {
+      "id": "NFR5.2",
+      "status": "OK",
+      "target": "performance-design.md Measurement · 메모리 및 쓰기 예산"
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "security-design.md Session issuance · 일회용 증거와 세션"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "security-design.md Authorization and failure behavior · 가구 권한"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "security-design.md Authorization and failure behavior · 접근 격리"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "security-design.md Authorization and failure behavior · 자료 보호"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "observability-design.md Signals and operational boundaries · 안전한 계정 로그"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "scalability-design.md Capacity controls · 단일 노드"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "reliability-design.md Consistent storage and retry · 원자적 저장"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "OK",
+      "target": "reliability-design.md Consistent storage and retry · 키 재시도"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "reliability-design.md Consistent storage and retry · 일정 시각 유지"
+    },
+    {
+      "id": "NFR4.2",
+      "status": "OK",
+      "target": "reliability-design.md Consistent storage and retry · DST 처리"
+    }
+  ]
+}

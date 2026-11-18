@@ -1,3 +1,15 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.local/
+.u1-db-*/
+src/server/generated/
+.env
+.env.local
+.env.*.local
+
 # BEGIN AI-DLC:gitignore
 # AI-DLC: local working files
 aidlc/active-space

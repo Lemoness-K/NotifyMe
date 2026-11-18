@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/server/generated"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id          String         @id @default(uuid())
+  displayName String?
+  active      Boolean        @default(true)
+  identities  AuthIdentity[]
+  memberships Membership[]
+  sessions    Session[]
+}
+
+model AuthIdentity {
+  issuer  String
+  subject String
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Restrict)
+  @@id([issuer, subject])
+}
+
+model Household {
+  id              String       @id @default(uuid())
+  singleton       Int          @unique @default(1)
+  defaultTimeZone String       @default("Asia/Seoul")
+  memberships     Membership[]
+  reminders       Reminder[]
+}
+
+model Membership {
+  householdId String
+  userId      String
+  role        String
+  active      Boolean      @default(true)
+  household   Household    @relation(fields: [householdId], references: [id], onDelete: Restrict)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Restrict)
+  created     Reminder[]   @relation("ReminderCreator")
+  requested   Reminder[]   @relation("ReminderRequester")
+  assigned    Assignment[]
+  @@id([householdId, userId])
+}
+
+model LoginChallenge {
+  digest     String   @id
+  nonce      String   @unique
+  issuedAt   DateTime
+  expiresAt  DateTime
+  consumedAt DateTime?
+  @@index([expiresAt])
+}
+
+model LoginProof {
+  issuer    String
+  subject   String
+  authTime  Int
+  expiresAt DateTime
+  @@id([issuer, subject, authTime])
+  @@index([expiresAt])
+}
+
+model Session {
+  digest    String    @id
+  userId    String
+  issuer    String
+  subject   String
+  authTime  Int
+  expiresAt DateTime
+  endedAt   DateTime?
+  user      User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  @@index([expiresAt])
+}
+
+model Reminder {
+  id            String     @id @default(uuid())
+  householdId   String
+  title         String
+  description   String?
+  createdBy     String
+  requesterId   String
+  revision      Int        @default(1)
+  lifecycle     String     @default("ACTIVE")
+  createdAt     DateTime   @default(now())
+  household     Household  @relation(fields: [householdId], references: [id], onDelete: Restrict)
+  creator       Membership @relation("ReminderCreator", fields: [householdId, createdBy], references: [householdId, userId], onDelete: Restrict)
+  requester     Membership @relation("ReminderRequester", fields: [householdId, requesterId], references: [householdId, userId], onDelete: Restrict)
+  assignments   Assignment[]
+  trigger       Trigger?
+  occurrence    Occurrence?
+  requestResults RequestResult[]
+  @@unique([id, householdId])
+  @@index([householdId, createdAt, id])
+  @@index([householdId, requesterId])
+}
+
+model Assignment {
+  householdId String
+  reminderId  String
+  userId      String
+  reminder    Reminder   @relation(fields: [reminderId, householdId], references: [id, householdId], onDelete: Cascade)
+  assignee    Membership @relation(fields: [householdId, userId], references: [householdId, userId], onDelete: Restrict)
+  @@id([reminderId, userId])
+  @@index([householdId, userId])
+}
+
+model Trigger {
+  reminderId  String   @id
+  kind        String   @default("TIME")
+  scheduledAt DateTime
+  timeZone    String
+  reminder    Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+}
+
+model Occurrence {
+  id          String   @id @default(uuid())
+  reminderId  String   @unique
+  state       String   @default("PENDING")
+  scheduledAt DateTime
+  revision    Int      @default(1)
+  reminder    Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+}
+
+model RequestResult {
+  householdId String
+  userId      String
+  operation   String
+  key         String
+  inputDigest String
+  reminderId  String
+  reminder    Reminder @relation(fields: [reminderId, householdId], references: [id, householdId], onDelete: Cascade)
+  @@id([householdId, userId, operation, key])
+}

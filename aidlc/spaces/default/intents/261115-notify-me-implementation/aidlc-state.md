@@ -48,6 +48,27 @@
 
 
 
+- **Unit Ownership**: solo
+
+- **Skeleton Stance**: on
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- **Construction Verification Command**: FONTCONFIG_FILE="$PWD/.local/fontconfig-u1.conf" LD_LIBRARY_PATH="$PWD/.local/chromium-deps/usr/lib/aarch64-linux-gnu" PLAYWRIGHT_BROWSERS_PATH="$PWD/.local/playwright" npm run verify:u1
+
 ## Phase Progress
 <!-- Status values: Pending, Active, Verified, Skipped -->
 
@@ -108,7 +129,7 @@
 - **Current Stage**: functional-design
 - **Next Stage**: nfr-requirements
 - **Status**: Running
-- **Last Updated**: 2026-11-18T04:38:13Z
+- **Last Updated**: 2026-11-18T22:37:33Z
 
 ## Session Resume Point
 - **Last Completed Stage**: delivery-planning

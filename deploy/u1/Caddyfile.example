@@ -1,0 +1,21 @@
+https://notify.example.invalid {
+	# Replace the documentation address with the host's private network address.
+	bind 192.0.2.10
+	tls internal
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy no-referrer
+		X-Frame-Options DENY
+	}
+	handle /api/v1/* {
+		reverse_proxy 127.0.0.1:3443
+	}
+	handle /internal/* {
+		respond 404
+	}
+	handle {
+		root * /opt/notify-me/dist/web
+		try_files {path} /index.html
+		file_server
+	}
+}

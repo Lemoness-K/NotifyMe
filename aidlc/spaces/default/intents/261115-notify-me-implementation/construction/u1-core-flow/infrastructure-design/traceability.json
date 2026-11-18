@@ -1,0 +1,80 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u1-core-flow",
+  "upstream_ids": [
+    "NFR5.1",
+    "NFR5.2",
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR2.1",
+    "NFR2.3",
+    "NFR5.3",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR4.1",
+    "NFR4.2"
+  ],
+  "coverage": [
+    {
+      "id": "NFR5.1",
+      "status": "OK",
+      "target": "monitoring-design.md Metrics & KPIs · p95 측정"
+    },
+    {
+      "id": "NFR5.2",
+      "status": "OK",
+      "target": "infrastructure-specification.md Deployment · 대상 ARM64와 자원 예산"
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md Infrastructure Services · HTTPS와 인증 환경"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "N/A",
+      "target": "업무 인가 정책은 앱 서버에서 확인"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md Shared Infrastructure · 접근 경계"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md Deployment · 보호된 데이터 및 비밀 분리"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "monitoring-design.md Logs & Tracing · 로컬 접근과 로그 보호"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md Deployment · 단일 Pi와 SQLite"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md Infrastructure Services · SQLite 영속과 짧은 쓰기"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "N/A",
+      "target": "앱의 작업 키·재시도 처리로 별도 인프라 없음"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "N/A",
+      "target": "앱이 UTC instant와 IANA zone을 다룸"
+    },
+    {
+      "id": "NFR4.2",
+      "status": "N/A",
+      "target": "DST 처리와 검증은 앱 시간 변환 경계에 있음"
+    }
+  ]
+}
