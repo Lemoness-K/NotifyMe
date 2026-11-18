@@ -504,5 +504,40 @@
         "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/contract-design/reviews/review-02.md"
       }
     ]
+  },
+  {
+    "id": "261115-notify-me-implementation/delivery-planning/20261118-042911581213",
+    "intent": "261115-notify-me-implementation",
+    "stage": "delivery-planning",
+    "stage_title": "Delivery Planning",
+    "created_at": "2026-11-18T04:29:11.581213+00:00",
+    "next_stage": "Functional Design",
+    "summary": "다섯 구현 단위의 순서, 완료 기준, 담당, 위험과 외부 검증 의존 관계를 정리했습니다. U3에서 삭제 기록과 실패 처리를 확인하고 U5에서 테스트 백업의 전체 복구를 검증합니다. Inception의 추적 검사 세 건을 통과했습니다.",
+    "files": [
+      {
+        "title": "Notify Me 구현 및 검증 계획",
+        "summary": "요구사항 `requirements.md`, 사용자 스토리 `stories.md`, 화면 설계 `mockups.md`, 도메인 `components.md`, 분할과 추적 문서 `unit-of-work.md`, `unit-of-work-dependency.md`, `unit-of-work-story-map.md`, `c...",
+        "url": "/reviews/261115-notify-me-implementation/delivery-planning/20261118-042911581213/01-bolt-plan/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/delivery-planning/bolt-plan.md"
+      },
+      {
+        "title": "Notify Me 작업 책임",
+        "summary": "`unit-of-work.md`, `unit-of-work-story-map.md`, `contract-summary.md`, `team-practices.md`를 기준으로 역할을 배정했다.",
+        "url": "/reviews/261115-notify-me-implementation/delivery-planning/20261118-042911581213/02-team-allocation/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/delivery-planning/team-allocation.md"
+      },
+      {
+        "title": "구현 순서와 위험 관리",
+        "summary": "`requirements.md`, `components.md`, `unit-of-work-dependency.md`, `contract-summary.md`, `team-practices.md`와 확인된 구현·검증 계획에 근거한다.",
+        "url": "/reviews/261115-notify-me-implementation/delivery-planning/20261118-042911581213/03-risk-and-sequencing-rationale/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/delivery-planning/risk-and-sequencing-rationale.md"
+      },
+      {
+        "title": "외부 환경과 검증 의존 관계",
+        "summary": "`requirements.md`, `unit-of-work.md`, `contract-summary.md`, `team-practices.md` 및 프로젝트 운영 설계를 기준으로 했다. Bolt는 독립된 완료 조건으로 진행하는 구현 묶음이다.",
+        "url": "/reviews/261115-notify-me-implementation/delivery-planning/20261118-042911581213/04-external-dependency-map/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/delivery-planning/external-dependency-map.md"
+      }
+    ]
   }
 ]
