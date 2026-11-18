@@ -423,5 +423,40 @@
         "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/units-generation/reviews/review-01.md"
       }
     ]
+  },
+  {
+    "id": "261115-notify-me-implementation/units-generation/20261118-010549966783",
+    "intent": "261115-notify-me-implementation",
+    "stage": "units-generation",
+    "stage_title": "Units Generation",
+    "created_at": "2026-11-18T01:05:49.966783+00:00",
+    "next_stage": "Contract Design",
+    "summary": "수정본입니다. 복구용 삭제 기록의 확정·누락 검증·서비스 재개 조건과 로컬 인증 및 비운영 Firebase·Google 연동의 검증 범위를 보완했습니다. 재검토에서 기존 두 건이 모두 해소됐으며 새 지적은 없습니다.",
+    "files": [
+      {
+        "title": "Notify Me 구현 작업 단위",
+        "summary": "승인된 도메인 설계의 `components.md`, `decisions.md`와 `requirements.md`, `stories.md`를 기준으로 작성했다.",
+        "url": "/reviews/261115-notify-me-implementation/units-generation/20261118-010549966783/01-unit-of-work/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/units-generation/unit-of-work.md"
+      },
+      {
+        "title": "작업 단위 의존 관계",
+        "summary": "승인된 도메인 설계의 `components.md`, `decisions.md`와 `requirements.md`, `stories.md`를 기준으로 작성했다.",
+        "url": "/reviews/261115-notify-me-implementation/units-generation/20261118-010549966783/02-unit-of-work-dependency/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/units-generation/unit-of-work-dependency.md"
+      },
+      {
+        "title": "작업 단위별 스토리 배정",
+        "summary": "승인된 도메인 설계의 `components.md`, `decisions.md`와 `requirements.md`, `stories.md`를 기준으로 작성했다.",
+        "url": "/reviews/261115-notify-me-implementation/units-generation/20261118-010549966783/03-unit-of-work-story-map/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/units-generation/unit-of-work-story-map.md"
+      },
+      {
+        "title": "Review 02",
+        "summary": "Verdict: READY",
+        "url": "/reviews/261115-notify-me-implementation/units-generation/20261118-010549966783/04-review-02/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/units-generation/reviews/review-02.md"
+      }
+    ]
   }
 ]
