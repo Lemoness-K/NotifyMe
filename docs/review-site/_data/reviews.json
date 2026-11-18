@@ -458,5 +458,28 @@
         "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/units-generation/reviews/review-02.md"
       }
     ]
+  },
+  {
+    "id": "261115-notify-me-implementation/contract-design/20261118-015640095312",
+    "intent": "261115-notify-me-implementation",
+    "stage": "contract-design",
+    "stage_title": "Contract Design",
+    "created_at": "2026-11-18T01:56:40.095312+00:00",
+    "next_stage": "Delivery Planning",
+    "summary": "API와 모듈 간 계약, 알림 동기화와 삭제 복구 흐름을 다이어그램과 함께 정리했습니다. 독립 리뷰에서 회차 조회, 기기 예약 후보 데이터, 백업 기준점의 미확정 삭제 처리 세 가지를 보완 사항으로 확인했습니다.",
+    "files": [
+      {
+        "title": "Notify Me 계약 명세",
+        "summary": "- `unit-of-work.md`, `unit-of-work-dependency.md`의 다섯 단위와 여덟 의존 관계",
+        "url": "/reviews/261115-notify-me-implementation/contract-design/20261118-015640095312/01-contract-summary/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/contract-design/contract-summary.md"
+      },
+      {
+        "title": "Review 01",
+        "summary": "Verdict: NOT-READY",
+        "url": "/reviews/261115-notify-me-implementation/contract-design/20261118-015640095312/02-review-01/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/contract-design/reviews/review-01.md"
+      }
+    ]
   }
 ]
