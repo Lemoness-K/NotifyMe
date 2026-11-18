@@ -18,6 +18,8 @@
 
 - 각 AI-DLC 단계가 승인되면 승인된 단계의 산출물만 커밋해 저장소 기본 브랜치로 향하는 PR을 만들고, PR 링크를 사용자에게 제공한다. 아직 승인되지 않은 다음 단계 산출물은 해당 PR에 포함하지 않는다. (learned 2026-11-17) <!-- cid:261115-notify-me-implementation:user-stories:3271c705b26a58d65798d0f3b351555fcd9dc02cd970963f03dbcb2a4b420262 -->
 
+- Notify Me 구현 작업에서는 승인된 AI-DLC 단계 산출물을 PR 없이 origin의 기본 브랜치에 직접 반영한다. 원격 이력을 먼저 확인하고 보존하며, 푸시에는 확인한 원격 커밋을 지정한 force-with-lease를 사용한다. 이 작업에는 이전 단계별 PR 관행 대신 이 지침을 적용한다. (learned 2026-11-18) <!-- cid:261115-notify-me-implementation:units-generation:e4205084826bf339c0fa4b388a0221681d87c6fd7ac1d26cc516a5ddbe97a249 -->
+
 ## Requirements Provenance
 
 - Record every formal FR/NFR with independent type (`FR`/`NFR`), origin (`User`/`Derived`/`AI`), lifecycle status (`Proposed`/`Approved`/`Rejected`/`Deferred`), source or derivation, acceptance/verification reference, and downstream traceability. `Derived` requires an approved source and an explanation of logical necessity. Keep these lifecycle statuses distinct from traceability coverage statuses.
