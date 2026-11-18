@@ -481,5 +481,28 @@
         "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/contract-design/reviews/review-01.md"
       }
     ]
+  },
+  {
+    "id": "261115-notify-me-implementation/contract-design/20261118-033039341355",
+    "intent": "261115-notify-me-implementation",
+    "stage": "contract-design",
+    "stage_title": "Contract Design",
+    "created_at": "2026-11-18T03:30:39.341355+00:00",
+    "next_stage": "Delivery Planning",
+    "summary": "수정본입니다. 기준 회차와 회차 조회 API, 설치 예약의 시간·장소 조건 및 삭제 결과를 검증한 백업 기준점을 명시했습니다. 독립 재검토에서 세 건 모두 해소됐으며 새 지적은 없습니다.",
+    "files": [
+      {
+        "title": "Notify Me 계약 명세",
+        "summary": "- `unit-of-work.md`, `unit-of-work-dependency.md`의 다섯 단위와 여덟 의존 관계",
+        "url": "/reviews/261115-notify-me-implementation/contract-design/20261118-033039341355/01-contract-summary/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/contract-design/contract-summary.md"
+      },
+      {
+        "title": "Review 02",
+        "summary": "Verdict: READY",
+        "url": "/reviews/261115-notify-me-implementation/contract-design/20261118-033039341355/02-review-02/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/contract-design/reviews/review-02.md"
+      }
+    ]
   }
 ]
