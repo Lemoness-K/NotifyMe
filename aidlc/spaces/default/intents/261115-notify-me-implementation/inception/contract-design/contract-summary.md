@@ -1180,6 +1180,12 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
           "x-owner": "U3",
           "parameters": [
             {
+              "name": "state",
+              "in": "query",
+              "required": false,
+              "schema": { "type": "string", "enum": ["VERIFICATION_PENDING"] }
+            },
+            {
               "name": "householdId",
               "in": "path",
               "required": true,
@@ -2139,6 +2145,11 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
               {"$ref": "#/components/schemas/Occurrence"},
               {"type": "null"}
             ]
+          },
+          "pendingVerificationCount": {
+            "description": "Number of verification requests still pending independently of the current occurrence",
+            "type": "integer",
+            "minimum": 0
           }
         },
         "required": [
@@ -2199,7 +2210,8 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
               "UNDO_COMPLETE",
               "SKIP",
               "APPROVE",
-              "REJECT"
+              "REJECT",
+              "WITHDRAW_VERIFICATION"
             ]
           },
           "revision": {
@@ -2238,6 +2250,12 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
             "description": "UTC instant, or null when no schedule is present",
             "type": ["string", "null"],
             "format": "date-time"
+          },
+          "allowedActions": {
+            "description": "Actions available to the authenticated caller for this occurrence",
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "type": "string", "enum": ["COMPLETE", "UNDO_COMPLETE", "SKIP", "APPROVE", "REJECT", "WITHDRAW_VERIFICATION"] }
           },
           "revision": {
             "type": "integer",
@@ -2474,6 +2492,7 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
 - 목록 커서는 불투명하고 조회 조건 및 가구 경계에 묶인다. 감사 이력의 변경 세부와 보존, 반복 필드의 상세 검증, 검증자 세부 정책은 Functional Design에서 구체화한다.
 - 할 일 목록과 Reminder 상세는 서버의 `currentOccurrence`를 사용한다. 서버는 반복·보관·무담당 정책을 적용해 기준 회차를 선택하고, 없는 경우 `null`을 반환한다. 오늘·예정·기한 초과 목록은 그 회차와 기존 분류 정책을 따른다. 별도 회차 목록은 같은 가구의 해당 Reminder 회차를 페이지로 반환한다.
 - UI는 조회한 `occurrenceId`와 회차의 `revision`으로 완료·건너뛰기·검증 작업을 호출한다. 정기 일정의 다음 날짜를 계산해 회차 ID를 추정하지 않는다. 이미 상태나 버전이 바뀐 경우 서버가 충돌을 반환하고 UI는 같은 경계에서 다시 조회한다.
+- U3에서 `pendingVerificationCount`는 현재 회차와 별도로 대기 요청 수를 나타낸다. 회차 목록의 `state=VERIFICATION_PENDING` 필터로 해당 요청을 탐색하고, 서버가 계산한 `allowedActions`를 UI에서 사용한다. 제출자의 철회는 `WITHDRAW_VERIFICATION`을 사용한다(`D-095`).
 - 위치 감지 제외는 사용자 확인을 받아 특정 설치와 Reminder 조합에 저장한다. 해당 요청을 허용하는 설치 권한을 확인하고 가구 Reminder와 다른 설치의 예약을 유지한다. 다음 동기화는 제외 상태를 보존한다.
 
 ## 2–5. 서버 내부 인터페이스와 인증 공급자

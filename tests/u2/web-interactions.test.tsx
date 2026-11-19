@@ -182,7 +182,7 @@ it('sends a selected Admin successor and the target revision when removing the c
 it('honors the list Retry-After deadline before sending another request', async () => {
   destination = () => reply({ code: 'UNAVAILABLE' }, 503, { 'Retry-After': '2' });
   await login();
-  const calls = () => requests('/households/home/reminders', 'GET');
+  const calls = () => requests('/households/home/reminders?view=MINE', 'GET');
   expect(calls()).toHaveLength(1);
   await click('다시 시도');
   expect(calls()).toHaveLength(1);

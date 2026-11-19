@@ -1,0 +1,115 @@
+{
+  "stage": "code-generation",
+  "unit": "u3-reminder-workflows",
+  "version": 1,
+  "writes": [
+    {
+      "path": "deploy/u1/notify-me.service.example"
+    },
+    {
+      "path": "playwright.config.ts"
+    },
+    {
+      "path": "prisma/migrations/202611190002_u3/migration.sql"
+    },
+    {
+      "path": "prisma/migrations/202611190003_u3_delete_replay/migration.sql"
+    },
+    {
+      "path": "prisma/schema.prisma"
+    },
+    {
+      "path": "src/server/config.ts"
+    },
+    {
+      "path": "src/server/delete-journal.ts"
+    },
+    {
+      "path": "src/server/household-runtime.ts"
+    },
+    {
+      "path": "src/server/http.ts"
+    },
+    {
+      "path": "src/server/main.ts"
+    },
+    {
+      "path": "src/server/occurrence-actions.ts"
+    },
+    {
+      "path": "src/server/recurrence.ts"
+    },
+    {
+      "path": "src/server/repository.ts"
+    },
+    {
+      "path": "src/server/storage.ts"
+    },
+    {
+      "path": "src/server/work-effects.ts"
+    },
+    {
+      "path": "src/server/work-input.ts"
+    },
+    {
+      "path": "src/server/work-queries.ts"
+    },
+    {
+      "path": "src/server/work-scheduling.ts"
+    },
+    {
+      "path": "src/server/work-service.ts"
+    },
+    {
+      "path": "src/server/work-storage.ts"
+    },
+    {
+      "path": "src/web/App.tsx"
+    },
+    {
+      "path": "src/web/client.ts"
+    },
+    {
+      "path": "src/web/styles.css"
+    },
+    {
+      "path": "src/web/work-form.tsx"
+    },
+    {
+      "path": "src/web/work-messages.ts"
+    },
+    {
+      "path": "src/web/work-pages.tsx"
+    },
+    {
+      "path": "tests/e2e/u3/reminder-workflows.spec.ts"
+    },
+    {
+      "path": "tests/u2/web-interactions.test.tsx"
+    },
+    {
+      "path": "tests/u3/delete-journal.test.ts"
+    },
+    {
+      "path": "tests/u3/http.test.ts"
+    },
+    {
+      "path": "tests/u3/occurrence-actions.test.ts"
+    },
+    {
+      "path": "tests/u3/recurrence.test.ts"
+    },
+    {
+      "path": "tests/u3/repository.test.ts"
+    },
+    {
+      "path": "tests/u3/storage-model.test.ts"
+    },
+    {
+      "path": "tests/u3/web-interactions.test.tsx"
+    },
+    {
+      "path": "vitest.config.ts"
+    }
+  ]
+}

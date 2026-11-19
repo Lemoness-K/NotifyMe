@@ -33,7 +33,9 @@ export function getRuntime(env: NodeJS.ProcessEnv = process.env) {
     administrationPerMinute: boundedInteger(env, 'NOTIFY_ADMIN_PER_MINUTE', householdRuntimeDefaults.administrationPerMinute, 1, 1000),
     cleanupIntervalMs: boundedInteger(env, 'NOTIFY_INVITE_CLEANUP_MS', householdRuntimeDefaults.cleanupIntervalMs, 1000, 3_600_000),
   };
-  const common = { host, port, origin: origin.origin, path, householdConfig, trustedProxy: mode === 'target' };
+  const deleteJournalPath = resolve(env.NOTIFY_DELETE_JOURNAL_PATH ?? path + '.delete.sqlite');
+  if (deleteJournalPath === path) throw new Error('Delete journal path must differ from the operating database');
+  const common = { host, port, origin: origin.origin, path, deleteJournalPath, householdConfig, trustedProxy: mode === 'target' };
   if (mode === 'local') {
     if (env.NOTIFY_SYNTHETIC_AUTH !== '1' || !['localhost', '127.0.0.1', '[::1]'].includes(origin.hostname)) {
       throw new Error('Local synthetic mode requires explicit opt-in and a loopback HTTPS origin');

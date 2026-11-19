@@ -12,13 +12,18 @@ import type { NestExpressApplication } from '@nestjs/platform-express';
 import type { PrismaClient } from './generated/client.js';
 import { type IdentityProvider, SessionService } from './auth.js';
 import { AppError } from './errors.js';
-import { createTimeReminder, listReminders, readReminder, type ListOptions } from './repository.js';
-import { prepareReminder } from './reminders.js';
+import { listReminders, readReminder, type ListOptions } from './repository.js';
 import { invitationIdentity, invalidField, normalizeInvitationEmail, optionalId, parseInvitationCode, parseRevision, prepareRoleChange, record } from './household-rules.js';
 import { HouseholdRepository, type HouseholdEffects } from './households.js';
-import { HouseholdRateLimit, householdRuntimeDefaults, requestSource, type HouseholdConfig } from './household-runtime.js';
+import { HouseholdRateLimit, householdRuntimeDefaults, requestSource, startWorkMaintenance, type HouseholdConfig } from './household-runtime.js';
 import type { SyntheticAccount } from './provider.js';
 import { catalog, prepareHouseholdSettings, prepareUserSettings } from './settings.js';
+import { DeleteJournal } from './delete-journal.js';
+import { WorkService } from './work-service.js';
+import { actionInput, createWorkInput, editWorkInput, lifecycleInput } from './work-input.js';
+import { listHistory, listOccurrences } from './work-queries.js';
+import { workEffects } from './work-effects.js';
+import type { InstallationPlanParticipant } from './work-scheduling.js';
 
 const services = Symbol('U1 services');
 const challengeName = '__Host-notify-login';
@@ -37,11 +42,15 @@ export interface AppOptions {
   localSignIn?: (nonce: string, account?: SyntheticAccount) => { firebaseToken: string; googleToken: string };
   householdConfig?: HouseholdConfig;
   householdEffects?: HouseholdEffects;
+  deleteJournalPath?: string;
+  workPlanPort?: InstallationPlanParticipant;
+  workLog?: (event: Record<string, unknown>) => void;
+  workMaintenance?: boolean;
   trustedProxy?: boolean;
   log?: (record: { requestId: string; route: string; status: number; durationMs: number; code?: string }) => void;
 }
 type Services = AppOptions & {
-  auth: SessionService; households: HouseholdRepository; limit: HouseholdRateLimit; householdConfig: HouseholdConfig;
+  auth: SessionService; households: HouseholdRepository; limit: HouseholdRateLimit; householdConfig: HouseholdConfig; work: WorkService;
 };
 
 function bearer(req: Request) {
@@ -263,14 +272,54 @@ class CoreController {
 
   @Get('households/:householdId/reminders/:reminderId')
   async detail(@Req() request: Request, @Param('householdId') home: string, @Param('reminderId') id: string) {
-    const who = await this.runtime.auth.principal(bearer(request), cookie(request, sessionName));
-    return readReminder(this.runtime.db, home, who.userId, id);
+    const who = await this.principal(request);
+    await this.runtime.work.advance(home, id, who.userId);
+    return readReminder(this.runtime.db, home, who.userId, id, this.runtime.clock?.());
   }
 
   @Post('households/:householdId/reminders')
   async add(@Req() request: Request, @Param('householdId') home: string, @Body() body: unknown) {
-    const who = await this.runtime.auth.principal(bearer(request), cookie(request, sessionName));
-    return createTimeReminder(this.runtime.db, home, who.userId, idempotency(request), prepareReminder(body, who.userId));
+    const who = await this.principal(request);
+    return this.runtime.work.add(home, who.userId, idempotency(request), createWorkInput(body, who.userId));
+  }
+
+  @Patch('households/:householdId/reminders/:reminderId')
+  async edit(@Req() request: Request, @Param('householdId') home: string, @Param('reminderId') id: string, @Body() body: unknown) {
+    const who = await this.principal(request);
+    return this.runtime.work.edit(home, who.userId, id, idempotency(request), editWorkInput(body));
+  }
+
+  @Post('households/:householdId/reminders/:reminderId/lifecycle')
+  @HttpCode(200)
+  async lifecycle(@Req() request: Request, @Param('householdId') home: string, @Param('reminderId') id: string, @Body() body: unknown) {
+    const who = await this.principal(request);
+    return this.runtime.work.lifecycle(home, who.userId, id, idempotency(request), lifecycleInput(body));
+  }
+
+  @Delete('households/:householdId/reminders/:reminderId')
+  @HttpCode(204)
+  async deleteWork(@Req() request: Request, @Param('householdId') home: string, @Param('reminderId') id: string) {
+    const who = await this.principal(request);
+    await this.runtime.work.delete(home, who.userId, id, idempotency(request), parseRevision(request.get('if-match')));
+  }
+
+  @Get('households/:householdId/reminders/:reminderId/occurrences')
+  async occurrences(@Req() request: Request, @Param('householdId') home: string, @Param('reminderId') id: string, @Query() query: Record<string, unknown>) {
+    const who = await this.principal(request);
+    return listOccurrences(this.runtime.db, home, who.userId, id, query, this.runtime.work.clock());
+  }
+
+  @Post('households/:householdId/occurrences/:occurrenceId/actions')
+  @HttpCode(200)
+  async action(@Req() request: Request, @Param('householdId') home: string, @Param('occurrenceId') id: string, @Body() body: unknown) {
+    const who = await this.principal(request);
+    return this.runtime.work.occurrenceAction(home, who.userId, id, idempotency(request), actionInput(body));
+  }
+
+  @Get('households/:householdId/history')
+  async history(@Req() request: Request, @Param('householdId') home: string, @Query() query: Record<string, unknown>) {
+    const who = await this.principal(request);
+    return listHistory(this.runtime.db, home, who.userId, query);
   }
 
   @All('{*unknown}')
@@ -280,11 +329,14 @@ class CoreController {
 }
 
 export async function createApp(options: AppOptions) {
+  const journal = options.deleteJournalPath ? await DeleteJournal.open(options.db, options.deleteJournalPath) : undefined;
+  const work = new WorkService(options.db, options.clock, options.workPlanPort, journal, options.workLog);
   @Module({
     controllers: [CoreController],
     providers: [{ provide: services, useValue: {
       ...options, auth: new SessionService(options.db, options.provider, options.clock),
-      households: new HouseholdRepository(options.db, options.origin, options.clock, options.householdEffects),
+      households: new HouseholdRepository(options.db, options.origin, options.clock, workEffects(options.workPlanPort, options.householdEffects)),
+      work,
       householdConfig: options.householdConfig ?? householdRuntimeDefaults,
       limit: new HouseholdRateLimit(options.clock ? () => options.clock!().getTime() : undefined),
     } }],
@@ -294,6 +346,11 @@ export async function createApp(options: AppOptions) {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: false, abortOnError: false, httpsOptions: options.tls,
   });
+  if (journal || options.workMaintenance) {
+    const stop = options.workMaintenance ? startWorkMaintenance(work, 60_000) : undefined;
+    const close = app.close.bind(app);
+    app.close = async () => { try { await stop?.(); await close(); } finally { journal?.close(); } };
+  }
   const express = app.getHttpAdapter().getInstance();
   express.disable('x-powered-by');
   app.setGlobalPrefix('api/v1');
@@ -333,7 +390,7 @@ export async function createApp(options: AppOptions) {
   if (options.webRoot && existsSync(join(options.webRoot, 'index.html'))) {
     const root = options.webRoot;
     app.useStaticAssets(root, { index: false });
-    express.get(['/', '/reminders', '/reminders/new', '/invite', '/settings', '/settings/household', '/settings/personal', '/settings/installation', '/household', '/household/members', '/household/invitations'], (_req: Request, response: Response) => {
+    express.get(['/', '/reminders', '/reminders/:reminderId', '/reminders/:reminderId/edit', '/invite', '/settings', '/settings/household', '/settings/personal', '/settings/installation', '/household', '/household/members', '/household/invitations'], (_req: Request, response: Response) => {
       response.sendFile(join(root, 'index.html'));
     });
   }

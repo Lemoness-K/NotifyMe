@@ -14,11 +14,11 @@ header, .section-title, .form-actions {
   justify-content: space-between;
   gap: .75rem;
 }
-h1, h2, h3 { line-height: 1.25; overflow-wrap: anywhere; }
+h1, h2, h3, h4 { line-height: 1.25; overflow-wrap: anywhere; }
 h1 { font-size: clamp(1.75rem, 6vw, 2.5rem); }
 .panel { padding: clamp(.75rem, 4vw, 1.5rem); border: 1px solid #becdcb; background: #fff; border-radius: .75rem; }
 .reminders { padding: 0; display: grid; gap: .75rem; list-style: none; }
-.reminders h3, .reminders p { margin-block: 0 .5rem; }
+.reminders h3, .reminders h4, .reminders p { margin-block: 0 .5rem; }
 .original { white-space: pre-wrap; overflow-wrap: anywhere; }
 time, small { color: #35534f; overflow-wrap: anywhere; }
 label { display: grid; min-width: 0; gap: .35rem; margin-top: 1rem; }
@@ -44,3 +44,25 @@ nav { display: flex; flex-wrap: wrap; gap: .75rem; }
 .management-list { padding: 0; list-style: none; }
 .management-list li { border-block-end: 1px solid #becdcb; padding-block: .75rem; overflow-wrap: anywhere; }
 .management-list li .form-actions { margin-top: .5rem; }
+.work-options { margin-top: 1.25rem; }
+.work-options summary { cursor: pointer; padding-block: .5rem; }
+.work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: .75rem; }
+.work-days { display: flex; flex-wrap: wrap; gap: .75rem; }
+.work-days label, .check-row { display: flex; align-items: center; gap: .5rem; }
+.work-days input, .check-row input { width: auto; }
+.work-badge { display: inline-block; margin-inline-end: .6rem; padding: .15rem .55rem; border: 1px solid #71928d; border-radius: .4rem; }
+.work-metadata { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .25rem .75rem; overflow-wrap: anywhere; }
+.work-metadata dt { font-weight: 600; }
+.work-metadata dd { margin: 0; }
+.work-state-list { display: flex; flex-wrap: wrap; gap: .35rem .9rem; list-style: none; padding: 0; }
+.work-state-list [aria-current] { font-weight: 700; text-decoration: underline; }
+.list-view { max-width: 24rem; }
+.work-list { container-type: inline-size; }
+.work-views { display: none; flex-wrap: wrap; gap: .5rem; }
+.work-views [aria-pressed="true"] { border: 2px solid #175948; }
+@container (min-width: 33rem) {
+  .work-views { display: flex; }
+  .list-view { display: none; }
+}
+fieldset { min-width: 0; margin-top: 1rem; }
+[role="alertdialog"] { margin-top: 1.5rem; padding: 1rem; border: 2px solid #8e281d; border-radius: .35rem; }

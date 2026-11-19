@@ -3,6 +3,7 @@ import { isIP } from 'node:net';
 import type { Request } from 'express';
 import { AppError } from './errors.js';
 import type { HouseholdRepository } from './households.js';
+import type { WorkService } from './work-service.js';
 
 export type HouseholdConfig = {
   inviteIpPerMinute: number;
@@ -83,6 +84,59 @@ export function startInviteCleanup(
   const timer = setInterval(run, intervalMs);
   timer.unref();
   run();
+  return async () => {
+    stopped = true;
+    clearInterval(timer);
+    await running;
+  };
+}
+
+export function startWorkMaintenance(work: WorkService, intervalMs: number) {
+  let running: Promise<void> | undefined;
+  let stopped = false;
+  async function run() {
+    const runId = randomUUID();
+    const started = performance.now();
+    let count = 0;
+    let after = '';
+    try {
+      while (!stopped) {
+        const rows = await work.db.reminder.findMany({
+          where: { id: { gt: after }, lifecycle: 'ACTIVE', pausedAt: null, recurrenceRules: { some: { effectiveTo: null } } },
+          select: { id: true, householdId: true }, orderBy: { id: 'asc' }, take: 100,
+        });
+        for (const row of rows) {
+          if (stopped) break;
+          try { await work.advance(row.householdId, row.id); count++; }
+          catch { work.log?.({ event: 'RECURRENCE_ADVANCE_FAILED', runId }); }
+        }
+        if (rows.length < 100) break;
+        after = rows[rows.length - 1].id;
+        await new Promise<void>((resolve) => setImmediate(resolve));
+      }
+      if (!stopped) {
+        const now = work.clock();
+        await work.db.reminderFeedEntry.deleteMany({ where: { expiresAt: { lte: now } } });
+        if (work.journal) {
+          const reconciled = await work.reconcileCommittedDeletes();
+          const unsettled = work.journal.unsettled(now);
+          const pruned = work.journal.prune(now);
+          if (unsettled.count) work.log?.({ event: 'DELETE_EVIDENCE_PENDING', runId, ...unsettled });
+          if (pruned.count) work.log?.({ event: 'DELETE_EVIDENCE_RETENTION_ADVANCED', runId, ...pruned });
+          if (reconciled) work.log?.({ event: 'DELETE_EVIDENCE_RECONCILED', runId, count: reconciled });
+        }
+      }
+      work.log?.({ event: 'WORK_MAINTENANCE', runId, count, durationMs: Math.round(performance.now() - started) });
+    } catch {
+      work.log?.({ event: 'WORK_MAINTENANCE_FAILED', runId, count });
+    }
+  }
+  function tick() {
+    if (!running) running = run().finally(() => { running = undefined; });
+  }
+  const timer = setInterval(tick, intervalMs);
+  timer.unref();
+  tick();
   return async () => {
     stopped = true;
     clearInterval(timer);

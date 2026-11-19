@@ -12,7 +12,10 @@ export async function openStore(path: string, options: { migrate?: boolean } = {
     try {
       file.exec('PRAGMA foreign_keys = ON; BEGIN');
       const hasTable = file.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?");
-      for (const [sentinel, migration] of [['User', '202611180001_u1'], ['Invitation', '202611190001_u2']]) {
+      for (const [sentinel, migration] of [
+        ['User', '202611180001_u1'], ['Invitation', '202611190001_u2'], ['DeletionCommit', '202611190002_u3'],
+        ['DeletedCreateKey', '202611190003_u3_delete_replay'],
+      ]) {
         if (!hasTable.get(sentinel)) {
           file.exec(readFileSync('prisma/migrations/' + migration + '/migration.sql', 'utf8'));
         }

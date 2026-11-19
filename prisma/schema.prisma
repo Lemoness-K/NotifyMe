@@ -155,45 +155,170 @@ model Reminder {
   requesterId   String
   revision      Int        @default(1)
   lifecycle     String     @default("ACTIVE")
+  archivedAt    DateTime?
+  verificationEnabled Boolean @default(false)
+  verifierUserId String?
+  pausedAt      DateTime?
   createdAt     DateTime   @default(now())
   household     Household  @relation(fields: [householdId], references: [id], onDelete: Restrict)
   creator       Membership @relation("ReminderCreator", fields: [householdId, createdBy], references: [householdId, userId], onDelete: Restrict)
   requester     Membership @relation("ReminderRequester", fields: [householdId, requesterId], references: [householdId, userId], onDelete: Restrict)
   assignments   Assignment[]
   trigger       Trigger?
-  occurrence    Occurrence?
+  occurrences   Occurrence[]
+  recurrenceRules RecurrenceRule[]
+  workAudit     ReminderAudit[]
+  commandResults ReminderCommandResult[]
   requestResults RequestResult[]
   @@unique([id, householdId])
   @@index([householdId, createdAt, id])
   @@index([householdId, requesterId])
+  @@index([householdId, lifecycle, archivedAt, id])
 }
 
 model Assignment {
+  id          String @id @default(uuid())
   householdId String
   reminderId  String
   userId      String
   endedAt     DateTime?
+  assignedAt  DateTime?
   reminder    Reminder   @relation(fields: [reminderId, householdId], references: [id, householdId], onDelete: Cascade)
   assignee    Membership @relation(fields: [householdId, userId], references: [householdId, userId], onDelete: Restrict)
-  @@id([reminderId, userId])
+  @@index([reminderId, userId, endedAt])
   @@index([householdId, userId])
 }
 
 model Trigger {
   reminderId  String   @id
   kind        String   @default("TIME")
-  scheduledAt DateTime
-  timeZone    String
+  scheduledAt DateTime?
+  timeZone    String?
+  latitude    Float?
+  longitude   Float?
+  placeName   String?
+  radiusM     Int?
+  event       String?
+  durationMin Int?
   reminder    Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
 }
 
 model Occurrence {
   id          String   @id @default(uuid())
-  reminderId  String   @unique
+  reminderId  String
+  occurrenceKey String @default("initial")
+  recurrenceRuleId String?
   state       String   @default("PENDING")
-  scheduledAt DateTime
+  scheduledAt DateTime?
+  stateAt     DateTime @default(now())
+  reason      String?
   revision    Int      @default(1)
   reminder    Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+  recurrenceRule RecurrenceRule? @relation(fields: [recurrenceRuleId], references: [id], onDelete: SetNull)
+  override    OccurrenceOverride?
+  completions Completion[]
+  @@unique([reminderId, occurrenceKey])
+  @@index([reminderId, state, scheduledAt, id])
+  @@index([reminderId, state, stateAt, id])
+}
+
+model RecurrenceRule {
+  id            String @id @default(uuid())
+  reminderId    String
+  effectiveFrom String
+  effectiveTo   String?
+  definition    String
+  generatedThrough String?
+  reminder      Reminder @relation(fields: [reminderId], references: [id], onDelete: Cascade)
+  occurrences   Occurrence[]
+  @@index([reminderId, effectiveFrom])
+}
+
+model OccurrenceOverride {
+  occurrenceId String @id
+  patch        String
+  occurrence   Occurrence @relation(fields: [occurrenceId], references: [id], onDelete: Cascade)
+}
+
+model Completion {
+  id            String @id @default(uuid())
+  occurrenceId  String
+  submittedBy   String
+  verifierUserId String?
+  state         String
+  requestedAt   DateTime
+  respondedAt   DateTime?
+  responseActorId String?
+  reason        String?
+  occurrence    Occurrence @relation(fields: [occurrenceId], references: [id], onDelete: Cascade)
+  @@index([occurrenceId, requestedAt, id])
+  @@index([verifierUserId, state])
+}
+
+model ReminderAudit {
+  id            String @id @default(uuid())
+  householdId   String
+  reminderId    String
+  occurrenceId  String?
+  actorId       String
+  action        String
+  stateAt       DateTime
+  changes       String
+  reminder      Reminder @relation(fields: [reminderId, householdId], references: [id, householdId], onDelete: Cascade)
+  @@index([householdId, stateAt, id])
+  @@index([reminderId, stateAt, id])
+}
+
+model ReminderCommandResult {
+  householdId  String
+  actorId      String
+  operation    String
+  key          String
+  digest       String
+  reminderId   String
+  result       String
+  reminder     Reminder @relation(fields: [reminderId, householdId], references: [id, householdId], onDelete: Cascade)
+  @@id([householdId, actorId, operation, key])
+  @@index([reminderId])
+}
+
+model HouseholdFeedCursor {
+  householdId String @id
+  revision    Int    @default(0)
+}
+
+model ReminderFeedEntry {
+  householdId String
+  revision    Int
+  reminderId  String
+  kind        String
+  changedAt   DateTime
+  expiresAt   DateTime?
+  @@id([householdId, revision])
+  @@index([expiresAt])
+  @@index([householdId, reminderId])
+}
+
+model DeletionCommit {
+  requestId   String @id
+  householdId String
+  reminderId  String
+  revision    Int
+  committedAt DateTime
+  inputDigest String?
+  @@index([householdId, reminderId])
+}
+
+model DeletedCreateKey {
+  scopeDigest String
+  format      String
+  inputDigest String
+  @@id([scopeDigest, format])
+}
+
+model RecoveryJournalIdentity {
+  id    Int @id
+  token String
 }
 
 model RequestResult {

@@ -12,6 +12,8 @@ try {
     await db.invitation.count();
     const app = await createApp({
       ...settings, db, webRoot: resolve('dist/web'),
+      workMaintenance: true,
+      workLog: (record) => process.stdout.write(JSON.stringify(record) + '\n'),
       log: (record) => process.stdout.write(JSON.stringify(record) + '\n'),
     });
     await app.listen(settings.port, settings.host);

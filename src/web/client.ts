@@ -7,10 +7,18 @@ export type Role = 'ADMIN' | 'MEMBER';
 export type Me = { userId: string; householdId?: string; defaultTimeZone?: string; householdRole?: Role };
 export type Preferences = { revision: number; locale?: 'ko-KR' | 'en-US'; timeZone?: string };
 type LoginProof = { firebaseToken: string; googleToken: string };
+type ReminderTrigger = { kind?: 'TIME' | 'LOCATION'; scheduledAt?: string; timeZone?: string; placeName?: string; latitude?: number;
+  longitude?: number; radiusM?: number; durationMinutes?: number; event?: string };
 export type Reminder = {
-  reminderId: string; title: string; description?: string;
-  trigger: { scheduledAt: string; timeZone: string };
+  reminderId: string; title: string; description?: string; trigger: ReminderTrigger;
+  assigneeIds?: string[]; requesterId?: string; revision?: number; lifecycle?: string; pendingVerificationCount?: number;
+  latestOccurrenceState?: string;
+  verification?: { enabled: boolean; verifierId?: string };
+  recurrence?: { frequency: string; interval?: number; endOn?: string; weekdays?: string[]; monthDays?: number[]; lastDayOfMonth?: boolean };
+  currentOccurrence?: WorkOccurrence | null;
 };
+export type WorkOccurrence = { occurrenceId: string; revision: number; scheduledAt: string | null; state: string; allowedActions?: string[];
+  override?: { title?: string; description?: string; trigger?: ReminderTrigger } };
 
 export class ApiError extends Error {
   constructor(

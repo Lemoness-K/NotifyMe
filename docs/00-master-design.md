@@ -131,7 +131,7 @@ Notify Me
 │   ├── F-REM-006 연기(Snooze/Reschedule) [후속 후보]
 │   ├── F-REM-007 회차 진행 상태 뱃지와 이력 진입 [MVP, D-035, D-036]
 │   ├── F-REM-008 Reminder·Occurrence 상태 흐름 보기 [MVP, D-035]
-│   └── F-REM-009 선택적 완료 검증 [MVP, Q-063, D-091]
+│   └── F-REM-009 선택적 완료 검증 [MVP, Q-063, D-091, D-094~D-096]
 ├── F-LIST 목록과 탐색
 │   ├── F-LIST-001 오늘 [MVP]
 │   ├── F-LIST-002 예정 [MVP]

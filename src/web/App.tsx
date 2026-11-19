@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link, Route, Routes, useLocation, useNavigate } from 'react-router';
-import { localToUtc } from '../server/time.js';
 import { api, ApiError, openSession, type ClientConfig, type Me, type Preferences, type Reminder } from './client.js';
 import { errorText, localeFor, retryAfterText, words } from './messages.js';
 import { HouseholdPreferences, Invitations, Members, PersonalPreferences, SettingsHome } from './Settings.js';
+import { WorkBadge, WorkOptions, workFormFields, type TriggerMode } from './work-form.js';
+import { workErrorText, workLabel, workWords } from './work-messages.js';
+import { WorkDetail, WorkHistory, WorkSchedule } from './work-pages.js';
 
 export { errorText, localeFor };
 type Locale = ReturnType<typeof localeFor>;
@@ -161,6 +163,8 @@ export function App() {
     <header><h1>Notify Me</h1>
       {session && <nav aria-label={text.navigation}>
         {profile?.householdId && <Link to="/reminders">{text.reminders}</Link>}
+        {profile?.householdId && <Link to="/reminders/history">{workWords[locale].history}</Link>}
+        {profile?.householdId && <Link to="/reminders/archive">{workWords[locale].archive}</Link>}
         <Link to="/settings">{text.settings}</Link>
       </nav>}
       {session && <button type="button" onClick={() => void logout()} disabled={busy}>{text.logout}</button>}
@@ -188,6 +192,12 @@ export function App() {
         <Route path="/household/invitations" element={<Invitations session={viewSession} locale={locale} />} />
         <Route path="/reminders/new" element={viewSession.me.householdId
           ? <ReminderForm session={viewSession} locale={locale} /> : <p role="alert">{text.noHousehold}</p>} />
+        {viewSession.me.householdId && <>
+          <Route path="/reminders/history" element={<WorkHistory session={viewSession} locale={locale} displayTimeZone={preferences?.timeZone} />} />
+          <Route path="/reminders/archive" element={<ReminderList key="archive" archived session={viewSession} locale={locale} displayTimeZone={preferences?.timeZone} />} />
+          <Route path="/reminders/:reminderId" element={<WorkDetail session={viewSession} locale={locale} displayTimeZone={preferences?.timeZone} />} />
+          <Route path="/reminders/:reminderId/edit" element={<WorkDetail edit session={viewSession} locale={locale} displayTimeZone={preferences?.timeZone} />} />
+        </>}
         <Route path="*" element={viewSession.me.householdId
           ? <ReminderList session={viewSession} locale={locale} displayTimeZone={preferences?.timeZone} />
           : <p role="alert">{text.noHousehold}</p>} />
@@ -199,9 +209,12 @@ function listPath(householdId: string) {
   return '/households/' + encodeURIComponent(householdId) + '/reminders';
 }
 
-function ReminderList({ session, locale, displayTimeZone }: PageProps & { displayTimeZone?: string }) {
+function ReminderList({ session, locale, displayTimeZone, archived }: PageProps & { displayTimeZone?: string; archived?: boolean }) {
   const text = words[locale];
+  const work = workWords[locale];
+  const [view, setView] = useState('MINE');
   const [reminders, setReminders] = useState<Reminder[]>([]);
+  const [sections, setSections] = useState<Record<string, string>>({});
   const [cursor, setCursor] = useState<string>();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
@@ -210,15 +223,18 @@ function ReminderList({ session, locale, displayTimeZone }: PageProps & { displa
   const requestFromSession = session.request;
 
   async function load(next?: string, signal?: AbortSignal) {
-    if (retryAt !== undefined && retryAt > Date.now()) return;
+    if (!signal && retryAt !== undefined && retryAt > Date.now()) return;
     setLoading(true);
     setError('');
     setRetryAt(undefined);
     try {
-      const suffix = next ? '?' + new URLSearchParams({ cursor: next }) : '';
-      const result = await requestFromSession<{ items: Reminder[]; nextCursor?: string }>(path + suffix);
+      const filters = new URLSearchParams(archived ? [['bucket', 'ARCHIVED']] : [['view', view]]);
+      if (next) filters.set('cursor', next);
+      const suffix = '?' + filters;
+      const result = await requestFromSession<{ items: Reminder[]; nextCursor?: string; sections?: Record<string, string> }>(path + suffix);
       if (!signal?.aborted) {
         setReminders((current) => next ? [...current, ...result.items] : result.items);
+        setSections((current) => next ? { ...current, ...result.sections } : result.sections ?? {});
         setCursor(result.nextCursor);
       }
     } catch (failure) {
@@ -232,28 +248,56 @@ function ReminderList({ session, locale, displayTimeZone }: PageProps & { displa
   }
   useEffect(() => {
     const request = new AbortController();
+    setReminders([]);
+    setSections({});
+    setCursor(undefined);
     void load(undefined, request.signal);
     return () => request.abort();
-  }, [path, requestFromSession]);
+  }, [path, requestFromSession, view, archived]);
 
-  return <section aria-labelledby="list-title">
-    <div className="section-title"><h2 id="list-title">{text.reminders}</h2>
-      <Link className="primary action" to="/reminders/new">{text.add}</Link>
+  const views = { MINE: work.mine, REQUESTED: work.requested, HOUSEHOLD: work.household };
+  const groups = new Map<string, Reminder[]>();
+  for (const item of reminders) {
+    const section = sections[item.reminderId] ?? '';
+    const group = groups.get(section);
+    if (group) group.push(item);
+    else groups.set(section, [item]);
+  }
+
+  return <section aria-labelledby="list-title" className="work-list">
+    <div className="section-title"><h2 id="list-title">{archived ? work.archive : text.reminders}</h2>
+      {!archived && <Link className="primary action" to="/reminders/new">{text.add}</Link>}
     </div>
+    {!archived && <><div className="work-views" role="group" aria-label={text.reminders}>
+      {Object.entries(views).map(([value, label]) => <button type="button" key={value} aria-pressed={view === value}
+        onClick={() => setView(value)}>{label}</button>)}</div>
+    <label className="list-view">{text.reminders}
+      <select value={view} onChange={(event) => setView(event.currentTarget.value)}>
+        {Object.entries(views).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+      </select></label></>}
     {error && <p role="alert">{errorText(locale, error)}{' '}
       {retryAt !== undefined && retryAfterText(locale, retryAt)}{' '}
       <button type="button" onClick={() => void load(cursor)}>{text.retry}</button></p>}
     {loading && <p role="status">{text.loading}</p>}
     {!error && !loading && reminders.length === 0 && <p>{text.empty}</p>}
-    <ul className="reminders">{reminders.map((item) => <li className="panel" key={item.reminderId}>
-      <h3>{item.title}</h3>
-      <time dateTime={item.trigger.scheduledAt}>{new Intl.DateTimeFormat(locale, {
-        timeZone: displayTimeZone ?? item.trigger.timeZone, dateStyle: 'medium', timeStyle: 'short',
-      }).format(new Date(item.trigger.scheduledAt))} · {displayTimeZone ?? item.trigger.timeZone}</time>
-      {item.description !== undefined && <p className="original">{item.description}</p>}
-    </li>)}</ul>
+    {Array.from(groups, ([section, rows]) => <div key={section}>
+      {section && <h3>{workLabel(locale, section)}</h3>}
+      <ul className="reminders">{rows.map((item) => <li className="panel" key={item.reminderId}>
+        {section ? <h4>{reminderTitle(item)}</h4> : <h3>{reminderTitle(item)}</h3>}
+        <WorkSchedule item={item} locale={locale} displayTimeZone={displayTimeZone} />
+        {item.currentOccurrence && <WorkBadge locale={locale} state={item.currentOccurrence.state} />}
+        {!!item.pendingVerificationCount && <span className="work-badge">{work.pending} ({item.pendingVerificationCount})</span>}
+        {(item.currentOccurrence?.override?.description ?? item.description) !== undefined &&
+          <p className="original">{item.currentOccurrence?.override?.description ?? item.description}</p>}
+      </li>)}</ul>
+    </div>)}
     {cursor && !error && <button type="button" disabled={loading} onClick={() => void load(cursor)}>{text.more}</button>}
   </section>;
+}
+
+function reminderTitle(item: Reminder) {
+  const title = item.currentOccurrence?.override?.title ?? item.title;
+  return item.revision === undefined ? title : <Link to={'/reminders/' + encodeURIComponent(item.reminderId)}>{title}</Link>;
 }
 
 function ReminderForm({ session, locale }: PageProps) {
@@ -261,7 +305,9 @@ function ReminderForm({ session, locale }: PageProps) {
   const zone = session.me.defaultTimeZone ?? 'Asia/Seoul';
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const [errorDetails, setErrorDetails] = useState<Record<string, unknown>>();
   const [busy, setBusy] = useState(false);
+  const [mode, setMode] = useState<TriggerMode>('TIME');
   const [draft] = useState(() => Array.from(session.pendingCreates.values()).at(-1));
   const [retryAt, setRetryAt] = useState(() => {
     const deadline = draft?.retryAt;
@@ -285,14 +331,15 @@ function ReminderForm({ session, locale }: PageProps) {
       return;
     }
     const localTime = String(data.get('scheduledAt') ?? '');
-    let scheduledAt: string;
-    try { scheduledAt = localToUtc(localTime, zone); }
-    catch {
-      setError('TIME_REQUIRED');
-      (event.currentTarget.elements.namedItem('scheduledAt') as HTMLInputElement).focus();
+    let payload: ReturnType<typeof workFormFields>;
+    try { payload = workFormFields(data, zone, mode); }
+    catch (failure) {
+      setError(failure instanceof ApiError ? failure.code : 'TIME_REQUIRED');
+      const control = event.currentTarget.elements.namedItem('scheduledAt');
+      if (control instanceof HTMLInputElement) control.focus();
       return;
     }
-    const body = JSON.stringify({ title, description, trigger: { kind: 'TIME', scheduledAt, timeZone: zone } });
+    const body = JSON.stringify({ title, description, ...payload });
     const pending = session.pendingCreates;
     const attempt: CreateAttempt = pending.get(body) ?? { key: crypto.randomUUID(), title, description, localTime };
     if (attempt.retryAt !== undefined && attempt.retryAt > Date.now()) {
@@ -304,6 +351,7 @@ function ReminderForm({ session, locale }: PageProps) {
     const clear = () => { if (pending.get(body) === attempt) pending.delete(body); };
     setBusy(true);
     setError('');
+    setErrorDetails(undefined);
     setRetryAt(undefined);
     try {
       await session.request(listPath(session.me.householdId ?? ''), { method: 'POST', body }, attempt.key);
@@ -317,6 +365,7 @@ function ReminderForm({ session, locale }: PageProps) {
         attempt.retryAt = Math.max(attempt.retryAt ?? 0, apiFailure.retryAt);
       }
       if (!mounted.current) return;
+      setErrorDetails(apiFailure?.details);
       if (attempt.retryAt !== undefined && attempt.retryAt > Date.now()) setRetryAt(attempt.retryAt);
       if (failure instanceof ApiError && failure.field === 'title') setError('TITLE_REQUIRED');
       else if (failure instanceof ApiError && failure.field === 'trigger.scheduledAt') setError('TIME_REQUIRED');
@@ -328,16 +377,17 @@ function ReminderForm({ session, locale }: PageProps) {
   return <section className="panel">
     <h2>{text.add}</h2>
     {(error || retryAt !== undefined) && <p id="form-error" role="alert">
-      {error && errorText(locale, error)}{error && retryAt !== undefined && ' '}
+      {error && workErrorText(locale, error, errorDetails)}{error && retryAt !== undefined && ' '}
       {retryAt !== undefined && retryAfterText(locale, retryAt)}
     </p>}
     <form onSubmit={(event) => void save(event)} noValidate>
       <label>{text.title}<input name="title" required maxLength={200} defaultValue={draft?.title} aria-invalid={error === 'TITLE_REQUIRED' || undefined}
         aria-describedby={error === 'TITLE_REQUIRED' ? 'form-error' : undefined} /></label>
       <label>{text.description}<textarea name="description" maxLength={4000} rows={4} defaultValue={draft?.description} /></label>
-      <label>{text.scheduledAt}<input name="scheduledAt" type="datetime-local" required defaultValue={draft?.localTime} aria-invalid={error === 'TIME_REQUIRED' || undefined}
+      {mode === 'TIME' && <><label>{text.scheduledAt}<input name="scheduledAt" type="datetime-local" required defaultValue={draft?.localTime} aria-invalid={error === 'TIME_REQUIRED' || undefined}
         aria-describedby={error === 'TIME_REQUIRED' ? 'form-error' : 'time-zone'} /></label>
-      <small id="time-zone">{zone}</small>
+      <small id="time-zone">{zone}</small></>}
+      <WorkOptions session={session} locale={locale} mode={mode} setMode={setMode} />
       <div className="form-actions">
         <button type="submit" className="primary" disabled={busy}>{busy ? text.loading : text.save}</button>
         <Link className="action" to="/reminders">{text.cancel}</Link>

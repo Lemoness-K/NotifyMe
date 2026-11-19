@@ -12,6 +12,9 @@ EnvironmentFile=/etc/notify-me/runtime.env
 ExecStart=/usr/bin/node /opt/notify-me/dist/server/main.js
 Restart=on-failure
 StateDirectory=notify-me
+StateDirectoryMode=0700
+Environment=NOTIFY_DELETE_JOURNAL_PATH=/var/lib/notify-me/delete-journal.sqlite
+UMask=0077
 NoNewPrivileges=yes
 PrivateTmp=yes
 ProtectSystem=strict
