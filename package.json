@@ -16,9 +16,12 @@
     "test:unit": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
+    "test:android:jvm": "./android/gradlew -p android/schedule-core test",
     "verify:u1": "npm run typecheck && npm run build && npm run test:coverage && npm run test:e2e"
   },
   "dependencies": {
+    "@capacitor/android": "8.6.2",
+    "@capacitor/core": "8.6.2",
     "@js-temporal/polyfill": "^0.5.1",
     "@nestjs/common": "11.2.10",
     "@nestjs/core": "11.2.10",
@@ -35,6 +38,7 @@
     "rxjs": "^7.8.0"
   },
   "devDependencies": {
+    "@capacitor/cli": "8.6.2",
     "@playwright/test": "^1.60.0",
     "@types/express": "^5.0.0",
     "@types/jsdom": "^30.0.0",
