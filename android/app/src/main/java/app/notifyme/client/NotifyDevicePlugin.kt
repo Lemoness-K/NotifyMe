@@ -8,6 +8,7 @@ import android.provider.Settings
 import androidx.core.app.ActivityCompat
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
+import androidx.webkit.WebViewFeature
 import com.getcapacitor.JSObject
 import com.getcapacitor.Plugin
 import com.getcapacitor.PluginCall
@@ -19,9 +20,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 
 @CapacitorPlugin(name = "NotifyDevice")
 class NotifyDevicePlugin : Plugin() {
@@ -29,15 +30,20 @@ class NotifyDevicePlugin : Plugin() {
     private val schedule get() = DeviceSchedule.get(context)
     private var signingIn = false
 
-    override fun shouldOverrideLoad(url: Uri): Boolean? =
-        if (local(url)) null else true
+    override fun shouldOverrideLoad(url: Uri): Boolean? {
+        if (local(url)) return null
+        if (url.scheme == "https" && url.host != null) {
+            runCatching { activity.startActivity(Intent(Intent.ACTION_VIEW, url).addCategory(Intent.CATEGORY_BROWSABLE)) }
+        }
+        return true
+    }
 
     private fun local(url: Uri): Boolean = url.scheme == "https" && url.encodedAuthority == "localhost"
 
     private fun safely(call: PluginCall, action: suspend () -> JSObject?) {
         activity.runOnUiThread {
             val source = bridge.webView.url
-            if (source == null || !local(Uri.parse(source))) {
+            if (!WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER) || source == null || !local(Uri.parse(source))) {
                 call.reject("Bridge origin denied", "ORIGIN_DENIED")
                 return@runOnUiThread
             }
@@ -46,7 +52,12 @@ class NotifyDevicePlugin : Plugin() {
                     val payload = action()
                     if (payload == null) call.resolve() else call.resolve(payload)
                 } catch (failure: ApiFailure) {
-                    call.reject("Request failed", failure.code, JSObject(failure.payload.toString()))
+                    val data = JSObject().apply {
+                        put("status", failure.status)
+                        put("body", failure.payload)
+                        put("retryAfter", failure.retryAfter)
+                    }
+                    call.reject("Request failed", failure.code, data)
                 } catch (_: Exception) {
                     call.reject("Device operation unavailable", "DEVICE_UNAVAILABLE")
                 }
@@ -63,11 +74,13 @@ class NotifyDevicePlugin : Plugin() {
         val path = requireNotNull(call.getString("path"))
         val body = call.getObject("body")
         val key = call.getString("key")
+        val revision = call.getString("revision")
         require(path.length <= 2_048 && (key == null || key.matches(Regex("[A-Za-z0-9._-]{1,128}"))))
+        require(revision == null || revision.matches(Regex("[0-9]{1,10}|\"[0-9]{1,10}\"")))
         require(method != "GET" || body == null)
         try {
-            val response = schedule.api.webRequest(method, path, body, key)
-            JSObject().apply { put("status", response.status); put("body", response.body) }
+            val response = schedule.api.webRequest(method, path, body, key, revision)
+            JSObject().apply { put("status", response.status); put("body", response.payload) }
         } finally {
             if (method == "DELETE" && path == "/sessions/current") schedule.signOut()
         }
@@ -85,6 +98,7 @@ class NotifyDevicePlugin : Plugin() {
             if (api.hasSession()) schedule.signOut()
             val clientId = api.clientId()
             val challenge = api.challenge()
+            val receivedAt = android.os.SystemClock.elapsedRealtime()
             val proof = withContext(Dispatchers.Main) {
                 val option = GetGoogleIdOption.Builder().setServerClientId(clientId)
                     .setFilterByAuthorizedAccounts(false).setNonce(challenge.nonce).build()
@@ -93,7 +107,14 @@ class NotifyDevicePlugin : Plugin() {
                 check(credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)
                 GoogleIdTokenCredential.createFrom(credential.data).idToken
             }
-            api.signIn(challenge, proof)
+            delay((1_030 - (android.os.SystemClock.elapsedRealtime() - receivedAt)).coerceAtLeast(0))
+            val invitation = call.getObject("invitation")
+            if (invitation != null) {
+                require(invitation.getString("code").matches(Regex("[A-Za-z0-9_-]{32}")))
+                require(invitation.getString("key").matches(Regex("[A-Za-z0-9._-]{1,128}")))
+            }
+            api.signIn(challenge, proof, invitation)
+            applyScope()
             JSObject(schedule.identity().toString())
         } finally {
             withContext(Dispatchers.Main) { signingIn = false }
@@ -101,12 +122,20 @@ class NotifyDevicePlugin : Plugin() {
     }
 
     @PluginMethod
+    fun clearSession(call: PluginCall) = safely(call) { schedule.clearCredentials(); null }
+
+    @PluginMethod
     fun bind(call: PluginCall) = safely(call) {
-        val identity = schedule.api.userRequest("GET", "/me").body
-        schedule.scope(identity.getString("userId"), identity.optString("householdId").ifEmpty { null })
+        applyScope()
         ScheduleWork.periodic(context)
         ScheduleWork.enqueue(context, "recover")
+        schedule.refresh()
         JSObject(schedule.identity().toString())
+    }
+
+    private fun applyScope() {
+        val identity = schedule.api.userRequest("GET", "/me").body
+        schedule.scope(identity.getString("userId"), identity.optString("householdId").ifEmpty { null })
     }
 
     @PluginMethod
@@ -146,7 +175,7 @@ class NotifyDevicePlugin : Plugin() {
 
     override fun handleOnResume() {
         ScheduleWork.enqueue(context, "recover")
-        notifyListeners("capabilitiesChanged", JSONObject().let { JSObject(it.toString()) })
+        notifyListeners("capabilitiesChanged", JSObject())
     }
 
     override fun handleOnDestroy() { jobs.cancel() }

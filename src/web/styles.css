@@ -66,3 +66,8 @@ nav { display: flex; flex-wrap: wrap; gap: .75rem; }
 }
 fieldset { min-width: 0; margin-top: 1rem; }
 [role="alertdialog"] { margin-top: 1.5rem; padding: 1rem; border: 2px solid #8e281d; border-radius: .35rem; }
+.installation-options { list-style: none; display: grid; gap: .75rem; padding: 0; }
+.installation-options li { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; justify-content: space-between; }
+.installation-options small { display: block; }
+.installation-options span, .location-confirm p { overflow-wrap: anywhere; min-inline-size: 0; }
+.location-capacity { margin-block: 1rem; }

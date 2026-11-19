@@ -26,7 +26,7 @@ function asError(failure: unknown) {
   return failure instanceof ApiError ? failure : new ApiError('UNAVAILABLE');
 }
 
-function useRead<T>(request: Session['request'], path?: string) {
+export function useRead<T>(request: Session['request'], path?: string) {
   const [data, setData] = useState<T>();
   const [error, setError] = useState<ApiError>();
   const [loading, setLoading] = useState(false);
@@ -59,12 +59,12 @@ function useRead<T>(request: Session['request'], path?: string) {
   return { data, setData, error, loading, load };
 }
 
-function useWrite(session: Session) {
+export function useWrite(session: Session) {
   const [error, setError] = useState<ApiError>();
   const [busy, setBusy] = useState(false);
   const inflight = useRef(false);
   async function submit<T>(
-    path: string, method: 'POST' | 'PATCH' | 'DELETE', body: unknown, onSuccess: (result: T) => void,
+    path: string, method: 'POST' | 'PATCH' | 'PUT' | 'DELETE', body: unknown, onSuccess: (result: T) => void,
     headers?: Record<string, string>,
   ) {
     if (inflight.current) return;
@@ -101,7 +101,7 @@ function useWrite(session: Session) {
   return { error, busy, submit, clearError: () => setError(undefined) };
 }
 
-function ErrorNotice({ locale, error, retry }: { locale: Locale; error?: ApiError; retry?: () => void }) {
+export function ErrorNotice({ locale, error, retry }: { locale: Locale; error?: ApiError; retry?: () => void }) {
   if (!error) return null;
   return <p role="alert">
     {errorText(locale, error.code)}{' '}

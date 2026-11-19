@@ -4,6 +4,7 @@ import { scheduleLocal } from '../server/recurrence.js';
 import type { PageProps } from './App.js';
 import { ApiError, type Reminder, type WorkOccurrence } from './client.js';
 import { errorText, retryAfterText, words } from './messages.js';
+import { CapacityAdjustment } from './InstallationSettings.js';
 import { WorkBadge, WorkOptions, workFormFields, type TriggerMode } from './work-form.js';
 import { workErrorText, workLabel, workWords } from './work-messages.js';
 
@@ -257,6 +258,7 @@ function EditWork({ session, locale, item }: PageProps & { item: Reminder }) {
   }
   return <section className="panel"><h2>{text.edit}</h2>
     {writer.error && <p role="alert">{workErrorText(locale, writer.error, writer.details)}{writer.retry && ' ' + retryAfterText(locale, writer.retry)}</p>}
+    {writer.error === 'GEOFENCE_CAPACITY_EXCEEDED' && <CapacityAdjustment session={session} locale={locale} details={writer.details} />}
     <form noValidate onSubmit={(event) => void save(event)}>
       <label>{label.title}<input name="title" maxLength={200} defaultValue={item.title} required /></label>
       <label>{label.description}<textarea name="description" defaultValue={item.description} maxLength={4000} rows={4} /></label>

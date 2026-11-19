@@ -27,6 +27,7 @@ export const householdDefaults = {
 const inviteLifetime = 24 * 60 * 60 * 1_000;
 
 export interface HouseholdEffects {
+  beforeRemoveTargets?(tx: Transaction, householdId: string, userId: string, at: Date): Promise<void>;
   // U3/U4 attach their persistent targets to the existing transaction.
   removeTargets?(tx: Transaction, householdId: string, userId: string, at: Date): Promise<void>;
   changeRadius?(tx: Transaction, householdId: string, actorId: string, radius: Radius, at: Date): Promise<void>;
@@ -296,6 +297,7 @@ export class HouseholdRepository {
         throw new AppError(422, 'INVALID_SUCCESSOR');
       }
       if (role === target.role) return recordResult(tx, requestScope, key, input, memberDto(target));
+      if (role === null) await this.effects.beforeRemoveTargets?.(tx, householdId, userId, now);
       const changed = await tx.membership.updateMany({
         where: { householdId, userId, revision, active: true },
         data: role === null ? { active: false, leftAt: now, removedByUserId: actorId, revision: { increment: 1 } } :

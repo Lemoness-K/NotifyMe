@@ -55,4 +55,13 @@ class ScheduleRulesTest {
         assertFalse(freshFull(next, next, authorized = false))
         assertFalse(requiresCleanup(next, next.copy(revision = 2)))
     }
+
+    @Test fun cleanupCommitsBeforeAnyAuthoritativeFullIsApplied() {
+        val pending = ScheduleVersion("next", "epoch-b", 4)
+        assertFalse(canApplyAfterCleanup(pending, null)) // Offline, revoked, or session has expired.
+        assertFalse(canApplyAfterCleanup(pending, pending.copy(revision = 3)))
+        assertTrue(canApplyAfterCleanup(pending, pending))
+        assertTrue(canApplyAfterCleanup(pending, pending.copy(revision = 5)))
+        assertTrue(canApplyAfterCleanup(pending, ScheduleVersion("restored", "epoch-c", 1)))
+    }
 }

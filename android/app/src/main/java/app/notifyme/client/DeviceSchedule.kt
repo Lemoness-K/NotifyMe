@@ -12,6 +12,7 @@ import app.notifyme.schedule.LocationState
 import app.notifyme.schedule.LocationTimer
 import app.notifyme.schedule.ScheduleVersion
 import app.notifyme.schedule.TimeAction
+import app.notifyme.schedule.canApplyAfterCleanup
 import app.notifyme.schedule.changeBoundary
 import app.notifyme.schedule.recoverTimer
 import app.notifyme.schedule.requiresCleanup
@@ -75,6 +76,14 @@ internal class DeviceSchedule(private val context: Context) {
     }
 
     @Synchronized
+    fun clearCredentials() {
+        val state = state()
+        state.remove("registered")
+        save(state)
+        api.clearSession()
+    }
+
+    @Synchronized
     fun refresh(recover: Boolean = false, signal: JSONObject? = null) {
         val state = state()
         finishRetirement(state)
@@ -96,16 +105,17 @@ internal class DeviceSchedule(private val context: Context) {
             var reply = api.userRequest("GET", "$base/sync$cursor").body
 
             if (active != null && requiresCleanup(version(active), version(reply))) {
+                val pending = version(reply)
                 retire(latest)
                 // Pending fetched plans cannot survive a failed authorization/revalidation.
                 reply = api.userRequest("GET", "$base/sync").body
-                check(reply.getString("mode") == "FULL")
+                check(reply.getString("mode") == "FULL" && canApplyAfterCleanup(pending, version(reply)))
             }
             reconcile(latest, reply, recover)
             drain(latest, base)
         } catch (failure: ApiFailure) {
             when {
-                failure.status == 401 -> signOut()
+                failure.status == 401 -> clearCredentials()
                 failure.code in listOf("HOUSEHOLD_ACCESS_REVOKED", "HOUSEHOLD_ACCESS_DENIED", "INSTALLATION_ACCESS_DENIED") -> retire(state())
                 else -> throw failure
             }

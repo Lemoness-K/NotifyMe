@@ -19,6 +19,7 @@ model User {
   settings    UserSettings?
   issuedInvitations   Invitation[] @relation("InvitationIssuer")
   consumedInvitations Invitation[] @relation("InvitationConsumer")
+  installations Installation[]
 }
 
 model AuthIdentity {
@@ -39,6 +40,7 @@ model Household {
   settings        HouseholdSettings?
   invitations     Invitation[]
   audit           HouseholdAudit[]
+  installationScopes InstallationScope[]
 }
 
 model Membership {
@@ -330,4 +332,102 @@ model RequestResult {
   reminderId  String
   reminder    Reminder @relation(fields: [reminderId, householdId], references: [id, householdId], onDelete: Cascade)
   @@id([householdId, userId, operation, key])
+}
+
+model Installation {
+  id              String   @id
+  userId          String
+  sessionDigest   String?
+  appVersion      String
+  tokenCiphertext String?
+  revision        Int      @default(1)
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  scopes          InstallationScope[]
+  @@index([userId, active])
+  @@index([sessionDigest])
+}
+
+model InstallationScope {
+  id             String   @id
+  installationId String
+  householdId    String
+  epoch          String
+  revision       Int      @default(0)
+  retainedFrom   Int      @default(0)
+  locationCount  Int      @default(0)
+  state          String   @default("ACTIVE")
+  installation   Installation @relation(fields: [installationId], references: [id], onDelete: Cascade)
+  household      Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  plans          DevicePlan[]
+  exclusions     LocationExclusion[]
+  signals        DeviceSignal[]
+  events         LocationEvent[]
+  @@unique([installationId, householdId])
+  @@index([householdId, state])
+}
+
+model DevicePlan {
+  scopeId    String
+  id         String
+  reminderId String
+  kind       String
+  payload    String?
+  version    Int
+  revision   Int
+  visible    Boolean @default(true)
+  removedAt  DateTime?
+  scope      InstallationScope @relation(fields: [scopeId], references: [id], onDelete: Cascade)
+  @@id([scopeId, id])
+  @@index([scopeId, revision, id])
+  @@index([scopeId, kind, reminderId])
+  @@index([removedAt])
+}
+
+model LocationExclusion {
+  scopeId    String
+  reminderId String
+  scope      InstallationScope @relation(fields: [scopeId], references: [id], onDelete: Cascade)
+  @@id([scopeId, reminderId])
+}
+
+model DeviceSignal {
+  id         String   @id
+  scopeId    String
+  type       String
+  revision   Int
+  createdAt  DateTime
+  readyAt    DateTime
+  expiresAt  DateTime
+  state      String   @default("PENDING")
+  attempts   Int      @default(0)
+  leaseUntil DateTime?
+  leaseToken String?
+  scope      InstallationScope @relation(fields: [scopeId], references: [id], onDelete: Cascade)
+  @@index([state, readyAt, id])
+  @@index([expiresAt])
+}
+
+model LocationEvent {
+  scopeId      String
+  id           String
+  occurrenceId String
+  detectedAt   DateTime
+  version      Int
+  condition    String
+  digest       String
+  scope        InstallationScope @relation(fields: [scopeId], references: [id], onDelete: Cascade)
+  @@id([scopeId, id])
+  @@index([detectedAt])
+}
+
+model InstallationCommand {
+  scope      String
+  key        String
+  digest     String
+  result     String
+  expiresAt  DateTime
+  @@id([scope, key])
+  @@index([expiresAt])
 }

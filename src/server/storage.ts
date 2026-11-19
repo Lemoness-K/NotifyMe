@@ -15,6 +15,7 @@ export async function openStore(path: string, options: { migrate?: boolean } = {
       for (const [sentinel, migration] of [
         ['User', '202611180001_u1'], ['Invitation', '202611190001_u2'], ['DeletionCommit', '202611190002_u3'],
         ['DeletedCreateKey', '202611190003_u3_delete_replay'],
+        ['Installation', '202611200001_u4_installations'],
       ]) {
         if (!hasTable.get(sentinel)) {
           file.exec(readFileSync('prisma/migrations/' + migration + '/migration.sql', 'utf8'));

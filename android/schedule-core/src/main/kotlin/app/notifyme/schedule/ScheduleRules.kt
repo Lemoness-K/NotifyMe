@@ -21,6 +21,9 @@ fun requiresCleanup(current: ScheduleVersion, next: ScheduleVersion): Boolean =
 fun freshFull(pending: ScheduleVersion, confirmed: ScheduleVersion, authorized: Boolean): Boolean =
     authorized && pending == confirmed
 
+fun canApplyAfterCleanup(pending: ScheduleVersion, confirmed: ScheduleVersion?): Boolean =
+    confirmed != null && (requiresCleanup(pending, confirmed) || confirmed.revision >= pending.revision)
+
 data class LocationResult(val state: LocationState, val event: ConditionEvent? = null)
 
 fun stableId(vararg values: String): String =

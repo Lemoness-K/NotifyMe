@@ -5,14 +5,18 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import okhttp3.CookieJar
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import org.json.JSONTokener
 import java.io.IOException
 import java.net.URI
-import java.util.UUID
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.HttpsURLConnection
 
-internal class ApiFailure(val status: Int, val payload: JSONObject) : IOException() {
+internal class ApiFailure(val status: Int, val payload: JSONObject, val retryAfter: String? = null) : IOException() {
     val code: String get() = payload.optString("code", "API_UNAVAILABLE")
 }
 
@@ -30,12 +34,14 @@ internal class NativeApi(context: Context) {
         return Challenge(result.body.getString("nonce"), result.cookie(challengeCookie))
     }
 
-    fun signIn(proof: Challenge, googleToken: String) = synchronized(lock) {
+    fun signIn(proof: Challenge, googleToken: String, invitation: JSONObject?) = synchronized(lock) {
         val firebase = auth() ?: throw IOException("Firebase configuration unavailable")
         try {
             val credential = GoogleAuthProvider.getCredential(googleToken, null)
             val user = Tasks.await(firebase.signInWithCredential(credential), 15, TimeUnit.SECONDS).user ?: throw IOException()
             val token = Tasks.await(user.getIdToken(true), 15, TimeUnit.SECONDS).token ?: throw IOException()
+            if (invitation != null) request("POST", "/invitations/accept",
+                JSONObject().put("code", invitation.getString("code")), invitation.getString("key"), authenticated = false, authorization = token)
             val result = request("POST", "/sessions", JSONObject().put("googleToken", googleToken),
                 authenticated = false, authorization = token, cookie = "$challengeCookie=${proof.cookie}")
             store.write("login", JSONObject().put("cookie", result.cookie(sessionCookie)))
@@ -50,50 +56,37 @@ internal class NativeApi(context: Context) {
         auth()?.signOut()
     }
 
-    fun userRequest(method: String, path: String, body: JSONObject? = null, key: String? = null): Reply {
-        val route = path.substringBefore('?')
-        check(!route.contains("..") && webRoutes.any { (verbs, pattern) -> method in verbs && pattern.matches(route) })
-        return request(method, path, body, key)
+    fun userRequest(method: String, path: String, body: JSONObject? = null, key: String? = null, revision: String? = null): Reply {
+        check(allows(method, path, fromWeb = false))
+        return request(method, path, body, key, revision = revision)
     }
 
-    fun webRequest(method: String, path: String, body: JSONObject?, key: String?): Reply {
-        val route = path.substringBefore('?')
-        check(route != "/installations" && route.endsWith("/events").not() && route.endsWith("/sync").not())
-        return userRequest(method, path, body, key)
+    fun webRequest(method: String, path: String, body: JSONObject?, key: String?, revision: String?): Reply {
+        check(allows(method, path, fromWeb = true))
+        return request(method, path, body, key, revision = revision)
     }
 
     private fun request(method: String, path: String, body: JSONObject? = null, key: String? = null,
-                        authenticated: Boolean = true, authorization: String? = null, cookie: String? = null): Reply {
+                        authenticated: Boolean = true, authorization: String? = null, cookie: String? = null, revision: String? = null): Reply {
         val origin = BuildConfig.NOTIFY_API_ORIGIN
         val target = URI(origin + "/api/v1" + path)
         if (origin.isEmpty() || target.scheme != "https" || target.host == null || target.fragment != null) throw IOException()
-        val connection = target.toURL().openConnection() as HttpsURLConnection
-        try {
-            connection.instanceFollowRedirects = false
-            connection.connectTimeout = 7_500
-            connection.readTimeout = 7_500
-            connection.requestMethod = method
-            connection.setRequestProperty("Accept", "application/json")
-            connection.setRequestProperty("Origin", origin)
-            if (authenticated) {
-                val session = store.read("login").optString("cookie")
-                val task = auth()?.currentUser?.getIdToken(false) ?: throw ApiFailure(401, JSONObject().put("code", "UNAUTHENTICATED"))
-                val token = Tasks.await(task, 10, TimeUnit.SECONDS).token
-                if (session.isEmpty() || token == null) throw ApiFailure(401, JSONObject().put("code", "UNAUTHENTICATED"))
-                connection.setRequestProperty("Cookie", "$sessionCookie=$session")
-                connection.setRequestProperty("Authorization", "Bearer $token")
-            }
-            authorization?.let { connection.setRequestProperty("Authorization", "Bearer $it") }
-            cookie?.let { connection.setRequestProperty("Cookie", it) }
-            key?.let { connection.setRequestProperty("Idempotency-Key", it) }
-            if (body != null) {
-                connection.doOutput = true
-                connection.setRequestProperty("Content-Type", "application/json")
-                connection.outputStream.use { it.write(body.toString().toByteArray()) }
-            }
-            val status = connection.responseCode
-            val stream = if (status in 200..299) connection.inputStream else connection.errorStream
-            val raw = stream?.bufferedReader()?.use { reader ->
+        val request = Request.Builder().url(target.toASCIIString()).header("Accept", "application/json").header("Origin", origin)
+        if (authenticated) {
+            val session = store.read("login").optString("cookie")
+            val task = auth()?.currentUser?.getIdToken(false) ?: throw ApiFailure(401, JSONObject().put("code", "UNAUTHENTICATED"))
+            val token = Tasks.await(task, 10, TimeUnit.SECONDS).token
+            if (session.isEmpty() || token == null) throw ApiFailure(401, JSONObject().put("code", "UNAUTHENTICATED"))
+            request.header("Cookie", "$sessionCookie=$session").header("Authorization", "Bearer $token")
+        }
+        authorization?.let { request.header("Authorization", "Bearer $it") }
+        cookie?.let { request.header("Cookie", it) }
+        key?.let { request.header("Idempotency-Key", it) }
+        revision?.let { request.header("If-Match", it) }
+        val requestBody = body?.toString()?.toRequestBody("application/json".toMediaType()) ?:
+            if (method in listOf("POST", "PUT", "PATCH")) ByteArray(0).toRequestBody() else null
+        return https.newCall(request.method(method, requestBody).build()).execute().use { response ->
+            val raw = response.body?.charStream()?.use { reader ->
                 val content = StringBuilder()
                 val chunk = CharArray(4096)
                 var count = reader.read(chunk)
@@ -104,17 +97,15 @@ internal class NativeApi(context: Context) {
                 }
                 content.toString()
             }.orEmpty()
-            val payload = if (raw.isBlank()) JSONObject() else JSONObject(raw)
-            if (status !in 200..299) throw ApiFailure(status, payload)
-            val cookies = connection.headerFields.entries.filter { it.key.equals("Set-Cookie", ignoreCase = true) }.flatMap { it.value }
-            return Reply(status, payload, cookies)
-        } finally {
-            connection.disconnect()
+            val payload = decode(raw)
+            if (!response.isSuccessful) throw ApiFailure(response.code, payload as? JSONObject ?: JSONObject(), response.header("Retry-After"))
+            Reply(response.code, payload, response.headers.values("Set-Cookie"))
         }
     }
 
     data class Challenge(val nonce: String, val cookie: String)
-    data class Reply(val status: Int, val body: JSONObject, private val cookies: List<String>) {
+    data class Reply(val status: Int, val payload: Any, private val cookies: List<String>) {
+        val body: JSONObject get() = payload as JSONObject
         fun cookie(name: String): String = cookies.asSequence().map { it.substringBefore(';') }
             .firstOrNull { it.startsWith("$name=") }?.substringAfter('=')?.takeIf { tokenPattern.matches(it) } ?: throw IOException()
     }
@@ -124,6 +115,9 @@ internal class NativeApi(context: Context) {
         private const val sessionCookie = "__Host-notify-session"
         private val lock = Any()
         private val tokenPattern = Regex("[A-Za-z0-9_-]{43}")
+        // Capacitor configures a process-wide CookieHandler backed by WebView. This client never uses it.
+        private val https = OkHttpClient.Builder().cookieJar(CookieJar.NO_COOKIES).followRedirects(false)
+            .followSslRedirects(false).retryOnConnectionFailure(false).callTimeout(15, TimeUnit.SECONDS).build()
         private const val id = "[A-Za-z0-9_-]{1,128}"
         private val webRoutes = listOf(
             setOf("GET") to Regex("/me|/settings/catalog"),
@@ -139,6 +133,13 @@ internal class NativeApi(context: Context) {
             setOf("POST") to Regex("/households/$id/installations/$id/events"),
         )
 
-        fun key(): String = UUID.randomUUID().toString()
+        fun allows(method: String, path: String, fromWeb: Boolean): Boolean {
+            if (path.length > 2_048 || path.contains('#')) return false
+            val route = path.substringBefore('?')
+            if (fromWeb && (route == "/installations" || route.endsWith("/events") || route.endsWith("/sync"))) return false
+            return webRoutes.any { (verbs, pattern) -> method in verbs && pattern.matches(route) }
+        }
+
+        fun decode(raw: String): Any = if (raw.isBlank()) JSONObject() else JSONTokener(raw).nextValue()
     }
 }

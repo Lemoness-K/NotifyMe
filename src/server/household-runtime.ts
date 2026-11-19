@@ -91,7 +91,7 @@ export function startInviteCleanup(
   };
 }
 
-export function startWorkMaintenance(work: WorkService, intervalMs: number) {
+export function startWorkMaintenance(work: WorkService, intervalMs: number, pruneInstallations?: () => Promise<void>) {
   let running: Promise<void> | undefined;
   let stopped = false;
   async function run() {
@@ -117,6 +117,7 @@ export function startWorkMaintenance(work: WorkService, intervalMs: number) {
       if (!stopped) {
         const now = work.clock();
         await work.db.reminderFeedEntry.deleteMany({ where: { expiresAt: { lte: now } } });
+        await pruneInstallations?.();
         if (work.journal) {
           const reconciled = await work.reconcileCommittedDeletes();
           const unsettled = work.journal.unsettled(now);

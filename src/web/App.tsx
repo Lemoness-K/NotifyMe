@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link, Route, Routes, useLocation, useNavigate } from 'react-router';
-import { api, ApiError, openSession, type ClientConfig, type Me, type Preferences, type Reminder } from './client.js';
+import { api, ApiError, deviceError, openSession, type ClientConfig, type Me, type Preferences, type Reminder } from './client.js';
 import { errorText, localeFor, retryAfterText, words } from './messages.js';
 import { HouseholdPreferences, Invitations, Members, PersonalPreferences, SettingsHome } from './Settings.js';
 import { WorkBadge, WorkOptions, workFormFields, type TriggerMode } from './work-form.js';
 import { workErrorText, workLabel, workWords } from './work-messages.js';
 import { WorkDetail, WorkHistory, WorkSchedule } from './work-pages.js';
+import { androidDevice, type DeviceStatus } from './device.js';
+import { CapacityAdjustment, InstallationSettings } from './InstallationSettings.js';
 
 export { errorText, localeFor };
 type Locale = ReturnType<typeof localeFor>;
@@ -17,6 +19,9 @@ export type Session = {
   signOut: () => Promise<void>;
   pendingCreates: Map<string, CreateAttempt>;
   pendingWrites: Map<string, { key: string; retryAt?: number }>;
+  installation?: DeviceStatus;
+  installationError?: ApiError;
+  retryInstallation?: () => void;
 };
 export type PageProps = { session: Session; locale: Locale };
 
@@ -31,6 +36,8 @@ export function App() {
   const [session, setSession] = useState<Session>();
   const [profile, setProfile] = useState<Me>();
   const [preferences, setPreferences] = useState<Preferences>();
+  const [installation, setInstallation] = useState<DeviceStatus>();
+  const [installationError, setInstallationError] = useState<ApiError>();
   const activeSession = useRef<Session>(undefined);
   const signOutPending = useRef<Promise<void>>(undefined);
   const [error, setError] = useState('');
@@ -45,7 +52,13 @@ export function App() {
   const text = words[locale];
   async function loadConfig() {
     setError('');
-    try { setConfig(await api<ClientConfig>('/client-config')); }
+    try {
+      const device = androidDevice();
+      if (!device) { setConfig(await api<ClientConfig>('/client-config')); return; }
+      const nativeConfig = { mode: 'android' } as const;
+      setConfig(nativeConfig);
+      if (!inviting && (await device.status()).signedIn) await login(nativeConfig, true);
+    }
     catch { setError('UNAVAILABLE'); }
   }
   useEffect(() => {
@@ -53,7 +66,8 @@ export function App() {
   }, []);
   useEffect(() => {
     document.documentElement.lang = locale;
-  }, [locale]);
+    if (session) void androidDevice()?.locale({ locale: locale === 'en-US' ? 'en' : 'ko' }).catch(() => {});
+  }, [locale, session]);
   useEffect(() => {
     if (location.pathname === '/invite' && location.hash) {
       setInvitation(readInvitation(location.pathname, location.hash));
@@ -70,12 +84,14 @@ export function App() {
     setSession(undefined);
     setProfile(undefined);
     setPreferences(undefined);
+    setInstallation(undefined);
+    setInstallationError(undefined);
     setError(reason);
     navigate('/', { replace: true });
   }
 
-  async function login() {
-    if (!config || busy || (retryAt !== undefined && Date.now() < retryAt)) return;
+  async function login(loginConfig = config, restore = false) {
+    if (!loginConfig || busy || (retryAt !== undefined && Date.now() < retryAt)) return;
     setError('');
     setRetryAt(undefined);
     setBusy(true);
@@ -84,7 +100,9 @@ export function App() {
       await signOutPending.current;
       const join = inviting && invitation ? { ...invitation, key: invitation.key || crypto.randomUUID() } : undefined;
       if (join) setInvitation(join);
-      credential = await openSession(config, 'google-button', join);
+      const device = androidDevice();
+      credential = restore && device ? { token: async () => undefined, signOut: () => device.clearSession() } :
+        await openSession(loginConfig, 'google-button', join);
       const me = await api<Me>('/me', await credential.token());
       const { token, signOut } = credential;
       const controller = new AbortController();
@@ -104,7 +122,7 @@ export function App() {
               closeSession(current, 'UNAUTHENTICATED');
               signOutPending.current = signOut().catch(() => {});
             } else if (!signal.aborted && path.startsWith('/households/') &&
-                failure instanceof ApiError && failure.code === 'HOUSEHOLD_ACCESS_DENIED') {
+                failure instanceof ApiError && ['HOUSEHOLD_ACCESS_DENIED', 'HOUSEHOLD_ACCESS_REVOKED'].includes(failure.code)) {
               void refreshProfile(current).catch(() => {});
             }
             throw failure;
@@ -114,6 +132,7 @@ export function App() {
       activeSession.current = current;
       setSession(current);
       setProfile(me);
+      if (device) void bindInstallation(current);
       setInvitation(undefined);
       navigate('/reminders', { replace: true });
       // Account settings are optional on older servers and use the same session as the app.
@@ -123,7 +142,7 @@ export function App() {
         }
       }).catch(() => {});
     } catch (failure) {
-      if (credential) await credential.signOut().catch(() => {});
+      if (credential && (!restore || failure instanceof ApiError && failure.status === 401)) await credential.signOut().catch(() => {});
       if (failure instanceof ApiError) setRetryAt(failure.retryAt);
       setError(failure instanceof ApiError
         ? failure.status === 401 ? 'UNAUTHENTICATED' : failure.code
@@ -141,7 +160,9 @@ export function App() {
       await session.request('/sessions/current', { method: 'DELETE' }, crypto.randomUUID());
     } catch (failure) {
       if (activeSession.current === session) {
-        setError(failure instanceof ApiError ? failure.code : 'UNAVAILABLE');
+        const reason = failure instanceof ApiError ? failure.code : 'UNAVAILABLE';
+        if (androidDevice()) closeSession(session, reason);
+        else setError(reason);
       }
       setBusy(false);
       return;
@@ -152,13 +173,31 @@ export function App() {
     finally { setBusy(false); }
   }
 
+  async function bindInstallation(current: Session) {
+    setInstallationError(undefined);
+    try {
+      const device = await androidDevice()?.bind();
+      if (activeSession.current === current) setInstallation(device);
+    } catch (failure) {
+      if (activeSession.current === current) {
+        setInstallation(undefined);
+        setInstallationError(deviceError(failure));
+      }
+    }
+  }
+
   async function refreshProfile(current = activeSession.current) {
     if (!current) return;
     const me = await current.request<Me>('/me');
-    if (activeSession.current === current) setProfile(me);
+    if (activeSession.current === current) {
+      setInstallation(undefined);
+      setProfile(me);
+      if (androidDevice()) void bindInstallation(current);
+    }
   }
 
-  const viewSession = session && profile ? { ...session, me: profile } : session;
+  const viewSession = session && profile ? { ...session, me: profile, installation, installationError,
+    retryInstallation: () => void bindInstallation(session) } : session;
   return <main>
     <header><h1>Notify Me</h1>
       {session && <nav aria-label={text.navigation}>
@@ -187,7 +226,7 @@ export function App() {
         <Route path="/settings" element={<SettingsHome session={viewSession} locale={locale} />} />
         <Route path="/settings/personal" element={<PersonalPreferences session={viewSession} locale={locale} onSaved={setPreferences} />} />
         <Route path="/settings/household" element={<HouseholdPreferences session={viewSession} locale={locale} onSaved={refreshProfile} />} />
-        <Route path="/settings/installation" element={<section className="panel"><h2>{text.installation}</h2><p>{text.installationUnavailable}</p></section>} />
+        <Route path="/settings/installation" element={<InstallationSettings session={viewSession} locale={locale} />} />
         <Route path="/household/members" element={<Members session={viewSession} locale={locale} onSaved={refreshProfile} />} />
         <Route path="/household/invitations" element={<Invitations session={viewSession} locale={locale} />} />
         <Route path="/reminders/new" element={viewSession.me.householdId
@@ -380,6 +419,7 @@ function ReminderForm({ session, locale }: PageProps) {
       {error && workErrorText(locale, error, errorDetails)}{error && retryAt !== undefined && ' '}
       {retryAt !== undefined && retryAfterText(locale, retryAt)}
     </p>}
+    {error === 'GEOFENCE_CAPACITY_EXCEEDED' && <CapacityAdjustment session={session} locale={locale} details={errorDetails} />}
     <form onSubmit={(event) => void save(event)} noValidate>
       <label>{text.title}<input name="title" required maxLength={200} defaultValue={draft?.title} aria-invalid={error === 'TITLE_REQUIRED' || undefined}
         aria-describedby={error === 'TITLE_REQUIRED' ? 'form-error' : undefined} /></label>

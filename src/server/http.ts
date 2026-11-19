@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import type { Request, Response, NextFunction } from 'express';
 import {
   All, ArgumentsHost, Body, Catch, Controller, Delete, ExceptionFilter, Get, HttpCode, HttpException,
-  Inject, Module, Param, Patch, Post, Query, Req, Res,
+  Inject, Module, Param, Patch, Post, Put, Query, Req, Res,
 } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
@@ -24,6 +24,9 @@ import { actionInput, createWorkInput, editWorkInput, lifecycleInput } from './w
 import { listHistory, listOccurrences } from './work-queries.js';
 import { workEffects } from './work-effects.js';
 import type { InstallationPlanParticipant } from './work-scheduling.js';
+import { InstallationRepository } from './installations.js';
+import { exclusionInput, installationId, installationQueryInteger, locationEventInput, locationPageQuery, registrationInput } from './installation-input.js';
+import { startSignalDelivery, type SignalSender } from './notification-outbox.js';
 
 const services = Symbol('U1 services');
 const challengeName = '__Host-notify-login';
@@ -44,6 +47,9 @@ export interface AppOptions {
   householdEffects?: HouseholdEffects;
   deleteJournalPath?: string;
   workPlanPort?: InstallationPlanParticipant;
+  installationTokenKey?: Buffer;
+  installationGeneration?: string;
+  installationSignalSender?: SignalSender;
   workLog?: (event: Record<string, unknown>) => void;
   workMaintenance?: boolean;
   trustedProxy?: boolean;
@@ -51,6 +57,7 @@ export interface AppOptions {
 }
 type Services = AppOptions & {
   auth: SessionService; households: HouseholdRepository; limit: HouseholdRateLimit; householdConfig: HouseholdConfig; work: WorkService;
+  installations: InstallationRepository;
 };
 
 function bearer(req: Request) {
@@ -151,8 +158,45 @@ class CoreController {
   @HttpCode(204)
   async logout(@Req() request: Request, @Res({ passthrough: true }) response: Response) {
     idempotency(request);
-    await this.runtime.auth.end(bearer(request), cookie(request, sessionName));
+    await this.runtime.auth.end(bearer(request), cookie(request, sessionName), (tx, digest) => this.runtime.installations.endSession(tx, digest));
     response.clearCookie(sessionName, secureCookie);
+  }
+
+  @Put('installations')
+  async registerInstallation(@Req() request: Request, @Body() body: unknown) {
+    const { userId, sessionDigest } = await this.principal(request);
+    return this.runtime.installations.register(userId, sessionDigest, idempotency(request), registrationInput(body));
+  }
+
+  @Get('households/:home/installations/:device/sync')
+  async syncInstallation(@Req() request: Request, @Param('home') home: string, @Param('device') device: string, @Query() query: Record<string, unknown>) {
+    const { userId } = await this.principal(request);
+    return this.runtime.installations.sync(installationId(home, 'householdId'), installationId(device, 'installationId'), userId,
+      optionalId(query.afterEpoch, 'afterEpoch'), installationQueryInteger(query.afterRevision, 'afterRevision'));
+  }
+
+  @Get('households/:home/installations/:device/location-exclusions')
+  async readLocationExclusions(@Req() request: Request, @Param('home') home: string, @Param('device') device: string, @Query() query: Record<string, unknown>) {
+    const { userId } = await this.principal(request);
+    return this.runtime.installations.exclusions(installationId(home, 'householdId'), installationId(device, 'installationId'), userId, locationPageQuery(query));
+  }
+
+  @Put('households/:home/installations/:device/location-exclusions/:reminder')
+  @HttpCode(204)
+  async setLocationExclusion(@Req() request: Request, @Param('home') home: string, @Param('device') device: string,
+    @Param('reminder') reminder: string, @Body() body: unknown) {
+    const { userId } = await this.principal(request);
+    const { epoch, revision, excluded } = exclusionInput(body);
+    await this.runtime.installations.setExclusion(installationId(home, 'householdId'), installationId(device, 'installationId'),
+      userId, installationId(reminder, 'reminderId'), idempotency(request), epoch, revision, excluded);
+  }
+
+  @Post('households/:home/installations/:device/events')
+  @HttpCode(204)
+  async recordInstallationEvent(@Req() request: Request, @Param('home') home: string, @Param('device') device: string, @Body() body: unknown) {
+    const { userId } = await this.principal(request);
+    await this.runtime.installations.recordEvent(installationId(home, 'householdId'), installationId(device, 'installationId'), userId,
+      idempotency(request), locationEventInput(body));
   }
 
   @Get('me')
@@ -330,13 +374,21 @@ class CoreController {
 
 export async function createApp(options: AppOptions) {
   const journal = options.deleteJournalPath ? await DeleteJournal.open(options.db, options.deleteJournalPath) : undefined;
-  const work = new WorkService(options.db, options.clock, options.workPlanPort, journal, options.workLog);
+  const installations = new InstallationRepository(options.db, options.clock, options.installationTokenKey, options.installationGeneration);
+  const plans = options.workPlanPort ?? installations;
+  const work = new WorkService(options.db, options.clock, plans, journal, options.workLog);
   @Module({
     controllers: [CoreController],
     providers: [{ provide: services, useValue: {
       ...options, auth: new SessionService(options.db, options.provider, options.clock),
-      households: new HouseholdRepository(options.db, options.origin, options.clock, workEffects(options.workPlanPort, options.householdEffects)),
-      work,
+      households: new HouseholdRepository(options.db, options.origin, options.clock, workEffects(plans, {
+        ...options.householdEffects,
+        async beforeRemoveTargets(tx, home, user, now) {
+          await installations.revoke(tx, home, user, now);
+          await options.householdEffects?.beforeRemoveTargets?.(tx, home, user, now);
+        },
+      })),
+      work, installations,
       householdConfig: options.householdConfig ?? householdRuntimeDefaults,
       limit: new HouseholdRateLimit(options.clock ? () => options.clock!().getTime() : undefined),
     } }],
@@ -346,10 +398,13 @@ export async function createApp(options: AppOptions) {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: false, abortOnError: false, httpsOptions: options.tls,
   });
-  if (journal || options.workMaintenance) {
-    const stop = options.workMaintenance ? startWorkMaintenance(work, 60_000) : undefined;
+  const sender = options.installationSignalSender;
+  const tokenKey = options.installationTokenKey;
+  if (journal || options.workMaintenance || (sender && tokenKey)) {
+    const stopWork = options.workMaintenance ? startWorkMaintenance(work, 60_000, () => installations.prune()) : undefined;
+    const stopSignals = sender && tokenKey ? startSignalDelivery(options.db, sender, tokenKey, installations.generation, options.workLog, options.clock) : undefined;
     const close = app.close.bind(app);
-    app.close = async () => { try { await stop?.(); await close(); } finally { journal?.close(); } };
+    app.close = async () => { try { await Promise.all([stopWork?.(), stopSignals?.()]); await close(); } finally { journal?.close(); } };
   }
   const express = app.getHttpAdapter().getInstance();
   express.disable('x-powered-by');
