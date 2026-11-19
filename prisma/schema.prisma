@@ -11,9 +11,14 @@ model User {
   id          String         @id @default(uuid())
   displayName String?
   active      Boolean        @default(true)
+  timeZone    String?
+  settingsRevision Int     @default(0)
   identities  AuthIdentity[]
   memberships Membership[]
   sessions    Session[]
+  settings    UserSettings?
+  issuedInvitations   Invitation[] @relation("InvitationIssuer")
+  consumedInvitations Invitation[] @relation("InvitationConsumer")
 }
 
 model AuthIdentity {
@@ -28,8 +33,12 @@ model Household {
   id              String       @id @default(uuid())
   singleton       Int          @unique @default(1)
   defaultTimeZone String       @default("Asia/Seoul")
+  settingsRevision Int        @default(0)
   memberships     Membership[]
   reminders       Reminder[]
+  settings        HouseholdSettings?
+  invitations     Invitation[]
+  audit           HouseholdAudit[]
 }
 
 model Membership {
@@ -37,12 +46,74 @@ model Membership {
   userId      String
   role        String
   active      Boolean      @default(true)
+  revision    Int          @default(0)
+  joinedAt    DateTime?
+  leftAt      DateTime?
+  removedByUserId String?
   household   Household    @relation(fields: [householdId], references: [id], onDelete: Restrict)
   user        User         @relation(fields: [userId], references: [id], onDelete: Restrict)
   created     Reminder[]   @relation("ReminderCreator")
   requested   Reminder[]   @relation("ReminderRequester")
   assigned    Assignment[]
   @@id([householdId, userId])
+  @@index([householdId, active, role])
+}
+
+model Invitation {
+  id               String    @id @default(uuid())
+  householdId      String
+  createdByUserId  String
+  targetEmail      String?
+  tokenHash        String    @unique
+  createdAt        DateTime
+  expiresAt        DateTime
+  consumedAt       DateTime?
+  consumedByUserId String?
+  revokedAt        DateTime?
+  household        Household @relation(fields: [householdId], references: [id], onDelete: Restrict)
+  createdBy        User      @relation("InvitationIssuer", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  consumedBy       User?     @relation("InvitationConsumer", fields: [consumedByUserId], references: [id], onDelete: Restrict)
+  @@index([householdId, createdAt, id])
+  @@index([expiresAt, id])
+}
+
+model HouseholdSettings {
+  householdId              String    @id
+  schemaVersion            Int       @default(1)
+  minRadiusM               Int       @default(50)
+  defaultRadiusM           Int       @default(100)
+  maxRadiusM               Int       @default(500)
+  maxLocationDurationMin   Int       @default(60)
+  weeklyCalendarConvention String    @default("MONDAY_START")
+  household                Household @relation(fields: [householdId], references: [id], onDelete: Restrict)
+}
+
+model UserSettings {
+  userId        String @id
+  schemaVersion Int    @default(1)
+  locale        String?
+  user          User   @relation(fields: [userId], references: [id], onDelete: Restrict)
+}
+
+model HouseholdAudit {
+  id          String    @id @default(uuid())
+  householdId String
+  actorId     String
+  action      String
+  subjectId   String
+  createdAt   DateTime
+  details     String
+  household   Household @relation(fields: [householdId], references: [id], onDelete: Restrict)
+  @@index([householdId, createdAt, id])
+}
+
+model HouseholdCommandResult {
+  scope       String
+  key         String
+  inputSalt   String
+  inputDigest String
+  result      String
+  @@id([scope, key])
 }
 
 model LoginChallenge {
@@ -101,6 +172,7 @@ model Assignment {
   householdId String
   reminderId  String
   userId      String
+  endedAt     DateTime?
   reminder    Reminder   @relation(fields: [reminderId, householdId], references: [id, householdId], onDelete: Cascade)
   assignee    Membership @relation(fields: [householdId, userId], references: [householdId, userId], onDelete: Restrict)
   @@id([reminderId, userId])

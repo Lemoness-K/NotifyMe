@@ -1,30 +1,45 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { Link, Route, Routes, useNavigate } from 'react-router';
+import { Link, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { localToUtc } from '../server/time.js';
-import { api, ApiError, openSession, type ClientConfig, type Me, type Reminder } from './client.js';
+import { api, ApiError, openSession, type ClientConfig, type Me, type Preferences, type Reminder } from './client.js';
 import { errorText, localeFor, retryAfterText, words } from './messages.js';
+import { HouseholdPreferences, Invitations, Members, PersonalPreferences, SettingsHome } from './Settings.js';
 
 export { errorText, localeFor };
 type Locale = ReturnType<typeof localeFor>;
 type CreateAttempt = { key: string; title: string; description: string; localTime: string; retryAt?: number };
-type Session = {
+export type Session = {
   me: Me;
   request: <T>(path: string, init?: RequestInit, key?: string) => Promise<T>;
   end: () => void;
   signOut: () => Promise<void>;
   pendingCreates: Map<string, CreateAttempt>;
+  pendingWrites: Map<string, { key: string; retryAt?: number }>;
 };
-type PageProps = { session: Session; locale: Locale };
+export type PageProps = { session: Session; locale: Locale };
+
+function readInvitation(path: string, hash: string) {
+  if (path !== '/invite' || !hash.slice(1)) return undefined;
+  return { code: hash.slice(1), key: '' };
+}
 
 export function App() {
-  const [locale] = useState(() => localeFor(typeof navigator === 'undefined' ? 'ko-KR' : navigator.language));
+  const [deviceLocale] = useState(() => localeFor(typeof navigator === 'undefined' ? 'ko-KR' : navigator.language));
   const [config, setConfig] = useState<ClientConfig>();
   const [session, setSession] = useState<Session>();
+  const [profile, setProfile] = useState<Me>();
+  const [preferences, setPreferences] = useState<Preferences>();
   const activeSession = useRef<Session>(undefined);
   const signOutPending = useRef<Promise<void>>(undefined);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [retryAt, setRetryAt] = useState<number>();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [invitation, setInvitation] = useState(() => readInvitation(location.pathname, location.hash));
+  const inviting = location.pathname === '/invite' && !session;
+  const storedLocale = preferences?.locale;
+  const locale = storedLocale === 'ko-KR' || storedLocale === 'en-US' ? storedLocale : deviceLocale;
   const text = words[locale];
   async function loadConfig() {
     setError('');
@@ -32,34 +47,48 @@ export function App() {
     catch { setError('UNAVAILABLE'); }
   }
   useEffect(() => {
-    document.documentElement.lang = locale;
     void loadConfig();
+  }, []);
+  useEffect(() => {
+    document.documentElement.lang = locale;
   }, [locale]);
+  useEffect(() => {
+    if (location.pathname === '/invite' && location.hash) {
+      setInvitation(readInvitation(location.pathname, location.hash));
+      navigate('/invite', { replace: true });
+    }
+  }, [location.pathname, location.hash, navigate]);
 
   function closeSession(current: Session, reason = '') {
     if (activeSession.current !== current) return;
     activeSession.current = undefined;
     current.end();
     current.pendingCreates.clear();
+    current.pendingWrites.clear();
     setSession(undefined);
+    setProfile(undefined);
+    setPreferences(undefined);
     setError(reason);
     navigate('/', { replace: true });
   }
 
   async function login() {
-    if (!config || busy) return;
+    if (!config || busy || (retryAt !== undefined && Date.now() < retryAt)) return;
     setError('');
+    setRetryAt(undefined);
     setBusy(true);
     let credential: Awaited<ReturnType<typeof openSession>> | undefined;
     try {
       await signOutPending.current;
-      credential = await openSession(config, 'google-button');
+      const join = inviting && invitation ? { ...invitation, key: invitation.key || crypto.randomUUID() } : undefined;
+      if (join) setInvitation(join);
+      credential = await openSession(config, 'google-button', join);
       const me = await api<Me>('/me', await credential.token());
       const { token, signOut } = credential;
       const controller = new AbortController();
       const signal = controller.signal;
       const current: Session = {
-        me, signOut, end: () => controller.abort(), pendingCreates: new Map(),
+        me, signOut, end: () => controller.abort(), pendingCreates: new Map(), pendingWrites: new Map(),
         async request<T>(path: string, init?: RequestInit, key?: string) {
           try {
             signal.throwIfAborted();
@@ -72,6 +101,9 @@ export function App() {
             if (!signal.aborted && failure instanceof ApiError && failure.status === 401) {
               closeSession(current, 'UNAUTHENTICATED');
               signOutPending.current = signOut().catch(() => {});
+            } else if (!signal.aborted && path.startsWith('/households/') &&
+                failure instanceof ApiError && failure.code === 'HOUSEHOLD_ACCESS_DENIED') {
+              void refreshProfile(current).catch(() => {});
             }
             throw failure;
           }
@@ -79,9 +111,18 @@ export function App() {
       };
       activeSession.current = current;
       setSession(current);
+      setProfile(me);
+      setInvitation(undefined);
       navigate('/reminders', { replace: true });
+      // Account settings are optional on older servers and use the same session as the app.
+      void current.request<Preferences>('/me/settings').then((saved) => {
+        if (activeSession.current === current && Number.isInteger(saved.revision)) {
+          setPreferences((existing) => existing && existing.revision > saved.revision ? existing : saved);
+        }
+      }).catch(() => {});
     } catch (failure) {
       if (credential) await credential.signOut().catch(() => {});
+      if (failure instanceof ApiError) setRetryAt(failure.retryAt);
       setError(failure instanceof ApiError
         ? failure.status === 401 ? 'UNAUTHENTICATED' : failure.code
         : 'UNAVAILABLE');
@@ -109,23 +150,47 @@ export function App() {
     finally { setBusy(false); }
   }
 
+  async function refreshProfile(current = activeSession.current) {
+    if (!current) return;
+    const me = await current.request<Me>('/me');
+    if (activeSession.current === current) setProfile(me);
+  }
+
+  const viewSession = session && profile ? { ...session, me: profile } : session;
   return <main>
     <header><h1>Notify Me</h1>
+      {session && <nav aria-label={text.navigation}>
+        {profile?.householdId && <Link to="/reminders">{text.reminders}</Link>}
+        <Link to="/settings">{text.settings}</Link>
+      </nav>}
       {session && <button type="button" onClick={() => void logout()} disabled={busy}>{text.logout}</button>}
     </header>
     {error && <p role="alert">{errorText(locale, error)}</p>}
+    {retryAt !== undefined && <p role="status">{retryAfterText(locale, retryAt)}</p>}
     {!session ? <section className="panel">
-      <h2>{text.login}</h2>
-      <button type="button" className="primary" onClick={() => void login()} disabled={busy || !config}>
-        {config?.mode === 'synthetic' ? text.localLogin : text.googleLogin}
-      </button>
+      <h2>{inviting ? text.inviteJoin : text.login}</h2>
+      {inviting && !invitation ? <p role="alert">{text.INVITATION_INVALID}</p> :
+        <button type="button" className="primary" onClick={() => void login()} disabled={busy || !config}>
+          {inviting ? config?.mode === 'synthetic' ? text.localJoin : text.googleJoin
+            : config?.mode === 'synthetic' ? text.localLogin : text.googleLogin}
+        </button>}
+      {inviting && <Link to="/">{text.login}</Link>}
       {busy && <p role="status">{text.loading}</p>}
       {config?.mode === 'google' && <div id="google-button" />}
       {!config && error && <button type="button" onClick={() => void loadConfig()}>{text.retry}</button>}
-    </section> : !session.me.householdId ? <p role="alert">{text.noHousehold}</p> :
+    </section> : viewSession &&
       <Routes>
-        <Route path="/reminders/new" element={<ReminderForm session={session} locale={locale} />} />
-        <Route path="*" element={<ReminderList session={session} locale={locale} />} />
+        <Route path="/settings" element={<SettingsHome session={viewSession} locale={locale} />} />
+        <Route path="/settings/personal" element={<PersonalPreferences session={viewSession} locale={locale} onSaved={setPreferences} />} />
+        <Route path="/settings/household" element={<HouseholdPreferences session={viewSession} locale={locale} onSaved={refreshProfile} />} />
+        <Route path="/settings/installation" element={<section className="panel"><h2>{text.installation}</h2><p>{text.installationUnavailable}</p></section>} />
+        <Route path="/household/members" element={<Members session={viewSession} locale={locale} onSaved={refreshProfile} />} />
+        <Route path="/household/invitations" element={<Invitations session={viewSession} locale={locale} />} />
+        <Route path="/reminders/new" element={viewSession.me.householdId
+          ? <ReminderForm session={viewSession} locale={locale} /> : <p role="alert">{text.noHousehold}</p>} />
+        <Route path="*" element={viewSession.me.householdId
+          ? <ReminderList session={viewSession} locale={locale} displayTimeZone={preferences?.timeZone} />
+          : <p role="alert">{text.noHousehold}</p>} />
       </Routes>}
   </main>;
 }
@@ -134,18 +199,21 @@ function listPath(householdId: string) {
   return '/households/' + encodeURIComponent(householdId) + '/reminders';
 }
 
-function ReminderList({ session, locale }: PageProps) {
+function ReminderList({ session, locale, displayTimeZone }: PageProps & { displayTimeZone?: string }) {
   const text = words[locale];
   const [reminders, setReminders] = useState<Reminder[]>([]);
   const [cursor, setCursor] = useState<string>();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [retryAt, setRetryAt] = useState<number>();
   const path = listPath(session.me.householdId ?? '');
   const requestFromSession = session.request;
 
   async function load(next?: string, signal?: AbortSignal) {
+    if (retryAt !== undefined && retryAt > Date.now()) return;
     setLoading(true);
     setError('');
+    setRetryAt(undefined);
     try {
       const suffix = next ? '?' + new URLSearchParams({ cursor: next }) : '';
       const result = await requestFromSession<{ items: Reminder[]; nextCursor?: string }>(path + suffix);
@@ -154,7 +222,10 @@ function ReminderList({ session, locale }: PageProps) {
         setCursor(result.nextCursor);
       }
     } catch (failure) {
-      if (!signal?.aborted) setError(failure instanceof ApiError ? failure.code : 'UNAVAILABLE');
+      if (!signal?.aborted) {
+        if (failure instanceof ApiError) setRetryAt(failure.retryAt);
+        setError(failure instanceof ApiError ? failure.code : 'UNAVAILABLE');
+      }
     } finally {
       if (!signal?.aborted) setLoading(false);
     }
@@ -170,14 +241,15 @@ function ReminderList({ session, locale }: PageProps) {
       <Link className="primary action" to="/reminders/new">{text.add}</Link>
     </div>
     {error && <p role="alert">{errorText(locale, error)}{' '}
+      {retryAt !== undefined && retryAfterText(locale, retryAt)}{' '}
       <button type="button" onClick={() => void load(cursor)}>{text.retry}</button></p>}
     {loading && <p role="status">{text.loading}</p>}
     {!error && !loading && reminders.length === 0 && <p>{text.empty}</p>}
     <ul className="reminders">{reminders.map((item) => <li className="panel" key={item.reminderId}>
       <h3>{item.title}</h3>
       <time dateTime={item.trigger.scheduledAt}>{new Intl.DateTimeFormat(locale, {
-        timeZone: item.trigger.timeZone, dateStyle: 'medium', timeStyle: 'short',
-      }).format(new Date(item.trigger.scheduledAt))} · {item.trigger.timeZone}</time>
+        timeZone: displayTimeZone ?? item.trigger.timeZone, dateStyle: 'medium', timeStyle: 'short',
+      }).format(new Date(item.trigger.scheduledAt))} · {displayTimeZone ?? item.trigger.timeZone}</time>
       {item.description !== undefined && <p className="original">{item.description}</p>}
     </li>)}</ul>
     {cursor && !error && <button type="button" disabled={loading} onClick={() => void load(cursor)}>{text.more}</button>}

@@ -73,6 +73,7 @@ export function realProvider(
         return {
           issuer: proof.iss, subject: proof.sub, googleSubject: subjects[0],
           authTime: proof.auth_time, displayName: typeof proof.name === 'string' ? proof.name : undefined,
+          ...(typeof proof.email === 'string' && proof.email_verified === true ? { email: proof.email, emailVerified: true } : {}),
         };
       } catch (error) {
         if (error instanceof AppError) throw error;
@@ -100,12 +101,19 @@ export function realProvider(
   };
 }
 
-type Signed = { kind: 'google' | 'firebase'; nonce?: string; authTime: number; expires: number };
+export type SyntheticAccount = 'admin' | 'member';
+type Signed = { kind: 'google' | 'firebase'; nonce?: string; authTime: number; expires: number; account: SyntheticAccount };
 
 export function syntheticProvider(key: string) {
-  const identity = {
-    issuer: 'urn:notifyme:local-test', subject: 'local-synthetic-admin', googleSubject: 'local-synthetic-google',
-    displayName: '로컬 테스트',
+  const identities = {
+    admin: {
+      issuer: 'urn:notifyme:local-test', subject: 'local-synthetic-admin', googleSubject: 'local-synthetic-google',
+      displayName: '로컬 테스트', email: 'admin@example.test', emailVerified: true,
+    },
+    member: {
+      issuer: 'urn:notifyme:local-test', subject: 'local-synthetic-member', googleSubject: 'local-synthetic-member-google',
+      displayName: '로컬 구성원', email: 'member@example.test', emailVerified: true,
+    },
   };
   const sign = (value: string) => createHmac('sha256', key).update(value).digest();
   function mint(payload: Signed) {
@@ -122,23 +130,27 @@ export function syntheticProvider(key: string) {
       if (actual.length !== expected.length || !timingSafeEqual(actual, expected)) throw badCredential();
       const proof = JSON.parse(Buffer.from(data, 'base64url').toString('utf8')) as Signed;
       if (proof.kind !== kind || !Number.isSafeInteger(proof.expires) || proof.expires <= Date.now() ||
-          !Number.isSafeInteger(proof.authTime)) throw badCredential();
+          !Number.isSafeInteger(proof.authTime) || (proof.account !== 'admin' && proof.account !== 'member')) throw badCredential();
       return proof;
     } catch { throw badCredential(); }
   }
   return {
-    mint(nonce = '') {
+    mint(nonce = '', account: SyntheticAccount = 'admin') {
       const authTime = Math.floor(Date.now() / 1000);
       const expires = Date.now() + 60 * 60_000;
-      return { firebaseToken: mint({ kind: 'firebase', authTime, expires }), googleToken: mint({ kind: 'google', nonce, authTime, expires }) };
+      return {
+        firebaseToken: mint({ kind: 'firebase', authTime, expires, account }),
+        googleToken: mint({ kind: 'google', nonce, authTime, expires, account }),
+      };
     },
     async verifyFirebase(token: string): Promise<FirebaseIdentity> {
-      return { ...identity, authTime: parse(token, 'firebase').authTime };
+      const proof = parse(token, 'firebase');
+      return { ...identities[proof.account], authTime: proof.authTime };
     },
     async verifyGoogle(token: string): Promise<GoogleProof> {
       const proof = parse(token, 'google');
       if (!proof.nonce) throw badCredential();
-      return { subject: identity.googleSubject, nonce: proof.nonce, expiresAt: new Date(proof.expires) };
+      return { subject: identities[proof.account].googleSubject, nonce: proof.nonce, expiresAt: new Date(proof.expires) };
     },
   };
 }

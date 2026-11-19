@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defaultVerificationPolicy, realProvider, syntheticProvider } from './provider.js';
+import { householdRuntimeDefaults } from './household-runtime.js';
 
 function required(env: NodeJS.ProcessEnv, key: string): string {
   const value = env[key];
@@ -26,7 +27,13 @@ export function getRuntime(env: NodeJS.ProcessEnv = process.env) {
   const origin = new URL(required(env, 'NOTIFY_ORIGIN'));
   if (origin.protocol !== 'https:' || origin.origin !== env.NOTIFY_ORIGIN) throw new Error('NOTIFY_ORIGIN must be one HTTPS origin');
   const path = resolve(required(env, 'NOTIFY_DATABASE_PATH'));
-  const common = { host, port, origin: origin.origin, path };
+  const householdConfig = {
+    inviteIpPerMinute: boundedInteger(env, 'NOTIFY_INVITE_IP_PER_MINUTE', householdRuntimeDefaults.inviteIpPerMinute, 1, 1000),
+    inviteIdentityPerMinute: boundedInteger(env, 'NOTIFY_INVITE_IDENTITY_PER_MINUTE', householdRuntimeDefaults.inviteIdentityPerMinute, 1, 1000),
+    administrationPerMinute: boundedInteger(env, 'NOTIFY_ADMIN_PER_MINUTE', householdRuntimeDefaults.administrationPerMinute, 1, 1000),
+    cleanupIntervalMs: boundedInteger(env, 'NOTIFY_INVITE_CLEANUP_MS', householdRuntimeDefaults.cleanupIntervalMs, 1000, 3_600_000),
+  };
+  const common = { host, port, origin: origin.origin, path, householdConfig, trustedProxy: mode === 'target' };
   if (mode === 'local') {
     if (env.NOTIFY_SYNTHETIC_AUTH !== '1' || !['localhost', '127.0.0.1', '[::1]'].includes(origin.hostname)) {
       throw new Error('Local synthetic mode requires explicit opt-in and a loopback HTTPS origin');

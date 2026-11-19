@@ -1,0 +1,374 @@
+{
+  "stage": "code-generation",
+  "unit": "u2-household-and-settings",
+  "upstream_ids": [
+    "AC1.4.1",
+    "AC1.4.2",
+    "AC1.4.3",
+    "AC1.4.4",
+    "AC1.5.1",
+    "AC1.5.2",
+    "AC1.5.3",
+    "AC1.7.1",
+    "AC1.7.2",
+    "AC1.7.3",
+    "AC6.1.1",
+    "AC6.1.2",
+    "AC6.1.3",
+    "AC6.1.4",
+    "AC6.2.1",
+    "AC6.2.2",
+    "AC6.2.3",
+    "AC6.3.1",
+    "AC6.3.2",
+    "AC6.3.3",
+    "AC6.3.4",
+    "AC6.4.1",
+    "AC6.4.2",
+    "AC6.5.1",
+    "AC6.5.2",
+    "AC6.5.3",
+    "AC6.6.1",
+    "AC6.6.2",
+    "AC6.6.3",
+    "AC6.7.1",
+    "AC6.7.2",
+    "AC6.7.3",
+    "AC6.8.1",
+    "AC6.8.2",
+    "AC6.8.3",
+    "NFR5.1",
+    "NFR5.2",
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR1.4",
+    "NFR2.1",
+    "NFR2.3",
+    "NFR5.3",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR4.1",
+    "BR2.1",
+    "BR2.2",
+    "BR2.3",
+    "BR2.4",
+    "BR2.5",
+    "BR2.6",
+    "BR2.7",
+    "BR2.8",
+    "BR2.9",
+    "BR2.10",
+    "BR2.11",
+    "BR2.12",
+    "BR2.13",
+    "BR2.14"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.4.1",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "AC1.4.2",
+      "status": "OK",
+      "target": "tests/e2e/u2/household-settings.spec.ts"
+    },
+    {
+      "id": "AC1.4.3",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "AC1.4.4",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "AC1.5.1",
+      "status": "OK",
+      "target": "tests/u2/repository.test.ts"
+    },
+    {
+      "id": "AC1.5.2",
+      "status": "OK",
+      "target": "tests/u2/repository.test.ts"
+    },
+    {
+      "id": "AC1.5.3",
+      "status": "OK",
+      "target": "tests/u2/repository.test.ts"
+    },
+    {
+      "id": "AC1.7.1",
+      "status": "OK",
+      "target": "tests/u2/repository.test.ts"
+    },
+    {
+      "id": "AC1.7.2",
+      "status": "N/A",
+      "target": "U3가 무담당 회차·반복 처리. U2에서 실제 U1 배정을 종료한다."
+    },
+    {
+      "id": "AC1.7.3",
+      "status": "N/A",
+      "target": "U4가 설치 회수 신호와 로컬 캐시·예약을 처리한다."
+    },
+    {
+      "id": "AC6.1.1",
+      "status": "OK",
+      "target": "tests/u2/settings-rules.test.ts"
+    },
+    {
+      "id": "AC6.1.2",
+      "status": "OK",
+      "target": "tests/e2e/u2/household-settings.spec.ts"
+    },
+    {
+      "id": "AC6.1.3",
+      "status": "N/A",
+      "target": "U4가 OS·설치 값을 소유한다. U2는 카탈로그를 제공한다."
+    },
+    {
+      "id": "AC6.1.4",
+      "status": "N/A",
+      "target": "U3가 Reminder·Trigger·RecurrenceRule 값의 생애주기를 처리한다."
+    },
+    {
+      "id": "AC6.2.1",
+      "status": "OK",
+      "target": "tests/u2/web-interactions.test.tsx"
+    },
+    {
+      "id": "AC6.2.2",
+      "status": "OK",
+      "target": "tests/e2e/u2/household-settings.spec.ts"
+    },
+    {
+      "id": "AC6.2.3",
+      "status": "OK",
+      "target": "src/web/App.tsx"
+    },
+    {
+      "id": "AC6.3.1",
+      "status": "OK",
+      "target": "src/web/messages.ts"
+    },
+    {
+      "id": "AC6.3.2",
+      "status": "OK",
+      "target": "src/web/App.tsx"
+    },
+    {
+      "id": "AC6.3.3",
+      "status": "OK",
+      "target": "tests/e2e/u1/core-flow.spec.ts"
+    },
+    {
+      "id": "AC6.3.4",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "AC6.4.1",
+      "status": "OK",
+      "target": "src/web/Settings.tsx"
+    },
+    {
+      "id": "AC6.4.2",
+      "status": "N/A",
+      "target": "U4에서 Android 권한과 채널 설정 화면을 연결한다."
+    },
+    {
+      "id": "AC6.5.1",
+      "status": "OK",
+      "target": "src/server/settings.ts"
+    },
+    {
+      "id": "AC6.5.2",
+      "status": "OK",
+      "target": "prisma/schema.prisma"
+    },
+    {
+      "id": "AC6.5.3",
+      "status": "OK",
+      "target": "src/server/settings.ts"
+    },
+    {
+      "id": "AC6.6.1",
+      "status": "OK",
+      "target": "tests/u2/settings-rules.test.ts"
+    },
+    {
+      "id": "AC6.6.2",
+      "status": "OK",
+      "target": "src/server/households.ts"
+    },
+    {
+      "id": "AC6.6.3",
+      "status": "OK",
+      "target": "src/server/households.ts"
+    },
+    {
+      "id": "AC6.7.1",
+      "status": "OK",
+      "target": "tests/u2/settings-rules.test.ts"
+    },
+    {
+      "id": "AC6.7.2",
+      "status": "N/A",
+      "target": "U3가 LOCATION 저장과 입력 선택을 제공한다. U2는 상한을 저장·노출한다."
+    },
+    {
+      "id": "AC6.7.3",
+      "status": "OK",
+      "target": "src/server/households.ts"
+    },
+    {
+      "id": "AC6.8.1",
+      "status": "OK",
+      "target": "tests/u2/settings-rules.test.ts"
+    },
+    {
+      "id": "AC6.8.2",
+      "status": "N/A",
+      "target": "U3가 생성 당시 달력 기준과 첫 주 계산을 구현한다."
+    },
+    {
+      "id": "AC6.8.3",
+      "status": "OK",
+      "target": "src/server/households.ts"
+    },
+    {
+      "id": "NFR5.1",
+      "status": "Deferred",
+      "target": "DS-014 대상 Raspberry Pi 성능 및 자원 검증."
+    },
+    {
+      "id": "NFR5.2",
+      "status": "Deferred",
+      "target": "DS-014 대상 Raspberry Pi 성능 및 자원 검증."
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "tests/u2/repository.test.ts"
+    },
+    {
+      "id": "NFR1.4",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "deploy/u1/Caddyfile.example"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "tests/u2/repository.test.ts"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "prisma/schema.prisma"
+    },
+    {
+      "id": "BR2.1",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "BR2.2",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "BR2.3",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "BR2.4",
+      "status": "OK",
+      "target": "tests/u2/repository.test.ts"
+    },
+    {
+      "id": "BR2.5",
+      "status": "OK",
+      "target": "tests/u2/repository.test.ts"
+    },
+    {
+      "id": "BR2.6",
+      "status": "OK",
+      "target": "tests/u2/repository.test.ts"
+    },
+    {
+      "id": "BR2.7",
+      "status": "OK",
+      "target": "src/server/settings.ts"
+    },
+    {
+      "id": "BR2.8",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "BR2.9",
+      "status": "OK",
+      "target": "src/web/App.tsx"
+    },
+    {
+      "id": "BR2.10",
+      "status": "OK",
+      "target": "src/server/households.ts"
+    },
+    {
+      "id": "BR2.11",
+      "status": "OK",
+      "target": "tests/u2/settings-rules.test.ts"
+    },
+    {
+      "id": "BR2.12",
+      "status": "OK",
+      "target": "src/server/households.ts"
+    },
+    {
+      "id": "BR2.13",
+      "status": "OK",
+      "target": "src/web/Settings.tsx"
+    },
+    {
+      "id": "BR2.14",
+      "status": "OK",
+      "target": "src/server/settings.ts"
+    }
+  ]
+}

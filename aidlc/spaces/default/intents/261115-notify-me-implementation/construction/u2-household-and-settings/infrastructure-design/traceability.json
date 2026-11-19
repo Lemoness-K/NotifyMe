@@ -1,0 +1,80 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u2-household-and-settings",
+  "upstream_ids": [
+    "NFR5.1",
+    "NFR5.2",
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR1.4",
+    "NFR2.1",
+    "NFR2.3",
+    "NFR5.3",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR4.1"
+  ],
+  "coverage": [
+    {
+      "id": "NFR5.1",
+      "status": "OK",
+      "target": "monitoring-design.md · 대상 Pi p95"
+    },
+    {
+      "id": "NFR5.2",
+      "status": "OK",
+      "target": "infrastructure-specification.md · Deployment 자원 / monitoring-design.md 자원 상한"
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md · HTTPS 및 인증 환경"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "infrastructure-specification.md · Shared Infrastructure 서버 경계 / cicd-pipeline.md · 권한 회귀"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md · 공유 DB와 앱 권한"
+    },
+    {
+      "id": "NFR1.4",
+      "status": "OK",
+      "target": "infrastructure-specification.md · HTTPS 비캐시와 접근 로그 / cicd-pipeline.md · 초대 검사"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md · 만료 정리 / monitoring-design.md · 지연"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "monitoring-design.md · Logs & Tracing"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md · 단일 Pi 시스템"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md · SQLite / cicd-pipeline.md · 실제 DB 마이그레이션"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "OK",
+      "target": "cicd-pipeline.md · 작업 키와 응답 유실 확인"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "N/A",
+      "target": "기존 IANA와 UTC 로직의 앱 검증에 포함하며 별도 인프라를 두지 않는다."
+    }
+  ]
+}

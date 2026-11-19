@@ -60,6 +60,13 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
 
 쓰기에서 `Idempotency-Key`는 사용자·가구·동작 범위에서 입력과 결과에 묶인다. 같은 키와 동일 입력은 같은 결과로 수렴한다. 수정 명령은 현재 revision을 보내 동시 변경을 감지한다. 같은 키로 새 동작이나 다른 입력을 보내면 오류를 반환한다.
 
+### U2 가구와 계정의 인가 경계
+
+- `/me/settings`는 유효한 앱 세션의 본인 계정을 사용한다. 활성 가구 Membership는 가구 범위 데이터의 조건이다. 소속을 잃어도 계정의 언어와 표시 시간대는 유지된다.
+- `POST /invitations/accept`는 초대받은 새 Google 신원이 가입하기 전에도 호출할 수 있다. 이 경로는 검증된 Firebase Bearer, Google 공급자, 확인된 이메일, 동일 출처와 명시적 수락을 요구한다. 유효한 이메일과 초대가 일치하면 계정 신원 연결·초대 소비·MEMBER 소속을 원자적으로 저장한다. 일반 업무 API에는 U1 앱 세션 조건이 적용된다.
+- 초대 발급 성공 응답에만 `inviteUrl` 원문을 한 번 포함한다. 같은 발급 요청을 다시 받으면 초대를 추가 생성하지 않고, 권한을 유지한 발급자에게 409와 기존 초대의 안전한 식별 정보를 반환한다. 기존 초대를 취소한 뒤 새 작업 키로 다시 발급할 수 있다. 가구 Admin 전용 초대 목록은 상태와 발급·만료 시각 및 초대 식별자만 제공한다. 초대 코드와 대상 이메일을 반환하지 않는다.
+- 구성원 제거 DELETE는 `If-Match`와 필요 시 `successorAdminId`를 받아 마지막 관리자 인계와 제거를 한 번에 처리한다. 초대 취소 DELETE는 현재 활성 상태를 서버 저장 경계에서 확인한다. 초대 수락·취소·만료의 이메일 삭제 및 초대 응답 비캐시 조건을 유지한다.
+
 <details markdown="1">
 <summary>상세 OpenAPI 명세 펼치기</summary>
 
@@ -253,6 +260,7 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
       "get": {
         "operationId": "getUserSettings",
         "x-owner": "U2",
+        "description": "유효한 앱 세션의 본인 계정 설정을 읽는다. 가구 소속을 요구하지 않는다.",
         "parameters": [],
         "responses": {
           "200": {
@@ -280,6 +288,7 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
       "patch": {
         "operationId": "updateUserSettings",
         "x-owner": "U2",
+        "description": "유효한 앱 세션의 본인 계정에서 전달한 필드만 변경한다. 가구 소속을 요구하지 않는다.",
         "parameters": [
           {
             "name": "Idempotency-Key",
@@ -421,9 +430,51 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
       }
     },
     "/households/{householdId}/invitations": {
+      "get": {
+        "operationId": "listInvitations",
+        "x-owner": "U2",
+        "description": "활성 가구 Admin에게 초대 상태를 제공한다. 코드와 대상 이메일은 포함하지 않는다.",
+        "parameters": [
+          {
+            "name": "householdId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "minLength": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": { "type": "integer", "minimum": 1, "maximum": 100, "default": 25 }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": { "type": "string", "minLength": 1 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "초대 상태 페이지",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/InvitationPage" }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "operationId": "createInvitation",
         "x-owner": "U2",
+        "description": "코드는 최초 성공에서만 공개한다. 동일 요청 재생 시 409 INVITATION_ALREADY_ISSUED와 details.invitationId, details.expiresAt을 반환하고 다른 입력의 동일 키에는 IDEMPOTENCY_CONFLICT를 반환한다.",
         "parameters": [
           {
             "name": "householdId",
@@ -532,6 +583,7 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
       "post": {
         "operationId": "acceptInvitation",
         "x-owner": "U2",
+        "description": "동일 출처의 검증된 Google Firebase Bearer를 확인한다. 기존 일반 앱 세션 없이 이 수락 경로에 접근할 수 있다.",
         "parameters": [
           {
             "name": "Idempotency-Key",
@@ -721,6 +773,11 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
               "type": "string",
               "minLength": 1
             }
+          },
+          {
+            "name": "successorAdminId",
+            "in": "query",
+            "schema": { "type": "string", "minLength": 1 }
           }
         ],
         "responses": {
@@ -1527,6 +1584,10 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
           "householdId": {
             "type": "string",
             "minLength": 1
+          },
+          "householdRole": {
+            "type": "string",
+            "enum": ["ADMIN", "MEMBER"]
           }
         },
         "required": [
@@ -1570,6 +1631,9 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
             },
             "storageOwner": {
               "type": "string"
+            },
+            "migration": {
+              "type": "string"
             }
           },
           "required": [
@@ -1578,7 +1642,8 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
             "definitionVersion",
             "valueType",
             "validation",
-            "storageOwner"
+            "storageOwner",
+            "migration"
           ]
         }
       },
@@ -1699,12 +1764,36 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
           "expiresAt"
         ]
       },
+      "InvitationPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/InvitationStatus" }
+          },
+          "nextCursor": { "type": "string" }
+        },
+        "required": ["items"]
+      },
+      "InvitationStatus": {
+        "type": "object",
+        "properties": {
+          "invitationId": { "type": "string" },
+          "status": { "type": "string", "enum": ["ACTIVE", "CONSUMED", "REVOKED", "EXPIRED"] },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "expiresAt": { "type": "string", "format": "date-time" }
+        },
+        "required": ["invitationId", "status", "createdAt", "expiresAt"]
+      },
       "Member": {
         "type": "object",
         "properties": {
           "userId": {
             "type": "string",
             "minLength": 1
+          },
+          "displayName": {
+            "type": "string"
           },
           "role": {
             "type": "string",

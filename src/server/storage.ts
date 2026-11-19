@@ -11,8 +11,11 @@ export async function openStore(path: string, options: { migrate?: boolean } = {
     const file = new DatabaseSync(absolute);
     try {
       file.exec('PRAGMA foreign_keys = ON; BEGIN');
-      if (!file.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'User'").get()) {
-        file.exec(readFileSync('prisma/migrations/202611180001_u1/migration.sql', 'utf8'));
+      const hasTable = file.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?");
+      for (const [sentinel, migration] of [['User', '202611180001_u1'], ['Invitation', '202611190001_u2']]) {
+        if (!hasTable.get(sentinel)) {
+          file.exec(readFileSync('prisma/migrations/' + migration + '/migration.sql', 'utf8'));
+        }
       }
       file.exec('COMMIT');
     } finally {

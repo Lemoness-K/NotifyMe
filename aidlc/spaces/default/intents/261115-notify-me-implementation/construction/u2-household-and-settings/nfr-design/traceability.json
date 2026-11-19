@@ -1,0 +1,80 @@
+{
+  "stage": "nfr-design",
+  "unit": "u2-household-and-settings",
+  "upstream_ids": [
+    "NFR5.1",
+    "NFR5.2",
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR1.4",
+    "NFR2.1",
+    "NFR2.3",
+    "NFR5.3",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR4.1"
+  ],
+  "coverage": [
+    {
+      "id": "NFR5.1",
+      "status": "OK",
+      "target": "performance-design.md · 부하 측정 / scalability-design.md · 단일 노드"
+    },
+    {
+      "id": "NFR5.2",
+      "status": "OK",
+      "target": "performance-design.md · 부하 측정 / scalability-design.md · 단일 노드"
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "security-design.md · 인증과 권한 및 요청 제한"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "security-design.md · 인증과 권한 및 요청 제한"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "security-design.md · 인증과 권한 및 요청 제한"
+    },
+    {
+      "id": "NFR1.4",
+      "status": "OK",
+      "target": "security-design.md · 인증과 권한 및 요청 제한"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "security-design.md · 초대 기밀과 신원 경계 / reliability-design.md · 종결 삭제"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "security-design.md · 초대 기밀과 신원 경계 / reliability-design.md · 종결 삭제"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "performance-design.md · 부하 측정 / scalability-design.md · 단일 노드"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "reliability-design.md · 동일 쓰기 단위와 키 재시도"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "OK",
+      "target": "reliability-design.md · 동일 쓰기 단위와 키 재시도"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "reliability-design.md · 저장 instant 및 표시 zone 분리"
+    }
+  ]
+}

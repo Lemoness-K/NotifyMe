@@ -3,7 +3,9 @@ import type { FirebaseOptions } from 'firebase/app';
 export type ClientConfig =
   | { mode: 'synthetic' }
   | { mode: 'google'; googleClientId: string; firebaseConfig: FirebaseOptions };
-export type Me = { userId: string; householdId?: string; defaultTimeZone?: string };
+export type Role = 'ADMIN' | 'MEMBER';
+export type Me = { userId: string; householdId?: string; defaultTimeZone?: string; householdRole?: Role };
+export type Preferences = { revision: number; locale?: 'ko-KR' | 'en-US'; timeZone?: string };
 type LoginProof = { firebaseToken: string; googleToken: string };
 export type Reminder = {
   reminderId: string; title: string; description?: string;
@@ -16,6 +18,7 @@ export class ApiError extends Error {
     readonly field?: string,
     readonly status?: number,
     readonly retryAt?: number,
+    readonly details?: Record<string, unknown>,
   ) { super(code); }
 }
 
@@ -45,7 +48,8 @@ export async function api<T>(path: string, token?: string, init: RequestInit = {
     const error = await response.json().catch(() => ({}));
     const code = response.status === 429 ? 'RATE_LIMITED' : error?.code;
     throw new ApiError(typeof code === 'string' ? code : 'UNAVAILABLE',
-      typeof error?.details?.field === 'string' ? error.details.field : undefined, response.status, retryAt);
+      typeof error?.details?.field === 'string' ? error.details.field : undefined, response.status, retryAt,
+      typeof error?.details === 'object' && error.details !== null ? error.details : undefined);
   }
   return (response.status === 204 ? undefined : await response.json()) as T;
 }
@@ -93,7 +97,7 @@ async function googleProof(clientId: string, nonce: string, elementId: string): 
   }
 }
 
-export async function openSession(config: ClientConfig, buttonId: string) {
+export async function openSession(config: ClientConfig, buttonId: string, invitation?: { code: string; key: string }) {
   const { nonce, issuedAt } = await api<{ nonce: string; issuedAt: string }>('/sessions/challenges', undefined, { method: 'POST' });
   let token: () => Promise<string>;
   let googleToken: string;
@@ -103,7 +107,7 @@ export async function openSession(config: ClientConfig, buttonId: string) {
   if (config.mode === 'synthetic') {
     await new Promise((resolve) => setTimeout(resolve, Math.max(0, nextSecond - Date.now() + 30)));
     const proof = await api<LoginProof>('/sessions/local-proof', undefined, {
-      method: 'POST', body: JSON.stringify({ nonce }),
+      method: 'POST', body: JSON.stringify({ nonce, ...(invitation ? { account: 'member' } : {}) }),
     });
     googleToken = proof.googleToken;
     token = async () => proof.firebaseToken;
@@ -129,7 +133,11 @@ export async function openSession(config: ClientConfig, buttonId: string) {
     signOut = () => auth.signOut(firebase);
   }
   try {
-    await api('/sessions', await token(), { method: 'POST', body: JSON.stringify({ googleToken }) });
+    const bearer = await token();
+    if (invitation) {
+      await api('/invitations/accept', bearer, { method: 'POST', body: JSON.stringify({ code: invitation.code }) }, invitation.key);
+    }
+    await api('/sessions', bearer, { method: 'POST', body: JSON.stringify({ googleToken }) });
     return { token, signOut };
   } catch (error) {
     await signOut();

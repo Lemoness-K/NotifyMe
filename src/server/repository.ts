@@ -12,7 +12,7 @@ export interface TimeReminderInput {
   scheduledAt: Date;
   timeZone: string;
 }
-const relations = { assignments: { orderBy: { userId: 'asc' } }, trigger: true, occurrence: true } as const;
+const relations = { assignments: { where: { endedAt: null }, orderBy: { userId: 'asc' } }, trigger: true, occurrence: true } as const;
 type RecordWithDetails = Prisma.ReminderGetPayload<{ include: typeof relations }>;
 const views = ['HOUSEHOLD', 'MINE', 'REQUESTED'] as const;
 const buckets = ['OVERDUE', 'TODAY', 'UPCOMING', 'ARCHIVED'] as const;
@@ -132,7 +132,7 @@ export async function listReminders(db: PrismaClient, householdId: string, userI
   const filters: Prisma.ReminderWhereInput[] = [
     { householdId, lifecycle: bucket === 'ARCHIVED' ? 'ARCHIVED' : 'ACTIVE' },
   ];
-  if (view === 'MINE') filters.push({ assignments: { some: { userId } } });
+  if (view === 'MINE') filters.push({ assignments: { some: { userId, endedAt: null } } });
   if (view === 'REQUESTED') filters.push({ requesterId: userId });
   if (opts.cursor) {
     try {

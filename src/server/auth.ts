@@ -9,6 +9,8 @@ export interface FirebaseIdentity {
   googleSubject: string;
   authTime: number;
   displayName?: string;
+  email?: string;
+  emailVerified?: boolean;
 }
 export interface GoogleProof { subject: string; nonce: string; expiresAt: Date }
 export interface VerificationBudget { deadline: number; retriesRemaining: number }

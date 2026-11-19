@@ -1,0 +1,100 @@
+{
+  "stage": "code-generation",
+  "unit": "u2-household-and-settings",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".github/workflows/u1-app-ci.yml"
+    },
+    {
+      "path": "deploy/u1/Caddyfile.example"
+    },
+    {
+      "path": "docs/u2-local-run.md"
+    },
+    {
+      "path": "playwright.config.ts"
+    },
+    {
+      "path": "prisma/migrations/202611190001_u2/migration.sql"
+    },
+    {
+      "path": "prisma/schema.prisma"
+    },
+    {
+      "path": "src/server/auth.ts"
+    },
+    {
+      "path": "src/server/config.ts"
+    },
+    {
+      "path": "src/server/errors.ts"
+    },
+    {
+      "path": "src/server/household-rules.ts"
+    },
+    {
+      "path": "src/server/household-runtime.ts"
+    },
+    {
+      "path": "src/server/households.ts"
+    },
+    {
+      "path": "src/server/http.ts"
+    },
+    {
+      "path": "src/server/main.ts"
+    },
+    {
+      "path": "src/server/provider.ts"
+    },
+    {
+      "path": "src/server/repository.ts"
+    },
+    {
+      "path": "src/server/settings.ts"
+    },
+    {
+      "path": "src/server/storage.ts"
+    },
+    {
+      "path": "src/web/App.tsx"
+    },
+    {
+      "path": "src/web/Settings.tsx"
+    },
+    {
+      "path": "src/web/client.ts"
+    },
+    {
+      "path": "src/web/messages.ts"
+    },
+    {
+      "path": "src/web/styles.css"
+    },
+    {
+      "path": "tests/e2e/u2/household-settings.spec.ts"
+    },
+    {
+      "path": "tests/u2/household-rules.test.ts"
+    },
+    {
+      "path": "tests/u2/http.test.ts"
+    },
+    {
+      "path": "tests/u2/repository.test.ts"
+    },
+    {
+      "path": "tests/u2/settings-rules.test.ts"
+    },
+    {
+      "path": "tests/u2/storage-model.test.ts"
+    },
+    {
+      "path": "tests/u2/web-interactions.test.tsx"
+    },
+    {
+      "path": "vitest.config.ts"
+    }
+  ]
+}

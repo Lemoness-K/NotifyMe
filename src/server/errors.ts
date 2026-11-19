@@ -3,6 +3,7 @@ export class AppError extends Error {
     readonly status: number,
     readonly code: string,
     readonly details?: Record<string, string>,
+    readonly retryAfterSeconds?: number,
   ) {
     super(code);
   }

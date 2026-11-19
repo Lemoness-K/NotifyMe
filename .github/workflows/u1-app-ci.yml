@@ -1,4 +1,4 @@
-name: Notify Me U1
+name: Notify Me application checks
 
 on:
   push:
@@ -39,5 +39,6 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - run: sudo apt-get update && sudo apt-get install -y caddy
       - run: npx playwright install --with-deps chromium
       - run: npm run verify:u1

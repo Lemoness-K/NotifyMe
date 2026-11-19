@@ -22,8 +22,8 @@ h1 { font-size: clamp(1.75rem, 6vw, 2.5rem); }
 .original { white-space: pre-wrap; overflow-wrap: anywhere; }
 time, small { color: #35534f; overflow-wrap: anywhere; }
 label { display: grid; min-width: 0; gap: .35rem; margin-top: 1rem; }
-input, textarea, button, .action { font: inherit; }
-input, textarea { width: 100%; min-width: 0; max-width: 100%; padding: .55rem; border: 1px solid #607874; border-radius: .35rem; }
+input, textarea, button, select, .action { font: inherit; }
+input, textarea, select { width: 100%; min-width: 0; max-width: 100%; padding: .55rem; border: 1px solid #607874; border-radius: .35rem; }
 button, .action {
   min-height: 2.75rem;
   padding: .6rem .9rem;
@@ -40,3 +40,7 @@ button:disabled { opacity: .65; }
 [aria-invalid="true"] { border-color: #ac2b1b; }
 .form-actions { justify-content: flex-start; margin-top: 1.25rem; }
 #google-button { margin-top: .75rem; max-width: 100%; overflow: auto; }
+nav { display: flex; flex-wrap: wrap; gap: .75rem; }
+.management-list { padding: 0; list-style: none; }
+.management-list li { border-block-end: 1px solid #becdcb; padding-block: .75rem; overflow-wrap: anywhere; }
+.management-list li .form-actions { margin-top: .5rem; }

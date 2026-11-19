@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import type { Request, Response, NextFunction } from 'express';
 import {
   All, ArgumentsHost, Body, Catch, Controller, Delete, ExceptionFilter, Get, HttpCode, HttpException,
-  Inject, Module, Param, Post, Query, Req, Res,
+  Inject, Module, Param, Patch, Post, Query, Req, Res,
 } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
@@ -14,6 +14,11 @@ import { type IdentityProvider, SessionService } from './auth.js';
 import { AppError } from './errors.js';
 import { createTimeReminder, listReminders, readReminder, type ListOptions } from './repository.js';
 import { prepareReminder } from './reminders.js';
+import { invitationIdentity, invalidField, normalizeInvitationEmail, optionalId, parseInvitationCode, parseRevision, prepareRoleChange, record } from './household-rules.js';
+import { HouseholdRepository, type HouseholdEffects } from './households.js';
+import { HouseholdRateLimit, householdRuntimeDefaults, requestSource, type HouseholdConfig } from './household-runtime.js';
+import type { SyntheticAccount } from './provider.js';
+import { catalog, prepareHouseholdSettings, prepareUserSettings } from './settings.js';
 
 const services = Symbol('U1 services');
 const challengeName = '__Host-notify-login';
@@ -29,10 +34,15 @@ export interface AppOptions {
   webRoot?: string;
   googleClientId?: string;
   firebaseConfig?: { apiKey: string; authDomain: string; projectId: string };
-  localSignIn?: (nonce: string) => { firebaseToken: string; googleToken: string };
+  localSignIn?: (nonce: string, account?: SyntheticAccount) => { firebaseToken: string; googleToken: string };
+  householdConfig?: HouseholdConfig;
+  householdEffects?: HouseholdEffects;
+  trustedProxy?: boolean;
   log?: (record: { requestId: string; route: string; status: number; durationMs: number; code?: string }) => void;
 }
-type Services = AppOptions & { auth: SessionService };
+type Services = AppOptions & {
+  auth: SessionService; households: HouseholdRepository; limit: HouseholdRateLimit; householdConfig: HouseholdConfig;
+};
 
 function bearer(req: Request) {
   const header = req.get('authorization');
@@ -72,6 +82,7 @@ class SafeErrors implements ExceptionFilter {
     }
     response.locals.errorCode = code;
     if (status === 503) response.setHeader('Retry-After', '2');
+    if (status === 429 && error instanceof AppError) response.setHeader('Retry-After', String(error.retryAfterSeconds ?? 60));
     response.status(status).json({ code, requestId: response.locals.requestId, ...(details ? { details } : {}) });
   }
 }
@@ -79,6 +90,16 @@ class SafeErrors implements ExceptionFilter {
 @Controller()
 class CoreController {
   constructor(@Inject(services) private readonly runtime: Services) {}
+
+  private principal(request: Request) {
+    return this.runtime.auth.principal(bearer(request), cookie(request, sessionName));
+  }
+
+  private async administratorRequest(request: Request, householdId: string) {
+    const { userId } = await this.principal(request);
+    this.runtime.limit.check(JSON.stringify(['ADMIN', householdId, userId]), this.runtime.householdConfig.administrationPerMinute);
+    return userId;
+  }
 
   @Get('client-config')
   config() {
@@ -100,7 +121,9 @@ class CoreController {
     if (typeof nonce !== 'string' || !/^[A-Za-z0-9_-]{43}$/.test(nonce)) {
       throw new AppError(422, 'INVALID_FIELD', { field: 'nonce' });
     }
-    return this.runtime.localSignIn(nonce);
+    const account = body && typeof body === 'object' && 'account' in body ? body.account : undefined;
+    if (account !== undefined && account !== 'admin' && account !== 'member') throw invalidField('account');
+    return this.runtime.localSignIn(nonce, account);
   }
 
   @Post('sessions')
@@ -132,8 +155,98 @@ class CoreController {
     });
     return {
       userId: identity.userId, ...(identity.displayName === null ? {} : { displayName: identity.displayName }),
-      ...(membership ? { householdId: membership.householdId, defaultTimeZone: membership.household.defaultTimeZone } : {}),
+      ...(membership ? {
+        householdId: membership.householdId, defaultTimeZone: membership.household.defaultTimeZone, householdRole: membership.role,
+      } : {}),
     };
+  }
+
+  @Get('settings/catalog')
+  async settingsCatalog(@Req() request: Request) {
+    await this.principal(request);
+    return catalog;
+  }
+
+  @Get('me/settings')
+  async userSettings(@Req() request: Request) {
+    const { userId } = await this.principal(request);
+    return this.runtime.households.getUserSettings(userId);
+  }
+
+  @Patch('me/settings')
+  async changeUserSettings(@Req() request: Request, @Body() body: unknown) {
+    const { userId } = await this.principal(request);
+    return this.runtime.households.updateUserSettings(userId, idempotency(request), prepareUserSettings(body));
+  }
+
+  @Get('households/:householdId/settings')
+  async householdSettings(@Req() request: Request, @Param('householdId') householdId: string) {
+    const { userId } = await this.principal(request);
+    return this.runtime.households.getHouseholdSettings(householdId, userId);
+  }
+
+  @Patch('households/:householdId/settings')
+  async changeHouseholdSettings(@Req() request: Request, @Param('householdId') householdId: string, @Body() body: unknown) {
+    const { userId } = await this.principal(request);
+    return this.runtime.households.updateHouseholdSettings(householdId, userId, idempotency(request), prepareHouseholdSettings(body));
+  }
+
+  @Get('households/:householdId/invitations')
+  async invitations(@Req() request: Request, @Param('householdId') householdId: string, @Query() query: Record<string, unknown>) {
+    const { userId } = await this.principal(request);
+    const limit = query.limit === undefined ? 25 : typeof query.limit === 'string' && /^\d+$/.test(query.limit) ? Number(query.limit) : 0;
+    if (limit < 1 || limit > 100) throw invalidField('limit');
+    if (query.cursor !== undefined && (typeof query.cursor !== 'string' || !/^[A-Za-z0-9_-]{1,1024}$/.test(query.cursor))) {
+      throw invalidField('cursor');
+    }
+    return this.runtime.households.listInvitations(householdId, userId, { limit, cursor: query.cursor });
+  }
+
+  @Post('households/:householdId/invitations')
+  async makeInvitation(@Req() request: Request, @Param('householdId') householdId: string, @Body() body: unknown) {
+    const userId = await this.administratorRequest(request, householdId);
+    return this.runtime.households.createInvitation(householdId, userId, idempotency(request), normalizeInvitationEmail(record(body).email));
+  }
+
+  @Delete('households/:householdId/invitations/:invitationId')
+  @HttpCode(204)
+  async revokeInvitation(@Req() request: Request, @Param('householdId') householdId: string, @Param('invitationId') invitationId: string) {
+    const userId = await this.administratorRequest(request, householdId);
+    await this.runtime.households.revokeInvitation(householdId, userId, invitationId, idempotency(request));
+  }
+
+  @Post('invitations/accept')
+  @HttpCode(200)
+  async acceptInvitation(@Req() request: Request, @Body() body: unknown) {
+    const ip = requestSource(request, this.runtime.trustedProxy === true);
+    this.runtime.limit.check(JSON.stringify(['INVITE_IP', ip]), this.runtime.householdConfig.inviteIpPerMinute);
+    const key = idempotency(request);
+    const code = parseInvitationCode(body);
+    const identity = await this.runtime.provider.verifyFirebase(bearer(request));
+    this.runtime.limit.check(JSON.stringify(['INVITE_IDENTITY', identity.issuer, identity.subject]),
+      this.runtime.householdConfig.inviteIdentityPerMinute);
+    return this.runtime.households.acceptInvitation(key, code, invitationIdentity(identity));
+  }
+
+  @Get('households/:householdId/members')
+  async members(@Req() request: Request, @Param('householdId') householdId: string) {
+    const { userId } = await this.principal(request);
+    return this.runtime.households.listMembers(householdId, userId);
+  }
+
+  @Patch('households/:householdId/members/:userId')
+  async changeRole(@Req() request: Request, @Param('householdId') householdId: string, @Param('userId') target: string, @Body() body: unknown) {
+    const userId = await this.administratorRequest(request, householdId);
+    const { revision, role, successorAdminId } = prepareRoleChange(body);
+    return this.runtime.households.changeRole(householdId, userId, target, idempotency(request), revision, role, successorAdminId);
+  }
+
+  @Delete('households/:householdId/members/:userId')
+  @HttpCode(204)
+  async removeMember(@Req() request: Request, @Param('householdId') householdId: string, @Param('userId') target: string, @Query('successorAdminId') successor: unknown) {
+    const actor = await this.administratorRequest(request, householdId);
+    await this.runtime.households.removeMember(householdId, actor, target, idempotency(request), parseRevision(request.get('if-match')),
+      optionalId(successor, 'successorAdminId'));
   }
 
   @Get('households/:householdId/reminders')
@@ -169,7 +282,12 @@ class CoreController {
 export async function createApp(options: AppOptions) {
   @Module({
     controllers: [CoreController],
-    providers: [{ provide: services, useValue: { ...options, auth: new SessionService(options.db, options.provider, options.clock) } }],
+    providers: [{ provide: services, useValue: {
+      ...options, auth: new SessionService(options.db, options.provider, options.clock),
+      households: new HouseholdRepository(options.db, options.origin, options.clock, options.householdEffects),
+      householdConfig: options.householdConfig ?? householdRuntimeDefaults,
+      limit: new HouseholdRateLimit(options.clock ? () => options.clock!().getTime() : undefined),
+    } }],
   })
   class AppModule {}
 
@@ -215,7 +333,7 @@ export async function createApp(options: AppOptions) {
   if (options.webRoot && existsSync(join(options.webRoot, 'index.html'))) {
     const root = options.webRoot;
     app.useStaticAssets(root, { index: false });
-    express.get(['/', '/reminders', '/reminders/new'], (_req: Request, response: Response) => {
+    express.get(['/', '/reminders', '/reminders/new', '/invite', '/settings', '/settings/household', '/settings/personal', '/settings/installation', '/household', '/household/members', '/household/invitations'], (_req: Request, response: Response) => {
       response.sendFile(join(root, 'index.html'));
     });
   }

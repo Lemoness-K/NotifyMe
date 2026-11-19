@@ -1,0 +1,218 @@
+{
+  "stage": "functional-design",
+  "unit": "u2-household-and-settings",
+  "upstream_ids": [
+    "AC1.4.1",
+    "AC1.4.2",
+    "AC1.4.3",
+    "AC1.4.4",
+    "AC1.5.1",
+    "AC1.5.2",
+    "AC1.5.3",
+    "AC1.7.1",
+    "AC1.7.2",
+    "AC1.7.3",
+    "AC6.1.1",
+    "AC6.1.2",
+    "AC6.1.3",
+    "AC6.1.4",
+    "AC6.2.1",
+    "AC6.2.2",
+    "AC6.2.3",
+    "AC6.3.1",
+    "AC6.3.2",
+    "AC6.3.3",
+    "AC6.3.4",
+    "AC6.4.1",
+    "AC6.4.2",
+    "AC6.5.1",
+    "AC6.5.2",
+    "AC6.5.3",
+    "AC6.6.1",
+    "AC6.6.2",
+    "AC6.6.3",
+    "AC6.7.1",
+    "AC6.7.2",
+    "AC6.7.3",
+    "AC6.8.1",
+    "AC6.8.2",
+    "AC6.8.3"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.4.1",
+      "status": "OK",
+      "target": "BR2.1, BR2.2"
+    },
+    {
+      "id": "AC1.4.2",
+      "status": "OK",
+      "target": "BR2.2"
+    },
+    {
+      "id": "AC1.4.3",
+      "status": "OK",
+      "target": "BR2.2, BR2.3"
+    },
+    {
+      "id": "AC1.4.4",
+      "status": "OK",
+      "target": "BR2.3"
+    },
+    {
+      "id": "AC1.5.1",
+      "status": "OK",
+      "target": "BR2.4"
+    },
+    {
+      "id": "AC1.5.2",
+      "status": "OK",
+      "target": "BR2.5"
+    },
+    {
+      "id": "AC1.5.3",
+      "status": "OK",
+      "target": "BR2.5"
+    },
+    {
+      "id": "AC1.7.1",
+      "status": "OK",
+      "target": "BR2.6"
+    },
+    {
+      "id": "AC1.7.2",
+      "status": "N/A",
+      "target": "U3가 미완료 회차와 무담당 반복 처리를 구현한다."
+    },
+    {
+      "id": "AC1.7.3",
+      "status": "N/A",
+      "target": "U4가 회수 신호 수신과 기기 정리를 구현한다. U2 서버의 회수 경계는 BR2.6이다."
+    },
+    {
+      "id": "AC6.1.1",
+      "status": "OK",
+      "target": "BR2.7"
+    },
+    {
+      "id": "AC6.1.2",
+      "status": "OK",
+      "target": "BR2.8"
+    },
+    {
+      "id": "AC6.1.3",
+      "status": "N/A",
+      "target": "U4가 OS·설치 값의 실제 저장과 동작을 구현한다. U2 카탈로그의 소유권은 BR2.7이다."
+    },
+    {
+      "id": "AC6.1.4",
+      "status": "N/A",
+      "target": "U3가 Reminder와 Trigger 및 RecurrenceRule의 실제 값을 저장한다."
+    },
+    {
+      "id": "AC6.2.1",
+      "status": "OK",
+      "target": "BR2.8, BR2.9"
+    },
+    {
+      "id": "AC6.2.2",
+      "status": "OK",
+      "target": "BR2.8, BR2.9"
+    },
+    {
+      "id": "AC6.2.3",
+      "status": "OK",
+      "target": "BR2.9"
+    },
+    {
+      "id": "AC6.3.1",
+      "status": "OK",
+      "target": "BR2.9"
+    },
+    {
+      "id": "AC6.3.2",
+      "status": "OK",
+      "target": "BR2.9, BR2.12, BR2.13"
+    },
+    {
+      "id": "AC6.3.3",
+      "status": "OK",
+      "target": "BR2.9"
+    },
+    {
+      "id": "AC6.3.4",
+      "status": "OK",
+      "target": "BR2.9"
+    },
+    {
+      "id": "AC6.4.1",
+      "status": "OK",
+      "target": "BR2.7, BR2.13"
+    },
+    {
+      "id": "AC6.4.2",
+      "status": "N/A",
+      "target": "U4가 Android OS 설정 화면의 연결을 제공한다."
+    },
+    {
+      "id": "AC6.5.1",
+      "status": "OK",
+      "target": "BR2.7"
+    },
+    {
+      "id": "AC6.5.2",
+      "status": "OK",
+      "target": "BR2.7, BR2.8"
+    },
+    {
+      "id": "AC6.5.3",
+      "status": "OK",
+      "target": "BR2.14"
+    },
+    {
+      "id": "AC6.6.1",
+      "status": "OK",
+      "target": "BR2.10"
+    },
+    {
+      "id": "AC6.6.2",
+      "status": "OK",
+      "target": "BR2.10"
+    },
+    {
+      "id": "AC6.6.3",
+      "status": "OK",
+      "target": "BR2.10"
+    },
+    {
+      "id": "AC6.7.1",
+      "status": "OK",
+      "target": "BR2.11"
+    },
+    {
+      "id": "AC6.7.2",
+      "status": "OK",
+      "target": "BR2.11"
+    },
+    {
+      "id": "AC6.7.3",
+      "status": "OK",
+      "target": "BR2.11"
+    },
+    {
+      "id": "AC6.8.1",
+      "status": "OK",
+      "target": "BR2.12"
+    },
+    {
+      "id": "AC6.8.2",
+      "status": "N/A",
+      "target": "U3가 생성 당시 기준의 저장과 첫 주 회차 계산을 구현한다. 정책 제공은 BR2.12다."
+    },
+    {
+      "id": "AC6.8.3",
+      "status": "OK",
+      "target": "BR2.12"
+    }
+  ]
+}

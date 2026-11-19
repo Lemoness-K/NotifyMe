@@ -13607,3 +13607,1868 @@
 **Review Finding Dispositions**: {"version":1,"dispositions":[{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/code-generation/code-generation-plan.md","id":"R-06","fingerprint":"sha256:ea16aaed8e6a15731711bcf7afa57589f30ac5e676383f6f370b26b7de066f70","status":"Accepted risk","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.json","digest":"sha256:0724b733282df6748e76f85fbf127d0b70a9b845dd113d78106e7f77bb4704f0"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/functional-design/functional-spec.md","id":"R-01","fingerprint":"sha256:d211887f427c261af915b3f403b2920efde4d6b3c9bbe6f5a26dbf1bd8f8837a","status":"Accepted risk","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/functional-design/units/u1-core-flow/6a9232c36f0fe5b7/2.json","digest":"sha256:af417a484a12e678aab486449203125e65afd678eae43030049bfd2b67f154c7"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/infrastructure-design/cicd-pipeline.md","id":"R-01","fingerprint":"sha256:30fcca656e436ce0fca8468b748eaf92ff8262e1e3686839559bf8b366aa49b3","status":"Accepted risk","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/infrastructure-design/units/u1-core-flow/6a9232c36f0fe5b7/1.json","digest":"sha256:04ee86a7930c87461f3ef3bbee56c890b61612bab29b371345f355cf95974621"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/infrastructure-design/cicd-pipeline.md","id":"R-02","fingerprint":"sha256:4e85db7634d17842e84531eb271beb65b2f08972fc916bd6af448d93f265914c","status":"Accepted risk","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/infrastructure-design/units/u1-core-flow/6a9232c36f0fe5b7/1.json","digest":"sha256:04ee86a7930c87461f3ef3bbee56c890b61612bab29b371345f355cf95974621"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/infrastructure-design/cicd-pipeline.md","id":"R-03","fingerprint":"sha256:d2196b9266f03a945754d3b3d16f565e1853484703afad788be4b267a3aab1c3","status":"Accepted risk","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/infrastructure-design/units/u1-core-flow/6a9232c36f0fe5b7/1.json","digest":"sha256:04ee86a7930c87461f3ef3bbee56c890b61612bab29b371345f355cf95974621"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/nfr-design/security-design.md","id":"R-01","fingerprint":"sha256:ec849083907fab4daf3b7e074041124c31a46e479ba4d2d341d337fcb25a8291","status":"Accepted risk","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/nfr-design/units/u1-core-flow/6a9232c36f0fe5b7/1.json","digest":"sha256:73a630fbc849670b41090d0cf2e43b35d80bec0d797456b68969ddb50c4fe874"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/nfr-design/security-design.md","id":"R-02","fingerprint":"sha256:e43f114466e255a528d83ca6641a9e3d00c55aa14c27129df1ab3f79dd98fe61","status":"Accepted risk","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/nfr-design/units/u1-core-flow/6a9232c36f0fe5b7/1.json","digest":"sha256:73a630fbc849670b41090d0cf2e43b35d80bec0d797456b68969ddb50c4fe874"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/nfr-requirements/security-requirements.md","id":"R-01","fingerprint":"sha256:19d5bcc53ff6fc996e334cd9875c1022cde5d16f64f633aec0fb09b560031861","status":"Accepted risk","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/nfr-requirements/units/u1-core-flow/6a9232c36f0fe5b7/1.json","digest":"sha256:1b710599c7aa1e2bcc6795700b388a784c3c59e7945aabc6d9e52f501ac21b8d"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/nfr-requirements/security-requirements.md","id":"R-02","fingerprint":"sha256:51a07d3f1356aef75e36b7026dd23eef2ee20c22afe1335474ac349d0b218dcd","status":"Accepted risk","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/nfr-requirements/units/u1-core-flow/6a9232c36f0fe5b7/1.json","digest":"sha256:1b710599c7aa1e2bcc6795700b388a784c3c59e7945aabc6d9e52f501ac21b8d"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/nfr-requirements/security-requirements.md","id":"R-03","fingerprint":"sha256:1d63a18781214b8f589678c74bb334ba564a87396749ad060cdbf49469da8809","status":"Accepted risk","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/nfr-requirements/units/u1-core-flow/6a9232c36f0fe5b7/1.json","digest":"sha256:1b710599c7aa1e2bcc6795700b388a784c3c59e7945aabc6d9e52f501ac21b8d"}}]}
 
 ---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:04:30Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/u1-final-rereview-issue.md
+**Context**: .aidlc-engine > u1-final-rereview-issue.md
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-18T23:12:09Z
+**Event**: HUMAN_TURN
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Origin**: person
+**Source**: typed
+**Message Id**: 97b633b4
+
+---
+
+## Autonomy Mode Set
+**Timestamp**: 2026-11-18T23:12:14Z
+**Event**: AUTONOMY_MODE_SET
+**Mode**: autonomous
+**Message Id**: 97b633b4
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-18T23:12:54Z
+**Event**: UNIT_STARTED
+**Stage**: functional-design
+**Unit**: u2-household-and-settings
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:14:55Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/functional-design-questions.md
+**Context**: construction > u2-household-and-settings > functional-design > functional-design-questions.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:14:56Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/entities.md
+**Context**: construction > u2-household-and-settings > functional-design > entities.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:14:57Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/rules.md
+**Context**: construction > u2-household-and-settings > functional-design > rules.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:16:27Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/functional-spec.md
+**Context**: construction > u2-household-and-settings > functional-design > functional-spec.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:16:28Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/frontend-components.md
+**Context**: construction > u2-household-and-settings > functional-design > frontend-components.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:17:03Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/traceability.json
+**Context**: construction > u2-household-and-settings > functional-design > traceability.json
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:17:11Z
+**Event**: SENSOR_FIRED
+**Fire id**: fe4373ad
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/entities.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:17:11Z
+**Event**: SENSOR_PASSED
+**Fire id**: fe4373ad
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/entities.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:17:12Z
+**Event**: SENSOR_FIRED
+**Fire id**: a271f7c6
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/rules.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:17:12Z
+**Event**: SENSOR_PASSED
+**Fire id**: a271f7c6
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/rules.md
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:17:12Z
+**Event**: SENSOR_FIRED
+**Fire id**: 100b9bd2
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/functional-spec.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:17:12Z
+**Event**: SENSOR_PASSED
+**Fire id**: 100b9bd2
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/functional-spec.md
+**Duration ms**: 185
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:17:12Z
+**Event**: SENSOR_FIRED
+**Fire id**: 94451ff9
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:17:13Z
+**Event**: SENSOR_PASSED
+**Fire id**: 94451ff9
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/traceability.json
+**Duration ms**: 185
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:17:13Z
+**Event**: SENSOR_FIRED
+**Fire id**: 33fa95df
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/frontend-components.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:17:13Z
+**Event**: SENSOR_PASSED
+**Fire id**: 33fa95df
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/frontend-components.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:17:13Z
+**Event**: SENSOR_FIRED
+**Fire id**: f1477deb
+**Sensor ID**: upstream-coverage
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/entities.md
+
+---
+
+## Sensor Failed
+**Timestamp**: 2026-11-18T23:17:13Z
+**Event**: SENSOR_FAILED
+**Fire id**: f1477deb
+**Sensor ID**: upstream-coverage
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/entities.md
+**Detail path**: aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/sensors/functional-design/upstream-coverage-f1477deb.md
+**Findings count**: 3
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:17:13Z
+**Event**: SENSOR_FIRED
+**Fire id**: 5ac7f379
+**Sensor ID**: traceability
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:17:14Z
+**Event**: SENSOR_PASSED
+**Fire id**: 5ac7f379
+**Sensor ID**: traceability
+**Stage slug**: functional-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/traceability.json
+**Duration ms**: 193
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:17:36Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/functional-spec.md
+**Context**: construction > u2-household-and-settings > functional-design > functional-spec.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-18T23:17:39Z
+**Event**: REVIEW_REQUESTED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:d41ee6a6c97801462b0cc77da8e523a02f99c66f4dd51e94409818799dea37b4
+**Request Id**: review:c90f9adc745e8530ddb1a9584bcbaf55
+**Review File**: .aidlc-engine/reviews/functional-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.c90f9adc745e8530ddb1a9584bcbaf55.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:17:44Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:19:08Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/functional-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.c90f9adc745e8530ddb1a9584bcbaf55.review.md
+**Context**: .aidlc-engine > reviews > functional-design > units > u2-household-and-settings > 6a9232c36f0fe5b7 > 1.c90f9adc745e8530ddb1a9584bcbaf55.review.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:19:21Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/functional-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.c90f9adc745e8530ddb1a9584bcbaf55.review.md
+**Context**: .aidlc-engine > reviews > functional-design > units > u2-household-and-settings > 6a9232c36f0fe5b7 > 1.c90f9adc745e8530ddb1a9584bcbaf55.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-18T23:19:27Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f0f3-e96f-7031-9ff9-811b34fea9b7
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**NOT-READY.** U2 수용 기준 35건의 추적 검사는 통과했습니다. 구현 전 네 가지 주요 문제를 보완해야 합니다.\n\n- 초대 코드 재노출 방식이 기존 1회 표시 정책과 충돌합니다.\n- 수락·취소·만료 이후 초대 대상 이메일 삭제 경로가 빠졌습니다.\n- 마지막
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/functional-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.c90f9adc745e8530ddb1a9584bcbaf55.review.md=c23e287e5be4cdfb862de646bf46409311bde27a81cc22b0e38702675dfd1300
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-18T23:19:32Z
+**Event**: REVIEW_COMPLETED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:d41ee6a6c97801462b0cc77da8e523a02f99c66f4dd51e94409818799dea37b4
+**Artifact Fingerprint**: sha256:d41ee6a6c97801462b0cc77da8e523a02f99c66f4dd51e94409818799dea37b4
+**Request Id**: review:c90f9adc745e8530ddb1a9584bcbaf55
+**Review Record**: .aidlc-engine/reviews/functional-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json
+**Review Record Digest**: sha256:54d2f0eef1d20cc6732ec4a163cd195c53681d2d2147a40065b08ece32ecd0c7
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:20:29Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/entities.md
+**Context**: construction > u2-household-and-settings > functional-design > entities.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:20:30Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/rules.md
+**Context**: construction > u2-household-and-settings > functional-design > rules.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:20:30Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/functional-spec.md
+**Context**: construction > u2-household-and-settings > functional-design > functional-spec.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:20:31Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/frontend-components.md
+**Context**: construction > u2-household-and-settings > functional-design > frontend-components.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-18T23:20:41Z
+**Event**: REVIEW_REQUESTED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:36259f0520dace370bdfef73850db9f4e0f666f7bafc88dc41a1698e2232af83
+**Request Id**: review:0233192dc2f7376c9e40be7f46f3dc40
+**Review File**: .aidlc-engine/reviews/functional-design/units/u2-household-and-settings/6a9232c36f0fe5b7/2.0233192dc2f7376c9e40be7f46f3dc40.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:20:44Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:21:24Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/functional-design/units/u2-household-and-settings/6a9232c36f0fe5b7/2.0233192dc2f7376c9e40be7f46f3dc40.review.md
+**Context**: .aidlc-engine > reviews > functional-design > units > u2-household-and-settings > 6a9232c36f0fe5b7 > 2.0233192dc2f7376c9e40be7f46f3dc40.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-18T23:21:30Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f0f3-e96f-7031-9ff9-811b34fea9b7
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**READY.** 초대 코드의 최초 1회 표시와 재발급 절차, 대상 이메일 삭제, 마지막 Admin 인계 입력, 실제 U1 배정 종료가 보완됐습니다. 수용 기준 35건의 추적 검사가 통과했습니다.\n\n경미한 지적 한 건이 남았습니다. 관리 화면을 다시 열었을 때 기존 초
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/functional-design/units/u2-household-and-settings/6a9232c36f0fe5b7/2.0233192dc2f7376c9e40be7f46f3dc40.review.md=f1f5a1128b50584ab581dabf7c799e0145605ed3bae7d3322719d1f6e7685a6a
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-18T23:21:36Z
+**Event**: REVIEW_COMPLETED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 2
+**Verdict**: READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:36259f0520dace370bdfef73850db9f4e0f666f7bafc88dc41a1698e2232af83
+**Artifact Fingerprint**: sha256:36259f0520dace370bdfef73850db9f4e0f666f7bafc88dc41a1698e2232af83
+**Request Id**: review:0233192dc2f7376c9e40be7f46f3dc40
+**Review Record**: .aidlc-engine/reviews/functional-design/units/u2-household-and-settings/6a9232c36f0fe5b7/2.json
+**Review Record Digest**: sha256:1090ee2992edd5b9db20c4fb22c3ee02da2db56e02a5eb979599d4c24a490bae
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-18T23:21:40Z
+**Event**: UNIT_COMPLETED
+**Stage**: functional-design
+**Unit**: u2-household-and-settings
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-18T23:22:07Z
+**Event**: UNIT_STARTED
+**Stage**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:23:05Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/nfr-requirements-questions.md
+**Context**: construction > u2-household-and-settings > nfr-requirements > nfr-requirements-questions.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:23:06Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/performance-requirements.md
+**Context**: construction > u2-household-and-settings > nfr-requirements > performance-requirements.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:23:08Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/security-requirements.md
+**Context**: construction > u2-household-and-settings > nfr-requirements > security-requirements.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:23:09Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/scalability-requirements.md
+**Context**: construction > u2-household-and-settings > nfr-requirements > scalability-requirements.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:23:10Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/reliability-requirements.md
+**Context**: construction > u2-household-and-settings > nfr-requirements > reliability-requirements.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:23:11Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/observability-requirements.md
+**Context**: construction > u2-household-and-settings > nfr-requirements > observability-requirements.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:23:12Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/tech-stack-decisions.md
+**Context**: construction > u2-household-and-settings > nfr-requirements > tech-stack-decisions.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:23:26Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/traceability.json
+**Context**: construction > u2-household-and-settings > nfr-requirements > traceability.json
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:23:33Z
+**Event**: SENSOR_FIRED
+**Fire id**: 4f968871
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/performance-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:23:34Z
+**Event**: SENSOR_PASSED
+**Fire id**: 4f968871
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/performance-requirements.md
+**Duration ms**: 183
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:23:34Z
+**Event**: SENSOR_FIRED
+**Fire id**: b0fad8b7
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/security-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:23:34Z
+**Event**: SENSOR_PASSED
+**Fire id**: b0fad8b7
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/security-requirements.md
+**Duration ms**: 183
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:23:34Z
+**Event**: SENSOR_FIRED
+**Fire id**: 9208e54c
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/scalability-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:23:34Z
+**Event**: SENSOR_PASSED
+**Fire id**: 9208e54c
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/scalability-requirements.md
+**Duration ms**: 185
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:23:35Z
+**Event**: SENSOR_FIRED
+**Fire id**: d221e391
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/reliability-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:23:35Z
+**Event**: SENSOR_PASSED
+**Fire id**: d221e391
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/reliability-requirements.md
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:23:35Z
+**Event**: SENSOR_FIRED
+**Fire id**: a976c56a
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/observability-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:23:35Z
+**Event**: SENSOR_PASSED
+**Fire id**: a976c56a
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/observability-requirements.md
+**Duration ms**: 186
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:23:35Z
+**Event**: SENSOR_FIRED
+**Fire id**: b7f7945d
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/tech-stack-decisions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:23:36Z
+**Event**: SENSOR_PASSED
+**Fire id**: b7f7945d
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/tech-stack-decisions.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:23:36Z
+**Event**: SENSOR_FIRED
+**Fire id**: 2ca98845
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:23:36Z
+**Event**: SENSOR_PASSED
+**Fire id**: 2ca98845
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/traceability.json
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:23:36Z
+**Event**: SENSOR_FIRED
+**Fire id**: b000f415
+**Sensor ID**: upstream-coverage
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/performance-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:23:36Z
+**Event**: SENSOR_PASSED
+**Fire id**: b000f415
+**Sensor ID**: upstream-coverage
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/performance-requirements.md
+**Duration ms**: 185
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:23:37Z
+**Event**: SENSOR_FIRED
+**Fire id**: 21e355c9
+**Sensor ID**: traceability
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:23:37Z
+**Event**: SENSOR_PASSED
+**Fire id**: 21e355c9
+**Sensor ID**: traceability
+**Stage slug**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/traceability.json
+**Duration ms**: 188
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-18T23:23:37Z
+**Event**: REVIEW_REQUESTED
+**Stage**: nfr-requirements
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:dfbffa0239c4b28857c0e8a23fca55abc805641c6a6c44bb21b04365fe63c367
+**Request Id**: review:4ffe774d8a8e934a58d8462983b3c8db
+**Review File**: .aidlc-engine/reviews/nfr-requirements/units/u2-household-and-settings/6a9232c36f0fe5b7/1.4ffe774d8a8e934a58d8462983b3c8db.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:23:42Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:24:31Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/nfr-requirements/units/u2-household-and-settings/6a9232c36f0fe5b7/1.4ffe774d8a8e934a58d8462983b3c8db.review.md
+**Context**: .aidlc-engine > reviews > nfr-requirements > units > u2-household-and-settings > 6a9232c36f0fe5b7 > 1.4ffe774d8a8e934a58d8462983b3c8db.review.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:24:41Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/nfr-requirements/units/u2-household-and-settings/6a9232c36f0fe5b7/1.4ffe774d8a8e934a58d8462983b3c8db.review.md
+**Context**: .aidlc-engine > reviews > nfr-requirements > units > u2-household-and-settings > 6a9232c36f0fe5b7 > 1.4ffe774d8a8e934a58d8462983b3c8db.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-18T23:24:46Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f0f3-e96f-7031-9ff9-811b34fea9b7
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**READY.** 추적 검사를 통과했고, 현재 U1 실행 스택과 일치합니다. Raspberry Pi 성능 판정 조건은 DS-014에 연결돼 있습니다.\n\nNFR 설계에서 보완할 경미한 항목 두 건을 기록했습니다. 초대·구성원 변경의 요청 제한과 `429` 검증, 만료된 
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/nfr-requirements/units/u2-household-and-settings/6a9232c36f0fe5b7/1.4ffe774d8a8e934a58d8462983b3c8db.review.md=60bf9825cda8a703d2d15d68c900efb628dd3dac0d0e02b7b0ddd7ee5678e2ee
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-18T23:24:50Z
+**Event**: REVIEW_COMPLETED
+**Stage**: nfr-requirements
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 1
+**Verdict**: READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:dfbffa0239c4b28857c0e8a23fca55abc805641c6a6c44bb21b04365fe63c367
+**Artifact Fingerprint**: sha256:dfbffa0239c4b28857c0e8a23fca55abc805641c6a6c44bb21b04365fe63c367
+**Request Id**: review:4ffe774d8a8e934a58d8462983b3c8db
+**Review Record**: .aidlc-engine/reviews/nfr-requirements/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json
+**Review Record Digest**: sha256:1ffc889b932e85ebb14d4a0ee2f3ad5592a1e291f59675d86c1ff0d2c8347b3b
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-18T23:24:54Z
+**Event**: UNIT_COMPLETED
+**Stage**: nfr-requirements
+**Unit**: u2-household-and-settings
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-18T23:25:22Z
+**Event**: UNIT_STARTED
+**Stage**: nfr-design
+**Unit**: u2-household-and-settings
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:26:14Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/nfr-design-questions.md
+**Context**: construction > u2-household-and-settings > nfr-design > nfr-design-questions.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:26:16Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/performance-design.md
+**Context**: construction > u2-household-and-settings > nfr-design > performance-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:26:17Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/security-design.md
+**Context**: construction > u2-household-and-settings > nfr-design > security-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:26:18Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/scalability-design.md
+**Context**: construction > u2-household-and-settings > nfr-design > scalability-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:26:19Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/reliability-design.md
+**Context**: construction > u2-household-and-settings > nfr-design > reliability-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:26:21Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/observability-design.md
+**Context**: construction > u2-household-and-settings > nfr-design > observability-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:26:22Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/logical-components.md
+**Context**: construction > u2-household-and-settings > nfr-design > logical-components.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:26:37Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/traceability.json
+**Context**: construction > u2-household-and-settings > nfr-design > traceability.json
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:26:48Z
+**Event**: SENSOR_FIRED
+**Fire id**: 5bc1c198
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/performance-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:26:48Z
+**Event**: SENSOR_PASSED
+**Fire id**: 5bc1c198
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/performance-design.md
+**Duration ms**: 183
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:26:48Z
+**Event**: SENSOR_FIRED
+**Fire id**: 48eb8b44
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/security-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:26:48Z
+**Event**: SENSOR_PASSED
+**Fire id**: 48eb8b44
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/security-design.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:26:49Z
+**Event**: SENSOR_FIRED
+**Fire id**: 728fd610
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/scalability-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:26:49Z
+**Event**: SENSOR_PASSED
+**Fire id**: 728fd610
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/scalability-design.md
+**Duration ms**: 186
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:26:49Z
+**Event**: SENSOR_FIRED
+**Fire id**: 5b896eaf
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/reliability-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:26:49Z
+**Event**: SENSOR_PASSED
+**Fire id**: 5b896eaf
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/reliability-design.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:26:49Z
+**Event**: SENSOR_FIRED
+**Fire id**: 0ba8b4d7
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/observability-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:26:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: 0ba8b4d7
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/observability-design.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:26:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: 1e2aab50
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/logical-components.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:26:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: 1e2aab50
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/logical-components.md
+**Duration ms**: 186
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:26:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: 58f12972
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:26:50Z
+**Event**: SENSOR_PASSED
+**Fire id**: 58f12972
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/traceability.json
+**Duration ms**: 183
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:26:50Z
+**Event**: SENSOR_FIRED
+**Fire id**: 5393a7ae
+**Sensor ID**: upstream-coverage
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/performance-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:26:51Z
+**Event**: SENSOR_PASSED
+**Fire id**: 5393a7ae
+**Sensor ID**: upstream-coverage
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/performance-design.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:26:51Z
+**Event**: SENSOR_FIRED
+**Fire id**: 28d41989
+**Sensor ID**: traceability
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:26:51Z
+**Event**: SENSOR_PASSED
+**Fire id**: 28d41989
+**Sensor ID**: traceability
+**Stage slug**: nfr-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/traceability.json
+**Duration ms**: 191
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-18T23:26:51Z
+**Event**: REVIEW_REQUESTED
+**Stage**: nfr-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:440afbf39dac2008fb7981777a5c325686fe46bf6f5b5a0e603f11b289735c2e
+**Request Id**: review:e55c1d63b2092f8f1dc57f968dcac506
+**Review File**: .aidlc-engine/reviews/nfr-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.e55c1d63b2092f8f1dc57f968dcac506.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:26:52Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:27:40Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/nfr-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.e55c1d63b2092f8f1dc57f968dcac506.review.md
+**Context**: .aidlc-engine > reviews > nfr-design > units > u2-household-and-settings > 6a9232c36f0fe5b7 > 1.e55c1d63b2092f8f1dc57f968dcac506.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-18T23:27:45Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f0f3-e96f-7031-9ff9-811b34fea9b7
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**READY.** 요청 제한과 `429` 대기 처리, 만료 이메일 정리, Admin 전용 초대 조회 설계를 검토했습니다. 추적 검사도 통과했습니다.\n\n경미한 지적 한 건을 기록했습니다. 가구 활성 소속 검사는 가구 데이터에 적용하고, `/me/settings`는 유효한
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/nfr-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.e55c1d63b2092f8f1dc57f968dcac506.review.md=352a0b363c7e9352d47d50261ffa564a73959c949aea5d8eb980b73b0154032d
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-18T23:27:49Z
+**Event**: REVIEW_COMPLETED
+**Stage**: nfr-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 1
+**Verdict**: READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:440afbf39dac2008fb7981777a5c325686fe46bf6f5b5a0e603f11b289735c2e
+**Artifact Fingerprint**: sha256:440afbf39dac2008fb7981777a5c325686fe46bf6f5b5a0e603f11b289735c2e
+**Request Id**: review:e55c1d63b2092f8f1dc57f968dcac506
+**Review Record**: .aidlc-engine/reviews/nfr-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json
+**Review Record Digest**: sha256:063132d0edf3d12f03be67dabf68775ea851d5b97e48b2935869dc8488078b2e
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-18T23:27:53Z
+**Event**: UNIT_COMPLETED
+**Stage**: nfr-design
+**Unit**: u2-household-and-settings
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-18T23:28:24Z
+**Event**: UNIT_STARTED
+**Stage**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:29:22Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/infrastructure-design-questions.md
+**Context**: construction > u2-household-and-settings > infrastructure-design > infrastructure-design-questions.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:29:23Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/infrastructure-specification.md
+**Context**: construction > u2-household-and-settings > infrastructure-design > infrastructure-specification.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:29:24Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/monitoring-design.md
+**Context**: construction > u2-household-and-settings > infrastructure-design > monitoring-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:29:25Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/cicd-pipeline.md
+**Context**: construction > u2-household-and-settings > infrastructure-design > cicd-pipeline.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:29:41Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/traceability.json
+**Context**: construction > u2-household-and-settings > infrastructure-design > traceability.json
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:29:53Z
+**Event**: SENSOR_FIRED
+**Fire id**: a7106e8a
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/infrastructure-specification.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:29:54Z
+**Event**: SENSOR_PASSED
+**Fire id**: a7106e8a
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/infrastructure-specification.md
+**Duration ms**: 183
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:29:54Z
+**Event**: SENSOR_FIRED
+**Fire id**: 45c25907
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/monitoring-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:29:54Z
+**Event**: SENSOR_PASSED
+**Fire id**: 45c25907
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/monitoring-design.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:29:54Z
+**Event**: SENSOR_FIRED
+**Fire id**: 5ae215d1
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/cicd-pipeline.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:29:54Z
+**Event**: SENSOR_PASSED
+**Fire id**: 5ae215d1
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/cicd-pipeline.md
+**Duration ms**: 181
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:29:54Z
+**Event**: SENSOR_FIRED
+**Fire id**: 4fb84ad7
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:29:55Z
+**Event**: SENSOR_PASSED
+**Fire id**: 4fb84ad7
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/traceability.json
+**Duration ms**: 185
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:29:55Z
+**Event**: SENSOR_FIRED
+**Fire id**: 18a88959
+**Sensor ID**: upstream-coverage
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/infrastructure-specification.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-18T23:29:55Z
+**Event**: SENSOR_PASSED
+**Fire id**: 18a88959
+**Sensor ID**: upstream-coverage
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/infrastructure-specification.md
+**Duration ms**: 187
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-18T23:29:55Z
+**Event**: SENSOR_FIRED
+**Fire id**: 84f36c65
+**Sensor ID**: traceability
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/traceability.json
+
+---
+
+## Sensor Failed
+**Timestamp**: 2026-11-18T23:29:55Z
+**Event**: SENSOR_FAILED
+**Fire id**: 84f36c65
+**Sensor ID**: traceability
+**Stage slug**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/traceability.json
+**Detail path**: aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/sensors/infrastructure-design/traceability-84f36c65.md
+**Findings count**: 1
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-18T23:30:06Z
+**Event**: REVIEW_REQUESTED
+**Stage**: infrastructure-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:7474895e783504e279784880bc920a733e16e5d749a3125fcf0c8e4ca9adeef5
+**Request Id**: review:ca07ed49fd528f87edb87d506e2f89e1
+**Review File**: .aidlc-engine/reviews/infrastructure-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.ca07ed49fd528f87edb87d506e2f89e1.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:30:07Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:31:05Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/infrastructure-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.ca07ed49fd528f87edb87d506e2f89e1.review.md
+**Context**: .aidlc-engine > reviews > infrastructure-design > units > u2-household-and-settings > 6a9232c36f0fe5b7 > 1.ca07ed49fd528f87edb87d506e2f89e1.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-18T23:31:11Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f0f3-e96f-7031-9ff9-811b34fea9b7
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**READY.** 기존 인프라 추적표의 12개 연결을 수동 확인했습니다. 상위 NFR 설계 문서에 상세 ID가 없어 자동 추적 검사는 실패했습니다.\n\n상세 ID 추적 복원과 실제 Caddy 경유 검증을 경미한 보완으로 기록했습니다. Caddy 검증에서는 전달 헤더 덮어
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/infrastructure-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.ca07ed49fd528f87edb87d506e2f89e1.review.md=b1d73a0399a6b0f85b0a8349373158996f8acd1e0d38030a24dab483123b310e
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-18T23:31:15Z
+**Event**: REVIEW_COMPLETED
+**Stage**: infrastructure-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 1
+**Verdict**: READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:7474895e783504e279784880bc920a733e16e5d749a3125fcf0c8e4ca9adeef5
+**Artifact Fingerprint**: sha256:7474895e783504e279784880bc920a733e16e5d749a3125fcf0c8e4ca9adeef5
+**Request Id**: review:ca07ed49fd528f87edb87d506e2f89e1
+**Review Record**: .aidlc-engine/reviews/infrastructure-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json
+**Review Record Digest**: sha256:9c033a2f00a256802530e9066cbac56ceb4df36fa2c0aac2479ec7f27c534688
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-18T23:31:19Z
+**Event**: UNIT_COMPLETED
+**Stage**: infrastructure-design
+**Unit**: u2-household-and-settings
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:32:59Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md
+**Context**: construction > u2-household-and-settings > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-18T23:33:01Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/unit-test-instructions.md
+**Context**: construction > u2-household-and-settings > code-generation > unit-test-instructions.md
+
+---
+
+## Plan Approval Blocked
+**Timestamp**: 2026-11-18T23:33:27Z
+**Event**: PLAN_APPROVAL_BLOCKED
+**Guard**: plan-approval-guard
+**Reason**: plan-approval
+**Tool**: Write
+**Target**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/u2-code-plan-issue.md
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Stage**: code-generation
+**Unit**: u2-household-and-settings
+
+---
+
+## Question Asked
+**Timestamp**: 2026-11-18T23:33:38Z
+**Event**: QUESTION_ASKED
+**Question Id**: dd92b4f1
+**Question Type**: plan-approval
+**Question Chat**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Question Shows**: sha256:dacd12b256180d1cc23b1d6ae559f908dac6965c9cd50ff9c8f3e080daec058e
+**Stage**: code-generation
+**Unit**: u2-household-and-settings
+**Ask Id**: b89d4f937c332484e44ede511988b02c
+**Options**: ["Approve Plan","Request Changes","I'll edit the files"]
+**Question Text SHA-256**: ab937df4e6696a3c3058c98faa0a0741d4103487f5e72112db831367f1079eab
+**Questions File**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-questions.md
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-18T23:37:24Z
+**Event**: HUMAN_TURN
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Origin**: person
+**Source**: typed
+**Message Id**: 19bd7a84
+**Open Questions**: dd92b4f1
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-questions.md","entries":{"Plan Approval":"ce8ae9a6c1e8f200"}}
+
+---
+
+## Plan Approval Recorded
+**Timestamp**: 2026-11-18T23:37:32Z
+**Event**: PLAN_APPROVAL_RECORDED
+**Stage**: code-generation
+**Details**: Approve Plan
+**Checkpoint**: plan-approval
+**Plan Target**: unit:u2-household-and-settings
+**Intent**: 01a1e180-8a76-7c04-92db-b37176f3e225
+**Directive Epoch**: sha256:df27ee819b67968d38c68ae6ce25f4d5cf6dd5ff465fa14d6510480d04e939ba
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+**Approval Fingerprint**: sha256:v3:e42c70ec1845e535a7cab79ba4bd37efd93a725f1d6cfb9eaa5036cad823ff86
+**Questions File**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-questions.md
+**Questions SHA-256**: fcb295cbc14475e30dc494ee1a89270f4b90d42990b54031d477e73131ebf4da
+**Prompt SHA-256**: 7168430a90d4e62c0b706aac63f5b10733fed730694a26fc2442a6c7f0544016
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Asked By**: engine
+**Person Reply**: 승인합니다
+**Message Id**: 19bd7a84
+**Unit**: u2-household-and-settings
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-18T23:38:10Z
+**Event**: UNIT_STARTED
+**Stage**: code-generation
+**Unit**: u2-household-and-settings
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:40:54Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/inception/contract-design/contract-summary.md
+**Context**: inception > contract-design > contract-summary.md
+**Summary Authorization Id**: 08a4b4d8d328120a2b4a5f34c9586219fc8428a30096f735cb8df887fac02adb
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:45:51Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md
+**Context**: construction > u2-household-and-settings > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:46:36Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/inception/contract-design/contract-summary.md
+**Context**: inception > contract-design > contract-summary.md
+**Summary Authorization Id**: 08a4b4d8d328120a2b4a5f34c9586219fc8428a30096f735cb8df887fac02adb
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:46:39Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/inception/contract-design/contract-summary.md
+**Context**: inception > contract-design > contract-summary.md
+**Summary Authorization Id**: 08a4b4d8d328120a2b4a5f34c9586219fc8428a30096f735cb8df887fac02adb
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:48:19Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md
+**Context**: construction > u2-household-and-settings > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:50:01Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/inception/contract-design/contract-summary.md
+**Context**: inception > contract-design > contract-summary.md
+**Summary Authorization Id**: 08a4b4d8d328120a2b4a5f34c9586219fc8428a30096f735cb8df887fac02adb
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:58:02Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md
+**Context**: construction > u2-household-and-settings > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-18T23:59:33Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md
+**Context**: construction > u2-household-and-settings > code-generation > code-generation-plan.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-19T00:01:28Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-developer-agent
+**Agent ID**: 01a1f106-b7e6-70b3-9b3b-623475075fb2
+**Message**: U2 서버 구현과 계획 1~14단계를 완료했습니다. 마이그레이션, 가구 초대·역할·제거, 계정·가구 설정, 요청 제한과 만료 이메일 정리를 구현했습니다.\n\n서버 테스트 46건과 타입 검사가 통과했습니다. 실제 로컬 Caddy를 통해 전달 헤더 덮어쓰기, 헬스 경로 차단, 초대 응답 비캐시도 확인했습니다.\n\n프런트엔드 구현과 전체 검증은 상위 에이전트에 인계
+
+---
+
+## Session Resume
+**Timestamp**: 2026-11-19T04:34:14Z
+**Event**: SESSION_RESUMED
+**Source**: resume
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-19T04:34:15Z
+**Event**: HUMAN_TURN
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Origin**: person
+**Source**: typed
+**Message Id**: 9a45904c
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-questions.md","entries":{"Plan Approval":"ce8ae9a6c1e8f200"}}
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-19T04:37:25Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/traceability.json
+**Context**: construction > u2-household-and-settings > code-generation > traceability.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-19T04:37:27Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/source-manifest.json
+**Context**: construction > u2-household-and-settings > code-generation > source-manifest.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-19T04:38:07Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-summary.md
+**Context**: construction > u2-household-and-settings > code-generation > code-summary.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-19T04:38:17Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md
+**Context**: construction > u2-household-and-settings > code-generation > code-generation-plan.md
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-19T04:38:25Z
+**Event**: SENSOR_FIRED
+**Fire id**: 6b837172
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-19T04:38:25Z
+**Event**: SENSOR_PASSED
+**Fire id**: 6b837172
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-19T04:38:26Z
+**Event**: SENSOR_FIRED
+**Fire id**: 4aba2607
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/unit-test-instructions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-19T04:38:26Z
+**Event**: SENSOR_PASSED
+**Fire id**: 4aba2607
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/unit-test-instructions.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-19T04:38:26Z
+**Event**: SENSOR_FIRED
+**Fire id**: b0772c90
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-summary.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-19T04:38:26Z
+**Event**: SENSOR_PASSED
+**Fire id**: b0772c90
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-summary.md
+**Duration ms**: 186
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-19T04:38:26Z
+**Event**: SENSOR_FIRED
+**Fire id**: 510725aa
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-19T04:38:27Z
+**Event**: SENSOR_PASSED
+**Fire id**: 510725aa
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/traceability.json
+**Duration ms**: 181
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-19T04:38:27Z
+**Event**: SENSOR_FIRED
+**Fire id**: 70e0443e
+**Sensor ID**: traceability
+**Stage slug**: code-generation
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-19T04:38:27Z
+**Event**: SENSOR_PASSED
+**Fire id**: 70e0443e
+**Sensor ID**: traceability
+**Stage slug**: code-generation
+**Unit**: u2-household-and-settings
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/traceability.json
+**Duration ms**: 196
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-19T04:38:30Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:54af399d87cf1c29909b9044cc59e894ebe15faba38d4e38c0ca34152a8ca57b
+**Request Id**: review:3ddebc0704fe4faba16302c0d684edb0
+**Source Fingerprint**: 4e9a017cd9da9796c141674ff09f25d48c9ec8b3ded82de94a619bb465973da1
+**Unit Source Fingerprint**: sha256:df57150484bceec041512830fc58fc4cb54b532aef2611570f4b0dd065e286cc
+**Review File**: .aidlc-engine/reviews/code-generation/units/u2-household-and-settings/6a9232c36f0fe5b7/1.3ddebc0704fe4faba16302c0d684edb0.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-19T04:38:38Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-19T04:41:20Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/code-generation/units/u2-household-and-settings/6a9232c36f0fe5b7/1.3ddebc0704fe4faba16302c0d684edb0.review.md
+**Context**: .aidlc-engine > reviews > code-generation > units > u2-household-and-settings > 6a9232c36f0fe5b7 > 1.3ddebc0704fe4faba16302c0d684edb0.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-19T04:41:25Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f219-c641-7810-b30e-9b749e72049a
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**READY.** U2 테스트 54개, Chromium 종단 테스트 1개, 코드 추적 검사가 통과했습니다.\n\n주요 지적 두 건은 Admin이 본인 권한을 변경한 뒤 성공 응답을 잃었을 때의 복구와 가구 접근 거부 후 기존 화면 데이터 정리입니다. 종료된 초대의 발급 복
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/code-generation/units/u2-household-and-settings/6a9232c36f0fe5b7/1.3ddebc0704fe4faba16302c0d684edb0.review.md=fe52e60f040dcb5cb403342b2944b8e13b8c6ff4a122b1ac21afd92c99992769
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-19T04:41:43Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u2-household-and-settings
+**Iteration**: 1
+**Verdict**: READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:54af399d87cf1c29909b9044cc59e894ebe15faba38d4e38c0ca34152a8ca57b
+**Artifact Fingerprint**: sha256:54af399d87cf1c29909b9044cc59e894ebe15faba38d4e38c0ca34152a8ca57b
+**Request Id**: review:3ddebc0704fe4faba16302c0d684edb0
+**Request Source Fingerprint**: 4e9a017cd9da9796c141674ff09f25d48c9ec8b3ded82de94a619bb465973da1
+**Source Fingerprint**: 4e9a017cd9da9796c141674ff09f25d48c9ec8b3ded82de94a619bb465973da1
+**Source Listing**: sha256:0e3a9d8179b1b7160a5c0bad653c6d5b56647bd4227847f2297a7de1c7f31bc1
+**Unit Source Fingerprint**: sha256:df57150484bceec041512830fc58fc4cb54b532aef2611570f4b0dd065e286cc
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json
+**Review Record Digest**: sha256:6ec29ff9950dc69ad71c4235cf772d1af67da9c863d6007bb7fba4bf2738571c
+**Testing Contract**: sha256:db2da083c5032971c34e88a0118abbc7e7e1e1d718fd17056cb266c3a392dadb
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-19T04:41:52Z
+**Event**: UNIT_COMPLETED
+**Stage**: code-generation
+**Unit**: u2-household-and-settings
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Checkpoint Verification Recorded
+**Timestamp**: 2026-11-19T04:43:39Z
+**Event**: CHECKPOINT_VERIFICATION_RECORDED
+**Unit**: u2-household-and-settings
+**Kind**: unit
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Verification Id**: 62922bac-92fe-439d-9e23-7a22b8149723
+**Fingerprint**: sha256:7ff0ce8ba3776a505f1ae38cf64cc944176471c147ce9845aad23e76d8ed7de6
+**Command SHA-256**: 8710f9975963f43f56a57f9f7d3d94297c9cdbb9be35dadc24c815991ea2a740
+**Exit Code**: 0
+**Verified**: true
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-11-19T04:44:06Z
+**Event**: GATE_APPROVED
+**Unit**: u2-household-and-settings
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Gate Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Gate Scope**: unit-end
+**Checkpoint**: construction-unit
+**Fingerprint**: sha256:7ff0ce8ba3776a505f1ae38cf64cc944176471c147ce9845aad23e76d8ed7de6
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+**Run floors**: {"functional-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","nfr-requirements":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","nfr-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","infrastructure-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","code-generation":"STAGE_JUMPED:2026-11-17T06:51:16Z#2"}
+**Verification Command SHA-256**: 8710f9975963f43f56a57f9f7d3d94297c9cdbb9be35dadc24c815991ea2a740
+**Verification Id**: 62922bac-92fe-439d-9e23-7a22b8149723
+**Approved Evidence**: {"functional-design":["sha256:36259f0520dace370bdfef73850db9f4e0f666f7bafc88dc41a1698e2232af83",null],"nfr-requirements":["sha256:dfbffa0239c4b28857c0e8a23fca55abc805641c6a6c44bb21b04365fe63c367",null],"nfr-design":["sha256:440afbf39dac2008fb7981777a5c325686fe46bf6f5b5a0e603f11b289735c2e",null],"infrastructure-design":["sha256:7474895e783504e279784880bc920a733e16e5d749a3125fcf0c8e4ca9adeef5",null],"code-generation":["sha256:54af399d87cf1c29909b9044cc59e894ebe15faba38d4e38c0ca34152a8ca57b","sha256:df57150484bceec041512830fc58fc4cb54b532aef2611570f4b0dd065e286cc",{"\u0000.github/workflows/u1-app-ci.yml":"100644 81c7a96ef7dac5b69e345ece80563ff369ec6fc9d20f90a814a9c46bc50cc702","\u0000deploy/u1/Caddyfile.example":"100644 c9a7d9f89ab5c4968599813e7ef82213153ee0653b1e423590abdb4cfe23ecd0","\u0000docs/u2-local-run.md":"100644 e6e5d740c872d152dd23e48d9ca0e31e70df0b7d14712c284a6646777e754430","\u0000playwright.config.ts":"100644 b43f5dda43c1123bf94da435db37ed2b19891ea259388f8e1ca153565b376a84","\u0000prisma/migrations/202611190001_u2/migration.sql":"100644 ff8f53f77fb23277853c289f68668ce645229b54ea33abc89a22970f20a5d176","\u0000prisma/schema.prisma":"100644 893542bea9da84ea3a09e437290b136a7357be8d681a04422b87db76412b756d","\u0000src/server/auth.ts":"100644 4b160e0394b79425124cc6d5a28557428f5326379a7bd472220bef2381536c28","\u0000src/server/config.ts":"100644 b1b8e8f39d214fb6100304a90ab654ee4110c2ceddf58bec395a28ddaa577545","\u0000src/server/errors.ts":"100644 86799f0e0e02cb4d7b9da3f63224f42e1520b40f187c9f5b64cf5afc6dfe89c0","\u0000src/server/household-rules.ts":"100644 778ce1a633d5476e25278376ac9332f30df256f8203290c03d5ed1735ce1037a","\u0000src/server/household-runtime.ts":"100644 b820a4337d87000433ca5c7b1f48505bf9d460899dbba9bb9ca2a90926aafbb6","\u0000src/server/households.ts":"100644 0ce083368a5d118f24dec903334e6b0cbffc9b95f3f9759e51fc642c1a4bf281","\u0000src/server/http.ts":"100644 d73069b3e12342db38133f4d417ffe8545aca8b32b2417a5433c5f5b8aeda5ac","\u0000src/server/main.ts":"100644 848cea30bba68c01a44cb2a45603c42eb1c9dbf461402d2ec1649606507e2877","\u0000src/server/provider.ts":"100644 f68e30f7ae0601619d545e07ebab5893dcb8d1a016333775b128eb1814129593","\u0000src/server/repository.ts":"100644 6d707ddc444343cc4bbf9d60ef048b037bd2e3944ac038e0fe8b88817859b70f","\u0000src/server/settings.ts":"100644 b57ef78e29863f9e6fe39ed42093a15095eeceb08164959dfb62e76982760c34","\u0000src/server/storage.ts":"100644 f516712d3f328c01493829e60f9bf1e92040fa0ea3c01dd91cb07b36fcc4dea8","\u0000src/web/App.tsx":"100644 b92eb16e02c376054be647734051ac68a5569cc9be117a6e10e65d496be6c9b2","\u0000src/web/Settings.tsx":"100644 72e5e24a9c89206c96226de46622fbdb1bdd79ad84a4fe607b732e6c515b00d3","\u0000src/web/client.ts":"100644 8ff3604ef07fe2be24c87bfd9fb0efe5f260b82e89b12a93636f4eac83f60526","\u0000src/web/messages.ts":"100644 4c3a6b938978c30fb55136f3cfe8aa63f716c68985bededf885f9a2d71919d26","\u0000src/web/styles.css":"100644 fb94fc77ab4ab05603ca1871f47a64d944cd3da74a0fedacc2532a5c81c0e7f6","\u0000tests/e2e/u2/household-settings.spec.ts":"100644 a4205fedbfb1323e018f997243df924c8935648bb581f22d60eca103c0c37d76","\u0000tests/u2/household-rules.test.ts":"100644 69255ae92c20225170fafb2654c966e2775bed40112780c2613eaaf9d37eb475","\u0000tests/u2/http.test.ts":"100644 96ecc79702d81d1593067072e8cb9963f033cd1ef36f93889b8226dbcac88f4f","\u0000tests/u2/repository.test.ts":"100644 fa2f68ad274ffb6e030cbfe556722b68129a3b0ceee439d1c3117851517722fc","\u0000tests/u2/settings-rules.test.ts":"100644 f13bd99aa35e79e786a20f1e31f372a5143d08250da0c707fa5610486591565c","\u0000tests/u2/storage-model.test.ts":"100644 217a66650c097df755cd337fce1ef89f8d80d6bf0c7d82220705d41f711d74e3","\u0000tests/u2/web-interactions.test.tsx":"100644 26cab5c710f06c7dcc6f62cee1c7e345f7a5179900420194ca3ad5734ebf8248","\u0000vitest.config.ts":"100644 96d3e09da153cf0c8d95eca810f9aa2d7341d5d4fc4478f4b47e44c5f7c9e253"}]}
+**Autonomous**: true
+**Review Finding Dispositions**: {"version":1,"dispositions":[{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md","id":"R-01","fingerprint":"sha256:48bcca37723ec6920821a95ca57b439fa71fa90866789afc13f74e41a363e769","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/code-generation/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json","digest":"sha256:6ec29ff9950dc69ad71c4235cf772d1af67da9c863d6007bb7fba4bf2738571c"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md","id":"R-02","fingerprint":"sha256:e5524cb3baeb2b91845a97aad74752f0402a773c2188d27af1f3e0af88737145","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/code-generation/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json","digest":"sha256:6ec29ff9950dc69ad71c4235cf772d1af67da9c863d6007bb7fba4bf2738571c"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md","id":"R-03","fingerprint":"sha256:116adb7610a4c2a67e2a9fd4510e3ebc36557fdcf4d54ff9f2649e6b83bb244a","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/code-generation/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json","digest":"sha256:6ec29ff9950dc69ad71c4235cf772d1af67da9c863d6007bb7fba4bf2738571c"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/functional-design/functional-spec.md","id":"R-03","fingerprint":"sha256:698e148ce03668d34d8b420ae5a05504f8aace2b89a165b647e15d7d59bea0bf","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/functional-design/units/u2-household-and-settings/6a9232c36f0fe5b7/2.json","digest":"sha256:1090ee2992edd5b9db20c4fb22c3ee02da2db56e02a5eb979599d4c24a490bae"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/cicd-pipeline.md","id":"R-01","fingerprint":"sha256:eaf7ad3e16dcdbc9afca79268524aafdbb132cf8ad3a4e50c6315e0ec8bdb3bf","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/infrastructure-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json","digest":"sha256:9c033a2f00a256802530e9066cbac56ceb4df36fa2c0aac2479ec7f27c534688"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/infrastructure-design/cicd-pipeline.md","id":"R-02","fingerprint":"sha256:327c1f5379b3f7dc004de98b0efd5d477706e4485c6989a1fbcdb4e31918afe5","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/infrastructure-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json","digest":"sha256:9c033a2f00a256802530e9066cbac56ceb4df36fa2c0aac2479ec7f27c534688"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-design/security-design.md","id":"R-01","fingerprint":"sha256:2e4384d43f3ddcf9200b6f1e3a07feb7d0275bf41f2f4b5c9be388d4163ae588","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/nfr-design/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json","digest":"sha256:063132d0edf3d12f03be67dabf68775ea851d5b97e48b2935869dc8488078b2e"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/security-requirements.md","id":"R-01","fingerprint":"sha256:420132ceca3210039fb1fe35a62d699229252b8e4c76acd3d1bfcf0b9f2f2d52","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/nfr-requirements/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json","digest":"sha256:1ffc889b932e85ebb14d4a0ee2f3ad5592a1e291f59675d86c1ff0d2c8347b3b"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/nfr-requirements/security-requirements.md","id":"R-02","fingerprint":"sha256:db2f0b9dde7a4f286ec38407fdeaec9ebb1fb7dd37c89994da79d75147301fd3","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/nfr-requirements/units/u2-household-and-settings/6a9232c36f0fe5b7/1.json","digest":"sha256:1ffc889b932e85ebb14d4a0ee2f3ad5592a1e291f59675d86c1ff0d2c8347b3b"}}]}
+
+---

@@ -8,7 +8,9 @@ https://notify.example.invalid {
 		X-Frame-Options DENY
 	}
 	handle /api/v1/* {
-		reverse_proxy 127.0.0.1:3443
+		reverse_proxy 127.0.0.1:3443 {
+			header_up X-Notify-Client-IP {remote_host}
+		}
 	}
 	handle /internal/* {
 		respond 404
