@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_time_channel">시간 리마인더</string>
+    <string name="notification_location_channel">장소 리마인더</string>
+</resources>
