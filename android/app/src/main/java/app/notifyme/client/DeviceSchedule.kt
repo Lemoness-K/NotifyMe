@@ -1,9 +1,12 @@
 package app.notifyme.client
 
 import android.content.Context
+import android.content.IntentFilter
+import android.location.LocationManager
 import android.os.Build
 import android.os.SystemClock
 import android.provider.Settings
+import androidx.core.content.ContextCompat
 import app.notifyme.schedule.Boundary
 import app.notifyme.schedule.ConditionEvent
 import app.notifyme.schedule.DAY_MS
@@ -37,6 +40,12 @@ internal class DeviceSchedule(private val context: Context) {
     val os = DeviceNotifications(context)
     private val foregroundRequest = AtomicLong()
     private var confirmedForeground = 0L
+
+    init {
+        // Android delivers location-mode changes only to context-registered receivers.
+        ContextCompat.registerReceiver(context, ScheduleReceiver(), IntentFilter(LocationManager.MODE_CHANGED_ACTION),
+            ContextCompat.RECEIVER_NOT_EXPORTED)
+    }
 
     // Mutations, network responses and receiver callbacks are serialized in the app process.
     private fun state() = protected.read("schedule")
@@ -304,7 +313,7 @@ internal class DeviceSchedule(private val context: Context) {
             if (active != null) interruptLocation(state, active)
             return
         }
-        if (active != null && active.has("monitoringBoot") && active.optString("monitoringBoot") != bootId()) {
+        if (active != null && active.collection("fences").length() > 0 && !monitoringContinuous(active)) {
             interruptLocation(state, active)
         }
         val pending = state.collection("pendingFenceRemovals")
@@ -320,12 +329,22 @@ internal class DeviceSchedule(private val context: Context) {
         val unregistered = desired.filterKeys { !registered.has(it) }
         os.addFences(unregistered)
         unregistered.keys.forEach { registered.put(it, true) }
-        active.put("monitoringBoot", bootId()).remove("locationInterrupted")
+        active.put("monitoringBoot", bootId()).put("monitoringProcess", processId).remove("locationInterrupted")
         save(state)
         locationPlans(active).forEach { (id, plan) ->
             val existing = active.collection("locations").optJSONObject(id)?.locationState() ?: return@forEach
             updateLocation(state, plan, LocationResult(existing))
         }
+    }
+
+    private fun monitoringContinuous(active: JSONObject) =
+        active.optString("monitoringBoot") == bootId() && active.optString("monitoringProcess") == processId
+
+    private fun checkMonitoring(state: JSONObject, active: JSONObject): Boolean {
+        if (os.locationAllowed() && monitoringContinuous(active)) return true
+        interruptLocation(state, active)
+        ScheduleWork.enqueue(context, "location")
+        return false
     }
 
     @Synchronized
@@ -335,7 +354,7 @@ internal class DeviceSchedule(private val context: Context) {
         val active = state.optJSONObject("active") ?: return
         val plan = active.collection("plans").objects().firstOrNull { (_, plan) -> planId(active, plan) == id }?.second ?: return
         if (timer) {
-            if (!os.locationAllowed()) { interruptLocation(state, active); return }
+            if (!checkMonitoring(state, active)) return
             val location = active.collection("locations").optJSONObject(plan.getString("planId"))?.locationState() ?: return
             updateLocation(state, plan, timerEvent(plan.getString("occurrenceId"), location, System.currentTimeMillis(),
                 SystemClock.elapsedRealtime(), bootId(), epoch = active.getString("epoch")))
@@ -352,7 +371,7 @@ internal class DeviceSchedule(private val context: Context) {
             if (locationPlans(active).any { (_, plan) -> planId(active, plan) in ids }) interruptLocation(state, active)
             return
         }
-        if (!os.locationAllowed()) { interruptLocation(state, active); return }
+        if (!checkMonitoring(state, active)) return
         val registered = active.collection("fences")
         locationPlans(active).filter { (_, plan) -> planId(active, plan).let { it in ids && registered.has(it) } }
             .forEach { (id, plan) ->
@@ -434,7 +453,7 @@ internal class DeviceSchedule(private val context: Context) {
         return account == "en"
     }
 
-    private fun bootId() = Settings.Global.getString(context.contentResolver, Settings.Global.BOOT_COUNT) ?: processBootFallback
+    private fun bootId() = Settings.Global.getString(context.contentResolver, Settings.Global.BOOT_COUNT) ?: processId
     private fun instant(raw: String) = Instant.parse(raw).toEpochMilli()
     private fun planId(active: JSONObject, plan: JSONObject): String {
         val identity = arrayOf(active.getString("epoch"), plan.getString("planId"), plan.getString("version"))
@@ -459,7 +478,7 @@ internal class DeviceSchedule(private val context: Context) {
         .put("posted", posted).put("uploaded", uploaded)
 
     companion object {
-        private val processBootFallback = UUID.randomUUID().toString()
+        private val processId = UUID.randomUUID().toString()
         @Volatile private var instance: DeviceSchedule? = null
         fun get(context: Context): DeviceSchedule = instance ?: synchronized(this) {
             instance ?: DeviceSchedule(context.applicationContext).also { instance = it }

@@ -49,7 +49,10 @@ class ScheduleReceiver : BroadcastReceiver() {
             Intent.ACTION_TIMEZONE_CHANGED, "android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" ->
                 ScheduleWork.enqueue(context, "clock")
             LocationManager.MODE_CHANGED_ACTION -> {
-                val action = if (DeviceSchedule.get(context).os.locationAllowed()) "location" else "location-interrupted"
+                val enabled = if (intent.hasExtra(LocationManager.EXTRA_LOCATION_ENABLED)) {
+                    intent.getBooleanExtra(LocationManager.EXTRA_LOCATION_ENABLED, false)
+                } else DeviceSchedule.get(context).os.locationAllowed()
+                val action = if (enabled) "location" else "location-interrupted"
                 ScheduleWork.enqueue(context, action)
             }
         }
