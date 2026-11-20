@@ -114,8 +114,8 @@ class NotifyDevicePlugin : Plugin() {
             delay((1_030 - (android.os.SystemClock.elapsedRealtime() - receivedAt)).coerceAtLeast(0))
             val invitation = call.getObject("invitation")
             if (invitation != null) {
-                require(invitation.getString("code").matches(Regex("[A-Za-z0-9_-]{32}")))
-                require(invitation.getString("key").matches(Regex("[A-Za-z0-9._-]{1,128}")))
+                require(invitation.getString("code")?.matches(Regex("[A-Za-z0-9_-]{32}")) == true)
+                require(invitation.getString("key")?.matches(Regex("[A-Za-z0-9._-]{1,128}")) == true)
             }
             api.signIn(challenge, proof, invitation)
             applyScope()

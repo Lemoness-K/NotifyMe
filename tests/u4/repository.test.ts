@@ -79,3 +79,21 @@ it('enqueues a scoped revocation even for an installation with no reminder plans
   expect(await fixture.db.deviceSignal.findFirst({ where: { type: 'household.access_revoked' } })).toMatchObject({ scopeId: old.scopeRef });
   await expect(repository.sync('home', 'device', 'other')).rejects.toMatchObject({ code: 'HOUSEHOLD_ACCESS_REVOKED' });
 });
+
+it('advances the retained cursor when an expired removal marker is pruned', async () => {
+  await seedReminders(fixture.db, 1);
+  await repository.register('member', undefined, 'register', registration());
+  const initial = await repository.sync('home', 'device', 'member');
+  const [plan] = initial.plans;
+  await fixture.db.$transaction(async (tx) => repository.validateAndStore(tx, 'home', [{
+    installationId: 'device', planId: plan.planId, version: plan.version + 1, action: 'REMOVE',
+  }]));
+  const next = await repository.sync('home', 'device', 'member', initial.epoch, initial.revision);
+  expect(next).toMatchObject({ mode: 'DELTA', removedPlanIds: [plan.planId] });
+
+  const later = new InstallationRepository(fixture.db, () => new Date('2032-02-01T00:00:00Z'), tokenKey);
+  await later.prune();
+  expect(await fixture.db.devicePlan.count()).toBe(0);
+  expect(await later.sync('home', 'device', 'member', initial.epoch, initial.revision)).toMatchObject({ mode: 'FULL', plans: [] });
+  expect(await later.sync('home', 'device', 'member', initial.epoch, next.revision)).toMatchObject({ mode: 'DELTA', plans: [] });
+});
