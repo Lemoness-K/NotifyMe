@@ -347,8 +347,11 @@ internal class DeviceSchedule(private val context: Context) {
     @Synchronized
     fun boundary(ids: List<String>, boundary: Boundary) {
         val state = state()
-        if (awaitsFull(state)) return
         val active = state.optJSONObject("active") ?: return
+        if (awaitsFull(state)) {
+            if (locationPlans(active).any { (_, plan) -> planId(active, plan) in ids }) interruptLocation(state, active)
+            return
+        }
         if (!os.locationAllowed()) { interruptLocation(state, active); return }
         val registered = active.collection("fences")
         locationPlans(active).filter { (_, plan) -> planId(active, plan).let { it in ids && registered.has(it) } }
