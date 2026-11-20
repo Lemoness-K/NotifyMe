@@ -307,7 +307,7 @@ internal class DeviceSchedule(private val context: Context) {
         when (val action = timeAction(at, now, os.exactAllowed(), displayed.has(tag))) {
             TimeAction.DROP -> os.cancel(alarmId)
             TimeAction.EXACT, TimeAction.INEXACT -> os.alarmAt(alarmId, at, false, action == TimeAction.EXACT)
-            TimeAction.POST -> if (os.post(tag, false, english(state))) {
+            TimeAction.POST -> if (os.post(tag, false, english(state), plan)) {
                 displayed.put(tag, now)
                 save(state)
             }
@@ -317,9 +317,11 @@ internal class DeviceSchedule(private val context: Context) {
     private fun drain(state: JSONObject, base: String? = null, upload: Boolean = true) {
         val active = state.optJSONObject("active") ?: return
         val endpoint = base ?: "/households/${state.getString("household")}/installations/${state.getString("installationId")}"
+        val plans = active.collection("plans")
         active.collection("events").objects().forEach { (id, event) ->
             if (System.currentTimeMillis() - instant(event.getString("detectedAt")) >= 30 * DAY_MS) return@forEach
-            if (!event.optBoolean("posted") && os.post(id, true, english(state))) {
+            val plan = plans.optJSONObject(event.getString("occurrenceId")) ?: return@forEach
+            if (!event.optBoolean("posted") && os.post(id, true, english(state), plan)) {
                 event.put("posted", true)
                 save(state)
             }

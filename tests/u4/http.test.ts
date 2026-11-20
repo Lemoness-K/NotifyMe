@@ -43,17 +43,19 @@ afterEach(async () => { await app?.close(); await fixture?.close(); });
 describe('installation HTTP contract', () => {
   it('qualifies snapshots and cursors by scope, authorizes ownership, and locks logout', async () => {
     await seedReminders(fixture.db, 2);
+    await fixture.db.reminder.update({ where: { id: 'location-000' }, data: { title: ' 현관 ', description: '가방을 챙기세요' } });
     expect((await register('device-a')).status).toBe(200);
     expect((await register('device-b')).status).toBe(200);
     expect(await (await send(scope('device-a') + '/sync', 'GET', undefined, 'other')).json()).toMatchObject({ code: 'INSTALLATION_ACCESS_DENIED' });
     const first = await (await send(scope('device-a') + '/sync')).json();
-    expect(first).toMatchObject({ mode: 'FULL', plans: [{ planId: 'location-000-occ' }, { planId: 'location-001-occ' }] });
+    expect(first).toMatchObject({ mode: 'FULL', plans: [{ planId: 'location-000-occ', reminderId: 'location-000', title: ' 현관 ',
+      description: '가방을 챙기세요' }, { planId: 'location-001-occ' }] });
     expect(await (await send(scope('device-a') + `/sync?afterEpoch=${first.epoch}&afterRevision=${first.revision}`)).json())
       .toMatchObject({ mode: 'DELTA', plans: [] });
     expect(await (await send(scope('device-b') + `/sync?afterEpoch=${first.epoch}&afterRevision=${first.revision}`)).json())
       .toMatchObject({ mode: 'FULL' });
     const list = await (await send(scope('device-a') + '/location-exclusions?limit=1')).json();
-    expect(list.items).toEqual([{ reminderId: 'location-000', title: 'location-000', slots: 1, excluded: false }]);
+    expect(list.items).toEqual([{ reminderId: 'location-000', title: ' 현관 ', slots: 1, excluded: false }]);
     expect((await send(scope('device-b') + '/location-exclusions?cursor=' + list.nextCursor)).status).toBe(422);
     const exclusion = { epoch: list.epoch, revision: list.revision, excluded: true };
     expect((await send(scope('device-a') + '/location-exclusions/location-000', 'PUT', exclusion)).status).toBe(204);

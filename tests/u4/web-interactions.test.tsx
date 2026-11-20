@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { App } from '../../src/web/App.js';
 
-const bridge = vi.hoisted(() => ({ active: true, status: vi.fn(), bind: vi.fn(), request: vi.fn(), openSettings: vi.fn(), locale: vi.fn(),
+const bridge = vi.hoisted(() => ({ active: true, status: vi.fn(), bind: vi.fn(), request: vi.fn(), openSettings: vi.fn(), locale: vi.fn(), takeReminder: vi.fn(),
   addListener: vi.fn(async () => ({ remove: async () => {} })) }));
 vi.mock('@capacitor/core', () => ({ Capacitor: { getPlatform: () => bridge.active ? 'android' : 'web', isPluginAvailable: () => bridge.active },
   registerPlugin: () => bridge }));
@@ -25,10 +25,12 @@ beforeEach(() => {
   bridge.bind.mockResolvedValue(status);
   bridge.locale.mockResolvedValue(undefined);
   bridge.openSettings.mockResolvedValue(undefined);
+  bridge.takeReminder.mockResolvedValue({});
   bridge.request.mockImplementation(async ({ path, method, body }) => {
     if (path === '/me') return { status: 200, body: { userId: 'self', householdId: 'home', householdRole: 'ADMIN' } };
     if (path === '/me/settings') return { status: 200, body: { revision: 0, locale: 'en-US' } };
     if (path === '/households/home/members') return { status: 200, body: [{ userId: 'self', displayName: 'Member' }] };
+    if (path === '/households/home/reminders/reminder-a') return { status: 200, body: { reminderId: 'reminder-a', title: '현관', trigger: { kind: 'LOCATION' } } };
     if (path === devicePath) return { status: 200, body: { epoch: 'epoch', revision: excluded ? 2 : 1,
       locationCapacity: { state: excluded ? 'ACTIVE' : 'CAPACITY_PENDING', requiredSlots: excluded ? 100 : 101, limit: 100 },
       items: [{ reminderId: 'reminder-a', title: '현관', excluded, slots: 1 }] } };
@@ -42,6 +44,13 @@ beforeEach(() => {
   host = document.createElement('div');
   document.body.append(host);
   root = createRoot(host);
+});
+
+it('opens the authenticated reminder detail after an Android notification tap', async () => {
+  bridge.takeReminder.mockResolvedValueOnce({ reminderId: 'reminder-a' });
+  await act(async () => root.render(<MemoryRouter><App /></MemoryRouter>));
+  expect(bridge.request).toHaveBeenCalledWith(expect.objectContaining({ path: '/households/home/reminders/reminder-a', method: 'GET' }));
+  expect(host.textContent).toContain('현관');
 });
 
 afterEach(async () => {

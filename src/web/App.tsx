@@ -69,6 +69,18 @@ export function App() {
     if (session) void androidDevice()?.locale({ locale: locale === 'en-US' ? 'en' : 'ko' }).catch(() => {});
   }, [locale, session]);
   useEffect(() => {
+    const device = androidDevice();
+    if (!device || !session) return;
+    const open = () => {
+      void device.takeReminder().then(({ reminderId }) => {
+        if (reminderId && activeSession.current === session) navigate('/reminders/' + encodeURIComponent(reminderId));
+      }).catch(() => {});
+    };
+    const listener = device.addListener('reminderOpened', open);
+    open();
+    return () => { void listener.then((active) => active.remove()).catch(() => {}); };
+  }, [navigate, session]);
+  useEffect(() => {
     if (location.pathname === '/invite' && location.hash) {
       setInvitation(readInvitation(location.pathname, location.hash));
       navigate('/invite', { replace: true });

@@ -7,7 +7,7 @@ test.use({ locale: 'ko-KR', hasTouch: true });
 test('preserves the location reminder draft while adjusting this installation on a narrow touch screen', async ({ page }) => {
   await page.addInitScript(() => {
     let excluded = false;
-    const methodNames = ['status', 'bind', 'request', 'locale', 'openSettings', 'clearSession'];
+    const methodNames = ['status', 'bind', 'request', 'locale', 'openSettings', 'clearSession', 'takeReminder'];
     const device = { signedIn: true, installationId: 'local-device', installationName: 'Android test', notifications: true,
       exactAlarms: false, location: true, timeChannel: true, locationChannel: true };
     const target = window as Window & { androidBridge?: unknown; Capacitor?: unknown };
@@ -16,6 +16,7 @@ test('preserves the location reminder draft while adjusting this installation on
       PluginHeaders: [{ name: 'NotifyDevice', methods: methodNames.map((name) => ({ name, rtype: 'promise' })) }],
       nativePromise: async (_plugin: string, method: string, input: { path?: string; method?: string; body?: { title?: string; excluded?: boolean } }) => {
         if (method === 'status' || method === 'bind') return device;
+        if (method === 'takeReminder') return {};
         if (method !== 'request') return undefined;
         const { path, method: verb, body } = input;
         if (path === '/me') return { status: 200, body: { userId: 'member', householdId: 'home', householdRole: 'ADMIN' } };

@@ -103,23 +103,28 @@ internal class DeviceNotifications(private val context: Context) {
     }
 
     @SuppressLint("MissingPermission")
-    fun post(id: String, location: Boolean, english: Boolean): Boolean {
+    fun post(id: String, location: Boolean, english: Boolean, plan: JSONObject): Boolean {
         channels()
         val channel = if (location) locationChannel else timeChannel
         if (!notices.areNotificationsEnabled() || !channelEnabled(channel) ||
             (Build.VERSION.SDK_INT >= 33 && !permission(Manifest.permission.POST_NOTIFICATIONS))) return false
-        val title = if (english) "Notify Me reminder" else "Notify Me 리마인더"
-        val message = if (location) {
+        val publicText = if (english) "You have a reminder." else "새 리마인더가 있어요."
+        val title = if (plan.has("title")) plan.getString("title") else if (english) "Notify Me reminder" else "Notify Me 리마인더"
+        val message = if (plan.has("description")) plan.getString("description") else if (location) {
             if (english) "A location condition was met." else "장소 조건이 충족됐어요."
         } else {
             if (english) "A reminder is due." else "리마인더 예정 시간이에요."
         }
-        val launch = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java),
+        val open = Intent(context, MainActivity::class.java)
+        if (plan.has("reminderId")) open.data = Uri.Builder().scheme("notify-detail").authority("local")
+            .appendPath(plan.getString("reminderId")).build()
+        val launch = PendingIntent.getActivity(context, 0, open,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val public = NotificationCompat.Builder(context, channel).setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
-            .setContentTitle("Notify Me").build()
+            .setContentTitle("Notify Me").setContentText(publicText).build()
         val notification = NotificationCompat.Builder(context, channel).setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
             .setContentTitle(title).setContentText(message).setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setPublicVersion(public).setOnlyAlertOnce(true).setAutoCancel(true).setContentIntent(launch).build()
         notices.notify(id, 1, notification)
         return true

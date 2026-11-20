@@ -23,12 +23,14 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.atomic.AtomicReference
 
 @CapacitorPlugin(name = "NotifyDevice")
 class NotifyDevicePlugin : Plugin() {
     private val jobs = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val schedule get() = DeviceSchedule.get(context)
     private var signingIn = false
+    private val pendingReminder = AtomicReference<String?>()
 
     override fun shouldOverrideLoad(url: Uri): Boolean? {
         if (local(url)) return null
@@ -127,6 +129,19 @@ class NotifyDevicePlugin : Plugin() {
 
     @PluginMethod
     fun clearSession(call: PluginCall) = safely(call) { schedule.clearCredentials(); null }
+
+    @PluginMethod
+    fun takeReminder(call: PluginCall) = safely(call) {
+        JSObject().apply { pendingReminder.getAndSet(null)?.let { put("reminderId", it) } }
+    }
+
+    override fun handleOnNewIntent(intent: Intent) {
+        val uri = intent.data ?: return
+        if (uri.scheme != "notify-detail" || uri.encodedAuthority != "local" || uri.pathSegments.size != 1) return
+        val reminder = uri.lastPathSegment?.takeIf { it.matches(Regex("[A-Za-z0-9_-]{1,128}")) } ?: return
+        pendingReminder.set(reminder)
+        notifyListeners("reminderOpened", JSObject())
+    }
 
     @PluginMethod
     fun bind(call: PluginCall) = safely(call) {

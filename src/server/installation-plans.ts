@@ -8,7 +8,7 @@ export const locationLimit = 100;
 export const eventLifetimeMs = 30 * dayMs;
 export type Tx = Prisma.TransactionClient;
 export type SignalType = 'reminder.changed' | 'household.access_revoked';
-export type Plan = NonNullable<PlanCandidate['plan']> & { expiresAt?: string };
+export type Plan = NonNullable<PlanCandidate['plan']> & { expiresAt?: string; reminderId?: string; title?: string; description?: string };
 
 export function wireScope(scope: Pick<InstallationScope, 'id' | 'epoch'>, generation: string) {
   if (!generation) return { scopeRef: scope.id, epoch: scope.epoch };
@@ -42,6 +42,12 @@ function includeExpiry(plan: Plan): Plan {
   return { ...plan, expiresAt: new Date(Date.parse(raw) + dayMs).toISOString() };
 }
 
+function authoredContent(reminder: { title: string; description: string | null }, override?: { patch: string } | null) {
+  const fields = JSON.parse(override?.patch ?? '{}') as { title?: string; description?: string };
+  const description = fields.description ?? reminder.description;
+  return { title: fields.title ?? reminder.title, ...(description === null ? {} : { description }) };
+}
+
 export async function seedPlans(tx: Tx, scope: InstallationScope, userId: string, now: Date) {
   const candidates = await tx.reminder.findMany({
     where: { householdId: scope.householdId, lifecycle: 'ACTIVE', pausedAt: null,
@@ -63,7 +69,8 @@ export async function seedPlans(tx: Tx, scope: InstallationScope, userId: string
       trigger.scheduledAt = current.scheduledAt.toISOString();
     }
     const version = scope.revision + 1;
-    const plan = includeExpiry({ planId: current.id, occurrenceId: current.id, version, trigger });
+    const plan = includeExpiry({ planId: current.id, occurrenceId: current.id, reminderId: reminder.id, version, trigger,
+      ...authoredContent(reminder, current.override) });
     return [{ scopeId: scope.id, id: current.id, reminderId: reminder.id,
       kind: trigger.kind, payload: JSON.stringify(plan), version, revision: version, visible: false }];
   });
@@ -82,10 +89,11 @@ export async function applyCandidates(tx: Tx, scope: InstallationScope, candidat
     }
     if (!candidate.plan) throw new AppError(503, 'INVALID_NOTIFICATION_PLAN');
     const occurrence = await tx.occurrence.findFirst({ where: { id: candidate.plan.occurrenceId,
-      reminder: { householdId: scope.householdId } }, select: { reminderId: true } });
+      reminder: { householdId: scope.householdId } }, select: { reminderId: true,
+      reminder: { select: { title: true, description: true } }, override: { select: { patch: true } } } });
     if (!occurrence) throw new AppError(503, 'INVALID_NOTIFICATION_PLAN');
     const version = scope.revision + 1;
-    const plan = includeExpiry({ ...candidate.plan, version });
+    const plan = includeExpiry({ ...candidate.plan, reminderId: occurrence.reminderId, version, ...authoredContent(occurrence.reminder, occurrence.override) });
     const data = { reminderId: occurrence.reminderId, kind: plan.trigger.kind,
       payload: JSON.stringify(plan), version, revision: version, removedAt: null };
     await tx.devicePlan.upsert({ where: { scopeId_id: key },
