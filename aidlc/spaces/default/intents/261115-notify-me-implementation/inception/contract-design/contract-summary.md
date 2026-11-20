@@ -88,6 +88,25 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
     }
   ],
   "paths": {
+    "/households/{householdId}/installations/{installationId}/location-exclusions": {
+      "get": {
+        "operationId": "listInstallationLocationExclusions",
+        "x-owner": "U4",
+        "parameters": [
+          { "name": "householdId", "in": "path", "required": true, "schema": { "type": "string", "minLength": 1 } },
+          { "name": "installationId", "in": "path", "required": true, "schema": { "type": "string", "minLength": 1 } },
+          { "name": "cursor", "in": "query", "schema": { "type": "string", "minLength": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 100, "default": 25 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Capacity and a coordinate-free page of assigned location reminders for the active installation owner",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/InstallationLocationPage" } } }
+          },
+          "default": { "description": "Structured error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
       "/households/{householdId}/installations/{installationId}/location-exclusions/{reminderId}": {
         "put": {
           "operationId": "setInstallationLocationExclusion",
@@ -134,11 +153,16 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
                   "type": "object",
                   "required": [
                     "excluded",
+                    "epoch",
                     "revision"
                   ],
                   "properties": {
                     "excluded": {
                       "type": "boolean"
+                    },
+                    "epoch": {
+                      "type": "string",
+                      "minLength": 1
                     },
                     "revision": {
                       "type": "integer",
@@ -192,6 +216,54 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
               }
             }
           }
+        }
+      }
+    },
+    "/sessions/challenges": {
+      "post": {
+        "operationId": "createLoginChallenge",
+        "x-owner": "U1",
+        "security": [],
+        "responses": {
+          "201": {
+            "description": "A one-time login nonce, its issue time, and the protected challenge cookie",
+            "headers": {
+              "Set-Cookie": { "description": "Short-lived __Host-notify-login, Secure, HttpOnly, SameSite=Strict, Path=/", "schema": { "type": "string" } }
+            },
+            "content": { "application/json": { "schema": {
+              "type": "object", "required": ["nonce", "issuedAt"],
+              "properties": { "nonce": { "type": "string", "minLength": 1 }, "issuedAt": { "type": "string", "format": "date-time" } }
+            } } }
+          },
+          "403": { "$ref": "#/components/responses/SessionError" },
+          "default": { "$ref": "#/components/responses/SessionError" }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "operationId": "exchangeLoginProofs",
+        "x-owner": "U1",
+        "description": "Consumes the challenge once after verifying the Google audience, matching Google subject and nonce, and Firebase authentication time. Web and Android use the same exchange.",
+        "security": [{ "firebaseBearer": [], "loginChallengeCookie": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": {
+          "type": "object", "required": ["googleToken"], "properties": { "googleToken": { "type": "string", "minLength": 1, "maxLength": 12000 } }
+        } } } },
+        "responses": {
+          "201": {
+            "description": "Session expiry and protected session cookie. The challenge cookie is cleared.",
+            "headers": {
+              "Set-Cookie": { "description": "__Host-notify-session, Secure, HttpOnly, SameSite=Strict, Path=/", "schema": { "type": "string" } }
+            },
+            "content": { "application/json": { "schema": {
+              "type": "object", "required": ["expiresAt"], "properties": { "expiresAt": { "type": "string", "format": "date-time" } }
+            } } }
+          },
+          "401": { "$ref": "#/components/responses/SessionError" },
+          "403": { "$ref": "#/components/responses/SessionError" },
+          "422": { "$ref": "#/components/responses/SessionError" },
+          "503": { "$ref": "#/components/responses/SessionError" },
+          "default": { "$ref": "#/components/responses/SessionError" }
         }
       }
     },
@@ -1461,6 +1533,12 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
               "type": "integer",
               "minimum": 0
             }
+          },
+          {
+            "name": "afterEpoch",
+            "in": "query",
+            "description": "Opaque server generation bound to this authenticated installation and household. Missing or mismatched generation requests FULL.",
+            "schema": { "type": "string", "minLength": 1 }
           }
         ],
         "responses": {
@@ -1549,7 +1627,11 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
     }
   },
   "components": {
+    "responses": {
+      "SessionError": { "description": "Structured request error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+    },
     "securitySchemes": {
+      "loginChallengeCookie": { "type": "apiKey", "in": "cookie", "name": "__Host-notify-login" },
       "firebaseBearer": {
         "type": "http",
         "scheme": "bearer",
@@ -2416,9 +2498,44 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
           "detectedAt"
         ]
       },
+      "LocationCapacity": {
+        "type": "object",
+        "properties": {
+          "state": { "type": "string", "enum": ["ACTIVE", "CAPACITY_PENDING"] },
+          "requiredSlots": { "type": "integer", "minimum": 0 },
+          "limit": { "type": "integer", "minimum": 0 }
+        },
+        "required": ["state", "requiredSlots", "limit"]
+      },
+      "InstallationLocationPage": {
+        "type": "object",
+        "properties": {
+          "epoch": { "type": "string", "minLength": 1 },
+          "revision": { "type": "integer", "minimum": 0 },
+          "locationCapacity": { "$ref": "#/components/schemas/LocationCapacity" },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "reminderId": { "type": "string", "minLength": 1 },
+                "title": { "type": "string" },
+                "excluded": { "type": "boolean" },
+                "slots": { "type": "integer", "minimum": 0 }
+              },
+              "required": ["reminderId", "title", "excluded", "slots"]
+            }
+          },
+          "nextCursor": { "type": "string" }
+        },
+        "required": ["epoch", "revision", "locationCapacity", "items"]
+      },
       "SyncSnapshot": {
         "type": "object",
         "properties": {
+          "epoch": { "type": "string", "minLength": 1 },
+          "scopeRef": { "type": "string", "minLength": 1 },
+          "locationCapacity": { "$ref": "#/components/schemas/LocationCapacity" },
           "revision": {
             "type": "integer",
             "minimum": 0
@@ -2472,6 +2589,9 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
           }
         },
         "required": [
+          "epoch",
+          "scopeRef",
+          "locationCapacity",
           "revision",
           "mode",
           "plans",
@@ -2548,6 +2668,12 @@ interface WorkChanges {
 U1은 인가와 공통 API·웹 인터페이스를 제공한다. U2가 가구 정책과 접근 회수, U3가 업무 명령과 변경 순서를 소유한다. U3 명령이 타입 포트를 정의하고 U4 구현체를 서버 구성에서 연결한다. U3는 U4 패키지를 직접 참조하지 않는다. 모든 대상 설치의 용량을 같은 트랜잭션에서 확인한다. 한 설치의 용량 확인이 실패하면 관련 쓰기를 모두 중단한다. SQLite 충돌 등 일시 실패는 새 트랜잭션에서만 재시도한다.
 
 U3은 현재 트랜잭션에서 읽은 회차와 저장하려는 시간·장소 조건으로 후보를 구성한다. 같은 실행 계획은 안정된 `planId`로 갱신한다. U4는 각 설치의 기존 계획에 추가·갱신·제거 후보를 모두 반영한 결과의 용량을 확인하고 그 결과를 같은 트랜잭션에서 저장한다. 커밋 후 설치 동기화의 `SyncSnapshot.plans`에는 같은 형태의 계획이 전달되고 제거된 계획은 `removedPlanIds`에 담긴다.
+
+D-097에 따라 새 설치의 현재 위치 계획 수요가 한도를 넘으면 설치 등록은 성공하고 시간 계획만 적용한다. 동기화는 설치별 장소 감지 대기 상태와 수요·한도를 별도로 나타낸다. 가구·설치·업무에 묶인 제외가 커밋되고 수요가 한도 내에 들면 다음 revision에서 장소 계획을 받을 수 있다. 용량 관리 목록의 항목은 현재 설치에 배정된 업무 표시와 슬롯 수를 제공하며 좌표는 포함하지 않는다.
+
+용량 관리 목록의 불투명 커서는 계정·가구·설치·epoch·revision·정렬 키에 묶는다. 제외 명령의 `revision`도 해당 설치 범위를 사용한다. 설치 소유자와 활성 가구 소속을 리스트와 명령 모두에서 확인하며 세대·revision이 바뀌면 읽기부터 갱신한다.
+
+동기화의 `scopeRef`는 서버가 계정·가구·설치 세대에 발급해 FCM과 기기 저장 경계를 연결한다. `afterEpoch`와 `afterRevision`이 같은 유효 범위에서만 DELTA를 반환한다. 복원으로 이전 revision이 다시 쓰일 수 있으면 U5는 서비스 재개 전에 서버 epoch를 교체한다. 세대 변경 응답은 현재 요청을 인가한 FULL로만 받아들인다.
 
 ## 6. FCM과 기기 알림
 

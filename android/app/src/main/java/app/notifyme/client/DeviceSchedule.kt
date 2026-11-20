@@ -84,7 +84,7 @@ internal class DeviceSchedule(private val context: Context) {
     }
 
     @Synchronized
-    fun refresh(recover: Boolean = false, signal: JSONObject? = null) {
+    fun refresh(full: Boolean = false, signal: JSONObject? = null) {
         val state = state()
         finishRetirement(state)
         val current = state.optJSONObject("active")
@@ -92,6 +92,7 @@ internal class DeviceSchedule(private val context: Context) {
             if (current == null || signal.optString("scopeRef") != current.optString("scopeRef")) return
             if (signal.optString("eventType") == "household.access_revoked" &&
                 signal.optLong("householdRevision") >= current.optLong("revision")) retire(state)
+            else if (signal.optLong("householdRevision") <= current.optLong("revision")) return
         }
         if (!api.hasSession() || state.optString("household").isEmpty()) return
         try {
@@ -101,7 +102,7 @@ internal class DeviceSchedule(private val context: Context) {
             register(latest, id)
             val base = "/households/$household/installations/$id"
             val active = latest.optJSONObject("active")
-            val cursor = active?.let { "?afterEpoch=${it.getString("epoch")}&afterRevision=${it.getLong("revision")}" }.orEmpty()
+            val cursor = if (full) "" else active?.let { "?afterEpoch=${it.getString("epoch")}&afterRevision=${it.getLong("revision")}" }.orEmpty()
             var reply = api.userRequest("GET", "$base/sync$cursor").body
 
             if (active != null && requiresCleanup(version(active), version(reply))) {
@@ -111,7 +112,7 @@ internal class DeviceSchedule(private val context: Context) {
                 reply = api.userRequest("GET", "$base/sync").body
                 check(reply.getString("mode") == "FULL" && canApplyAfterCleanup(pending, version(reply)))
             }
-            reconcile(latest, reply, recover)
+            reconcile(latest, reply, false)
             drain(latest, base)
         } catch (failure: ApiFailure) {
             when {
@@ -132,7 +133,7 @@ internal class DeviceSchedule(private val context: Context) {
                 .put("plans", org.json.JSONArray()).put("removedPlanIds", org.json.JSONArray())
             reconcile(state, cached, true)
         }
-        refresh()
+        refresh(full = true)
     }
 
     private fun register(state: JSONObject, id: String) {
@@ -176,8 +177,14 @@ internal class DeviceSchedule(private val context: Context) {
             os.cancel(planId(pending, plan))
             os.cancelPost(timeId(state, plan))
         }
+        val cancelled = pending.collection("cancelled")
+        cancelled.objects().forEach { (id, plan) ->
+            os.cancel(id)
+            os.cancelPost(timeId(state, plan))
+        }
         events.keys().asSequence().forEach(os::cancelPost)
-        os.removeFences(plans.objects().filter { (_, plan) -> plan.location() }.map { (_, plan) -> planId(pending, plan) })
+        os.removeFences(plans.objects().filter { (_, plan) -> plan.location() }.map { (_, plan) -> planId(pending, plan) } +
+            cancelled.objects().filter { (_, plan) -> plan.location() }.map { (id, _) -> id })
         state.remove("retiring")
         save(state)
     }
@@ -342,7 +349,7 @@ internal class DeviceSchedule(private val context: Context) {
         return account == "en"
     }
 
-    private fun bootId() = Settings.Global.getString(context.contentResolver, Settings.Global.BOOT_COUNT) ?: "unknown"
+    private fun bootId() = Settings.Global.getString(context.contentResolver, Settings.Global.BOOT_COUNT) ?: processBootFallback
     private fun instant(raw: String) = Instant.parse(raw).toEpochMilli()
     private fun planId(active: JSONObject, plan: JSONObject) = stableId(active.getString("epoch"), plan.getString("planId"), plan.getString("version"))
     private fun timeId(state: JSONObject, plan: JSONObject) = stableId(state.getString("installationId"), plan.getString("occurrenceId"))
@@ -363,6 +370,7 @@ internal class DeviceSchedule(private val context: Context) {
         .put("posted", posted).put("uploaded", uploaded)
 
     companion object {
+        private val processBootFallback = UUID.randomUUID().toString()
         @Volatile private var instance: DeviceSchedule? = null
         fun get(context: Context): DeviceSchedule = instance ?: synchronized(this) {
             instance ?: DeviceSchedule(context.applicationContext).also { instance = it }

@@ -78,6 +78,10 @@ class NotifyDevicePlugin : Plugin() {
         require(path.length <= 2_048 && (key == null || key.matches(Regex("[A-Za-z0-9._-]{1,128}"))))
         require(revision == null || revision.matches(Regex("[0-9]{1,10}|\"[0-9]{1,10}\"")))
         require(method != "GET" || body == null)
+        val installation = path.substringBefore('?').split('/').let { segments ->
+            if (segments.getOrNull(3) == "installations" && segments.getOrNull(5) == "location-exclusions") segments[4] else null
+        }
+        if (installation != null) require(installation == schedule.identity().getString("installationId"))
         try {
             val response = schedule.api.webRequest(method, path, body, key, revision)
             JSObject().apply { put("status", response.status); put("body", response.payload) }
@@ -129,7 +133,7 @@ class NotifyDevicePlugin : Plugin() {
         applyScope()
         ScheduleWork.periodic(context)
         ScheduleWork.enqueue(context, "recover")
-        schedule.refresh()
+        schedule.refresh(full = true)
         JSObject(schedule.identity().toString())
     }
 
