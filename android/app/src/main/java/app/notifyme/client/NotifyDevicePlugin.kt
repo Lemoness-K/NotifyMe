@@ -148,7 +148,6 @@ class NotifyDevicePlugin : Plugin() {
     fun bind(call: PluginCall) = safely(call) {
         applyScope()
         ScheduleWork.periodic(context)
-        schedule.beginForeground()
         schedule.recover(ScheduleEntry.FOREGROUND)
         JSObject(schedule.identity().toString())
     }

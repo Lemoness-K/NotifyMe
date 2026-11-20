@@ -16,8 +16,10 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import app.notifyme.schedule.Boundary
+import app.notifyme.schedule.LocationInterruption
 import app.notifyme.schedule.ScheduleEntry
 import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofenceStatusCodes
 import com.google.android.gms.location.GeofencingEvent
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -31,7 +33,12 @@ class ScheduleReceiver : BroadcastReceiver() {
             "alarm", "timer" -> intent.data?.lastPathSegment?.let { ScheduleWork.enqueue(context, intent.action!!, listOf(it)) }
             "fence" -> {
                 val event = GeofencingEvent.fromIntent(intent) ?: return
-                if (event.hasError()) return
+                if (event.hasError()) {
+                    if (event.errorCode == GeofenceStatusCodes.GEOFENCE_NOT_AVAILABLE) {
+                        interruptMonitoring(context, LocationInterruption.UNAVAILABLE)
+                    }
+                    return
+                }
                 val action = when (event.geofenceTransition) {
                     Geofence.GEOFENCE_TRANSITION_ENTER -> "enter"
                     Geofence.GEOFENCE_TRANSITION_EXIT -> "exit"
@@ -42,7 +49,7 @@ class ScheduleReceiver : BroadcastReceiver() {
             }
             Intent.ACTION_BOOT_COMPLETED -> ScheduleWork.enqueue(context, "boot")
             Intent.ACTION_MY_PACKAGE_REPLACED -> {
-                DeviceSchedule.get(context).beginForeground()
+                DeviceSchedule.get(context).requireAuthorization()
                 ScheduleWork.enqueue(context, "foreground")
             }
             Intent.ACTION_TIME_CHANGED,
@@ -52,9 +59,17 @@ class ScheduleReceiver : BroadcastReceiver() {
                 val enabled = if (intent.hasExtra(LocationManager.EXTRA_LOCATION_ENABLED)) {
                     intent.getBooleanExtra(LocationManager.EXTRA_LOCATION_ENABLED, false)
                 } else DeviceSchedule.get(context).os.locationAllowed()
-                val action = if (enabled) "location" else "location-interrupted"
-                ScheduleWork.enqueue(context, action)
+                if (enabled) ScheduleWork.enqueue(context, "location")
+                else interruptMonitoring(context, LocationInterruption.DISABLED)
             }
+        }
+    }
+
+    private fun interruptMonitoring(context: Context, reason: LocationInterruption) {
+        try {
+            DeviceSchedule.get(context).locationInterrupted(reason)
+        } finally {
+            ScheduleWork.enqueue(context, "location")
         }
     }
 }
@@ -69,6 +84,7 @@ class DeviceMessagingService : FirebaseMessagingService() {
             data["expiresAt"]?.let { runCatching { Instant.parse(it).isAfter(Instant.now()) }.getOrDefault(false) } != true) return
         val signal = JSONObject().put("scopeRef", data["scopeRef"]).put("eventType", data["eventType"])
             .put("householdRevision", data["householdRevision"])
+        DeviceSchedule.get(this).observeRevocation(signal)
         ScheduleWork.enqueue(this, "signal", listOf(signal.toString()))
     }
 }
@@ -86,7 +102,6 @@ class ScheduleWork(context: Context, params: WorkerParameters) : Worker(context,
                 "foreground" -> schedule.recover(ScheduleEntry.FOREGROUND)
                 "clock" -> schedule.replanTime()
                 "location" -> schedule.retryLocation()
-                "location-interrupted" -> schedule.locationInterrupted()
                 else -> schedule.refresh()
             }
             Result.success()
@@ -104,7 +119,7 @@ class ScheduleWork(context: Context, params: WorkerParameters) : Worker(context,
                 .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
             if (action == "refresh") request.setConstraints(connected)
             val manager = WorkManager.getInstance(context)
-            if (action in setOf("enter", "exit", "alarm", "timer", "location-interrupted")) {
+            if (action in setOf("enter", "exit", "alarm", "timer")) {
                 manager.enqueueUniqueWork("notify-schedule-events", ExistingWorkPolicy.APPEND_OR_REPLACE, request.build())
             } else manager.enqueue(request.build())
         }

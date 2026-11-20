@@ -6,6 +6,7 @@ import com.getcapacitor.BridgeActivity;
 public class MainActivity extends BridgeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DeviceSchedule.screenEntering(this);
         registerPlugin(NotifyDevicePlugin.class);
         super.onCreate(savedInstanceState);
     }
