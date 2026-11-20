@@ -6,6 +6,8 @@ import { createServer } from 'node:net';
 import { request } from 'node:https';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { Activation, bindGeneration } from '../../src/server/operations/activation.js';
+import { DeleteJournal } from '../../src/server/delete-journal.js';
+import { createApp } from '../../src/server/http.js';
 import { OperationsReporter } from '../../src/server/operations/reporting.js';
 import { startManagedRuntime } from '../../src/server/operations/runtime.js';
 import { operationsSettings } from '../../src/server/operations/settings.js';
@@ -29,21 +31,31 @@ function environment() {
     NOTIFY_OPS_AUTHORITY_KEY_FILE: authorityKey };
 }
 
+function managedRuntime() {
+  const config = operationsSettings({ ...environment(), NOTIFY_MODE: 'local', NOTIFY_SYNTHETIC_AUTH: '1' })!;
+  return { authority: config.authority, journalPath: join(fixture.state, 'journal.sqlite') };
+}
+
 it('does not start API or Worker when restored state is blocked', async () => {
   const activation = new Activation(fixture.state);
   activation.block();
   const start = vi.fn();
-  await expect(startManagedRuntime(fixture.state, start)).rejects.toThrow('RECOVERY_NOT_ACTIVE');
+  await expect(startManagedRuntime(fixture.state, start, managedRuntime())).rejects.toThrow('RECOVERY_NOT_ACTIVE');
   expect(start).not.toHaveBeenCalled();
 });
 
 it('starts only with the database and epoch in the verified activation', async () => {
   const activation = new Activation(fixture.state);
+  const options = managedRuntime();
+  const db = await openStore(fixture.database, { migrate: true });
+  const journal = await DeleteJournal.open(db, options.journalPath);
+  try { await journal.initializeAuthority(options.authority, db); }
+  finally { journal.close(); await db.$disconnect(); }
   bindGeneration(fixture.database, 'trusted-generation');
   activation.initialize(fixture.database, 'trusted-generation');
   const stop = vi.fn(async () => undefined);
   const start = vi.fn(async (_active: { database: string; epoch: string }) => stop);
-  const close = await startManagedRuntime(fixture.state, start);
+  const close = await startManagedRuntime(fixture.state, start, options);
   expect(start.mock.calls[0][0]).toMatchObject({ database: fixture.database, epoch: 'trusted-generation' });
   await close();
   expect(stop).toHaveBeenCalledOnce();
@@ -66,14 +78,17 @@ it('records weekly and incident transitions once across new processes, without e
 
 it('preserves disabled reporting and accepts independent switches', () => {
   const report = vi.fn();
-  new OperationsReporter({ state: fixture.state, timeZone: 'UTC', weekly: true, incidents: false }, report)
-    .observe(monday, 'UNAVAILABLE');
-  expect(report.mock.calls.map(([event]) => event.kind)).toEqual(['WEEKLY']);
+  const options = { state: fixture.state, timeZone: 'UTC', weekly: true, incidents: false };
+  new OperationsReporter(options, report).observe(monday, 'READY');
+  new OperationsReporter(options, report).observe(new Date(monday.getTime() + 1000), 'UNAVAILABLE');
+  new OperationsReporter(options, report).observe(new Date(monday.getTime() + 2000), 'UNAVAILABLE');
+  new OperationsReporter(options, report).observe(new Date(monday.getTime() + 7 * 86_400_000), 'READY');
+  expect(report.mock.calls.map(([event]) => [event.kind, event.incidents])).toEqual([['WEEKLY', 0], ['WEEKLY', 1]]);
 });
 
 it('rejects a directory on the operating filesystem even with the configured media marker', () => {
   const operations = operationsSettings({ ...environment(), NOTIFY_MODE: 'target' })!;
-  expect(() => operations.authority.baseline('synthetic-lineage', 0)).toThrow('RECOVERY_AUTHORITY_UNAVAILABLE');
+  expect(() => operations.authority.baseline('synthetic-lineage', 0, 'a'.repeat(64))).toThrow('RECOVERY_AUTHORITY_UNAVAILABLE');
 });
 
 it('serves status through a private Unix socket and persists a backup failure outcome', async () => {
@@ -90,6 +105,31 @@ it('serves status through a private Unix socket and persists a backup failure ou
   } finally { await close(); await database.$disconnect(); }
 });
 
+it('withholds HTTP responses and the Worker until the managed serving gate is published', async () => {
+  const db = await openStore(fixture.database, { migrate: true });
+  let startWorkers: (() => void) | undefined;
+  let published = false;
+  const log = vi.fn();
+  let observed!: () => void;
+  const ran = new Promise<void>((resolve) => { observed = resolve; });
+  log.mockImplementation(({ event }) => { if (event === 'WORK_MAINTENANCE') observed(); });
+  const unused = async () => { throw new Error('fixture'); };
+  const app = await createApp({ db, origin: 'http://127.0.0.1', workMaintenance: true,
+    provider: { verifyFirebase: unused, verifyGoogle: unused }, workLog: log,
+    servingGate: { isPublished: () => published, deferWorkers: (start) => { startWorkers = start; } },
+  });
+  try {
+    await app.listen(0, '127.0.0.1');
+    const url = (await app.getUrl()) + '/internal/health';
+    expect((await fetch(url)).status).toBe(503);
+    expect(log).not.toHaveBeenCalled();
+    published = true;
+    startWorkers!();
+    await ran;
+    expect((await fetch(url)).status).toBe(204);
+  } finally { await app.close(); await db.$disconnect(); }
+});
+
 async function reservePort() {
   const server = createServer().listen(0, '127.0.0.1');
   await once(server, 'listening');
@@ -103,7 +143,7 @@ it('keeps the real Caddy ingress and direct public API closed after a blocked ap
   const startup = vi.fn();
   const activation = new Activation(fixture.state);
   activation.block();
-  await expect(startManagedRuntime(fixture.state, startup)).rejects.toThrow('RECOVERY_NOT_ACTIVE');
+  await expect(startManagedRuntime(fixture.state, startup, managedRuntime())).rejects.toThrow('RECOVERY_NOT_ACTIVE');
   expect(startup).not.toHaveBeenCalled();
   const apiPort = await reservePort();
   const proxyPort = await reservePort();

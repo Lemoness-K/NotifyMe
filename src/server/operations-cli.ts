@@ -31,7 +31,7 @@ try {
       try {
         journal = await DeleteJournal.open(db, journalPath);
         await new WorkService(db, undefined, undefined, journal).reconcileCommittedDeletes();
-        journal.initializeAuthority(operations.authority);
+        await journal.initializeAuthority(operations.authority, db);
         operations.archives.initialize();
       } finally { journal?.close(); await db.$disconnect(); }
       const epoch = randomUUID();
@@ -42,7 +42,7 @@ try {
   } else if (command === 'restore' && id) {
     const operations = operationsSettings()!;
     await restoreBackup({ activation, archives: operations.archives, authority: operations.authority,
-      journalPath, state: operations.state, id, now: new Date() });
+      journalPath, state: operations.state, id });
     log({ state: 'VERIFIED' });
   } else if (command === 'backup') {
     log(await localRequest(local.socket, '/backup'));

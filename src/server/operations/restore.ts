@@ -6,8 +6,8 @@ import { revisePlans } from '../installation-plans.js';
 import { openStore } from '../storage.js';
 import { appendChange, preserveDeletedCreateKeys } from '../work-storage.js';
 import { acquireOwnership, bindGeneration, type Activation } from './activation.js';
-import { samePoint, type JournalAuthority } from './authority.js';
-import { inspectSnapshot, type Backups } from './backup.js';
+import { sameHead, samePoint, type JournalAuthority } from './authority.js';
+import { backupExpiresAt, inspectSnapshot, type Backups } from './backup.js';
 import { hashFile, syncDirectory } from './files.js';
 
 function settledAfter(rows: JournalEntry[], cutoff: number) {
@@ -31,7 +31,7 @@ function settledAfter(rows: JournalEntry[], cutoff: number) {
   return committed;
 }
 
-async function applyDeletes(image: string, entries: JournalEntry[]) {
+async function prepareCandidate(image: string, entries: JournalEntry[], journal: DeleteJournal, history: ReturnType<DeleteJournal['history']>) {
   const database = await openStore(image, { migrate: true });
   try {
     for (const entry of entries) {
@@ -59,22 +59,33 @@ async function applyDeletes(image: string, entries: JournalEntry[]) {
           committedAt: new Date(entry.at), inputDigest: entry.digest } });
       });
     }
+    await database.$transaction(async (tx) => {
+      // Treat every restored session-bound installation as logged out until registration.
+      await tx.installation.updateMany({ where: { sessionDigest: { not: null } },
+        data: { active: false, tokenCiphertext: null } });
+      await tx.session.deleteMany();
+      await tx.loginChallenge.deleteMany();
+    });
     // Verify existing authorization joins without opening a listener or invoking a provider.
     await database.membership.findFirst({ where: { active: true }, include: { user: true, household: true } });
     await database.reminder.count();
+    await journal.assertDatabase(database, history);
   } finally { await database.$disconnect(); }
 }
 
 export async function restoreBackup(options: {
-  activation: Activation; archives: Backups; authority: JournalAuthority; state: string; journalPath: string; id: string; now: Date;
+  activation: Activation; archives: Backups; authority: JournalAuthority; state: string; journalPath: string; id: string;
+  clock?: () => Date;
 }) {
   const release = acquireOwnership(options.state);
+  const clock = options.clock ?? (() => new Date());
   let directory: string | undefined;
   let journal: DeleteJournal | undefined;
   try {
     options.activation.block();
     journal = DeleteJournal.openRecovery(options.journalPath, options.authority);
-    const item = options.archives.select(options.id, options.now);
+    const item = options.archives.select(options.id, clock());
+    const expiresAt = backupExpiresAt(item);
     const history = journal.history();
     const cutoff = history.points.get(item.cutoff.position);
     if (journal.lineage !== item.lineage || !cutoff || !samePoint(cutoff, item.cutoff)) throw new Error('RECOVERY_CUTOFF_MISMATCH');
@@ -86,20 +97,19 @@ export async function restoreBackup(options: {
     const image = join(directory, 'candidate.sqlite');
     await options.archives.decrypt(item, image);
     if (await hashFile(image) !== item.digest || inspectSnapshot(image) !== item.schema) throw new Error('RECOVERY_FINGERPRINT_MISMATCH');
-    await applyDeletes(image, committed);
+    await prepareCandidate(image, committed, journal, history);
     inspectSnapshot(image, committed);
     const epoch = randomUUID();
     bindGeneration(image, epoch);
     const digest = await hashFile(image);
     const newest = journal.history().head;
-    if (!samePoint(newest.tip, history.head.tip) || !samePoint(newest.floor, history.head.floor)) {
-      throw new Error('RECOVERY_BOUNDARY_CHANGED');
-    }
+    if (!sameHead(newest, history.head)) throw new Error('RECOVERY_BOUNDARY_CHANGED');
+    if (!(clock().getTime() < expiresAt)) throw new Error('BACKUP_NOT_SELECTABLE');
     const database = join(options.state, 'recovered-' + epoch + '.sqlite');
     renameSync(image, database);
     chmodSync(database, 0o600);
     syncDirectory(options.state);
-    options.activation.verify(database, epoch, newest.tip.position, digest);
+    options.activation.verify(database, epoch, newest, digest, expiresAt);
     return { database, epoch };
   } finally {
     journal?.close();

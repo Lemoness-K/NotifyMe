@@ -4,6 +4,7 @@ import { DatabaseSync } from 'node:sqlite';
 import type { PrismaClient } from './generated/client.js';
 import { AppError } from './errors.js';
 import { JournalAuthority, samePoint, type JournalHead, type JournalPoint } from './operations/authority.js';
+import { databaseFloor, readDeletionProofs } from './operations/deletion-proof.js';
 
 export interface DeleteRequest {
   requestId: string;
@@ -55,6 +56,13 @@ export class DeleteJournal {
         file.prepare('SELECT position FROM entries LIMIT 1').get();
       }
       const journal = new DeleteJournal(file, token);
+      if (authority) {
+        journal.authority = authority;
+        const prefix = journal.verifyPrefix(true);
+        await journal.assertDatabase(db, prefix);
+        if (!samePoint(prefix.head.tip, prefix.tip)) authority.advance(prefix.head, { ...prefix.head, tip: prefix.tip });
+        return journal;
+      }
       // A stale copy can have the expected identity and still lack a recent deletion.
       const recent = await db.deletionCommit.findMany({ where: {
         committedAt: { gt: new Date(Date.now() - 30 * 86_400_000) },
@@ -67,13 +75,10 @@ export class DeleteJournal {
           throw new Error('Deletion evidence missing from journal');
         }
       }
-      if (authority) {
-        journal.authority = authority;
-        journal.refreshAuthority();
-      }
       return journal;
-    } catch {
+    } catch (error) {
       file?.close();
+      if (authority && error instanceof AppError) throw error;
       throw new AppError(503, 'DELETE_JOURNAL_UNAVAILABLE');
     }
   }
@@ -96,11 +101,24 @@ export class DeleteJournal {
       .get()?.position);
   }
 
-  initializeAuthority(authority: JournalAuthority) {
+  async initializeAuthority(authority: JournalAuthority, db: PrismaClient) {
     if (this.unsettled(new Date()).count) throw new AppError(503, 'DELETE_EVIDENCE_PENDING');
+    const identity = await db.recoveryJournalIdentity.findUnique({ where: { id: 1 } });
+    if (identity?.token !== this.lineage) throw new AppError(503, 'RECOVERY_DATABASE_PROOF_MISMATCH');
+    const proofs = await readDeletionProofs(db);
+    databaseFloor(this.entries(), proofs, this.proofFloor());
     this.file.exec('CREATE TABLE IF NOT EXISTS authority_append (position INTEGER PRIMARY KEY, digest TEXT NOT NULL)');
-    authority.baseline(this.lineage, this.lastPosition());
+    // Previously pruned legacy entries have only the explicitly verified bootstrap DB as their origin.
+    authority.baseline(this.lineage, this.lastPosition(), databaseFloor([], proofs));
     this.authority = authority;
+  }
+
+  async assertDatabase(db: PrismaClient, history = this.history()) {
+    const identity = await db.recoveryJournalIdentity.findUnique({ where: { id: 1 } });
+    if (identity?.token !== this.lineage ||
+        databaseFloor(history.rows, await readDeletionProofs(db)) !== history.head.floorProof) {
+      throw new AppError(503, 'RECOVERY_DATABASE_PROOF_MISMATCH');
+    }
   }
 
   get authoritative() { return this.authority !== undefined; }
@@ -265,7 +283,7 @@ export class DeleteJournal {
     }
   }
 
-  pruneWithAuthority(now: Date, protectedThrough: number) {
+  async pruneWithAuthority(now: Date, protectedThrough: number, db: PrismaClient) {
     if (!this.activeHold || !this.authority) throw new AppError(503, 'BACKUP_HOLD_EXPIRED');
     const { head, points, rows } = this.history();
     const cutoff = new Date(now.getTime() - 30 * 86_400_000).toISOString();
@@ -278,7 +296,12 @@ export class DeleteJournal {
       else unresolved.delete(row.requestId);
       if (!unresolved.size) position = row.position;
     }
-    if (position !== head.floor.position) this.authority.advance(head, { ...head, floor: points.get(position)! });
+    if (position !== head.floor.position) {
+      const proofs = await readDeletionProofs(db);
+      if (databaseFloor(rows, proofs) !== head.floorProof) throw new AppError(503, 'RECOVERY_DATABASE_PROOF_MISMATCH');
+      const floorProof = databaseFloor(rows.filter((row) => row.position > position), proofs);
+      this.authority.advance(head, { ...head, floor: points.get(position)!, floorProof });
+    }
     // Older legacy rows at or below the initial authority floor still use their expiry.
     this.file.exec('BEGIN IMMEDIATE');
     try {

@@ -64,7 +64,7 @@ it('does not suppress journal reconciliation when installation retention fails',
 
 it('blocks the operating delete before its database transaction when the configured authority is missing', async () => {
   const { item, service } = await reminder();
-  journal.initializeAuthority(trust());
+  await journal.initializeAuthority(trust(), database.db);
   renameSync(fixture.volume, fixture.volume + '-missing');
   await expect(service.delete('home', 'member', item.reminderId, 'delete', item.revision)).rejects.toMatchObject({ status: 503 });
   expect(await database.db.reminder.count()).toBe(1);
@@ -74,7 +74,7 @@ it('blocks the operating delete before its database transaction when the configu
 it('detects truncation of an authentic same-lineage journal without the operating database', async () => {
   const { item, service } = await reminder();
   const authority = trust();
-  journal.initializeAuthority(authority);
+  await journal.initializeAuthority(authority, database.db);
   const old = join(fixture.state, 'old.sqlite');
   copyFileSync(join(fixture.state, 'journal.sqlite'), old);
   await service.delete('home', 'member', item.reminderId, 'delete', item.revision);
@@ -82,10 +82,19 @@ it('detects truncation of an authentic same-lineage journal without the operatin
   expect(() => DeleteJournal.openRecovery(old, authority)).toThrow('RECOVERY_JOURNAL_GAP');
 });
 
+it('does not adopt a legacy journal whose committed deletion is missing from the database', async () => {
+  const { item, request } = await reminder();
+  journal.request(request);
+  journal.finish(request, 'COMMITTED', item.revision + 1);
+  const authority = trust();
+  await expect(journal.initializeAuthority(authority, database.db)).rejects.toThrow('RECOVERY_DATABASE_PROOF_MISMATCH');
+  expect(() => authority.read()).toThrow('RECOVERY_AUTHORITY_UNAVAILABLE');
+});
+
 it('does not report a delete successful before terminal evidence reaches the authority and can retry a signed append', async () => {
   const { item, service } = await reminder();
   const authority = trust();
-  journal.initializeAuthority(authority);
+  await journal.initializeAuthority(authority, database.db);
   const publish = authority.advance.bind(authority);
   const fault = vi.spyOn(authority, 'advance').mockImplementation((previous, next) => {
     if (next.tip.position === 2) throw new AppError(503, 'RECOVERY_AUTHORITY_UNAVAILABLE');

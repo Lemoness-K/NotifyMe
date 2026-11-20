@@ -55,6 +55,7 @@ export interface AppOptions {
   workMaintenance?: boolean;
   journalAuthority?: JournalAuthority;
   onWorkService?: (service: WorkService) => void;
+  servingGate?: { isPublished: () => boolean; deferWorkers: (start: () => void) => void };
   trustedProxy?: boolean;
   log?: (record: { requestId: string; route: string; status: number; durationMs: number; code?: string }) => void;
 }
@@ -405,14 +406,25 @@ export async function createApp(options: AppOptions) {
   });
   const sender = options.installationSignalSender;
   const tokenKey = options.installationTokenKey;
+  const servingGate = options.servingGate;
   if (journal || options.workMaintenance || (sender && tokenKey)) {
-    const stopWork = options.workMaintenance ? startWorkMaintenance(work, 60_000, () => installations.prune()) : undefined;
-    const stopSignals = sender && tokenKey ? startSignalDelivery(options.db, sender, tokenKey, installations.generation, options.workLog, options.clock) : undefined;
+    let stopWork: (() => Promise<void>) | undefined;
+    let stopSignals: (() => Promise<void>) | undefined;
+    const startWorkers = () => {
+      if (options.workMaintenance) stopWork = startWorkMaintenance(work, 60_000, () => installations.prune());
+      if (sender && tokenKey) stopSignals = startSignalDelivery(options.db, sender, tokenKey, installations.generation, options.workLog, options.clock);
+    };
+    if (servingGate) servingGate.deferWorkers(startWorkers);
+    else startWorkers();
     const close = app.close.bind(app);
     app.close = async () => { try { await Promise.all([stopWork?.(), stopSignals?.()]); await close(); } finally { journal?.close(); } };
   }
   const express = app.getHttpAdapter().getInstance();
   express.disable('x-powered-by');
+  if (servingGate) app.use((_request: Request, response: Response, next: NextFunction) => {
+    if (servingGate.isPublished()) return next();
+    response.status(503).end();
+  });
   app.setGlobalPrefix('api/v1');
   app.useGlobalFilters(new SafeErrors());
   app.use((req: Request, res: Response, next: NextFunction) => {

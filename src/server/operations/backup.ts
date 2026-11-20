@@ -22,6 +22,7 @@ export type BackupMetadata = {
   digest: string;
 };
 type Entry = { backup: BackupMetadata; expired: boolean };
+export const backupExpiresAt = (item: BackupMetadata) => Date.parse(item.createdAt) + RETENTION_MS;
 
 function metadata(item: BackupMetadata) {
   const { version, id, createdAt, lineage, cutoff, schema, digest } = item;
@@ -92,7 +93,7 @@ export class Backups {
   }
 
   private valid(entry: Entry, now: Date) {
-    return !entry.expired && now.getTime() - Date.parse(entry.backup.createdAt) < RETENTION_MS;
+    return !entry.expired && now.getTime() < backupExpiresAt(entry.backup);
   }
 
   select(id: string, now: Date) {
@@ -133,10 +134,10 @@ export class Backups {
       try {
         const head = journal.refreshAuthority()!;
         const entries = this.collect(now, partial);
-        if (entries.length) journal.pruneWithAuthority(now, Math.min(...entries.map(({ backup }) => backup.cutoff.position)));
+        if (entries.length) await journal.pruneWithAuthority(now, Math.min(...entries.map(({ backup }) => backup.cutoff.position)), work.db);
         else if (head.floor.position !== head.tip.position && !journal.unsettled(now).count) {
           // Without a selectable backup, a settled cutoff can become the earliest future recovery point.
-          journal.pruneWithAuthority(now, head.tip.position);
+          await journal.pruneWithAuthority(now, head.tip.position, work.db);
         }
       } finally { retention.release(); }
       for (const name of readdirSync(this.state)) {
@@ -172,7 +173,7 @@ export class Backups {
         renameSync(partial, this.path(id));
         syncDirectory(this.archives);
         this.publish([...entries, { backup: item, expired: false }]);
-        journal.pruneWithAuthority(now, Math.min(cutoff.position, ...entries.map(({ backup }) => backup.cutoff.position)));
+        await journal.pruneWithAuthority(now, Math.min(cutoff.position, ...entries.map(({ backup }) => backup.cutoff.position)), work.db);
       } finally { publish.release(); }
       return item;
     } finally {

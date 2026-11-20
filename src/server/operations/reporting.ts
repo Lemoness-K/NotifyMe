@@ -30,11 +30,16 @@ export class OperationsReporter {
     }
     const events: Event[] = state.pending ?? [];
     const event = (kind: string, id: string) => ({ event: 'LOCAL_OPERATIONS' as const, kind, id, at: now.toISOString() });
-    if (this.options.incidents && health === 'CHECK_FAILED') {
-      events.push(event('CHECK_FAILED', 'check-' + ++state.sequence));
-    } else if (this.options.incidents && state.health !== health) {
-      if (health === 'UNAVAILABLE') { state.incidents++; events.push(event('INCIDENT', 'incident-' + ++state.sequence)); }
-      else if (state.health === 'UNAVAILABLE') events.push(event('RECOVERED', 'recovered-' + ++state.sequence));
+    const transitioned = health !== 'CHECK_FAILED' && state.health !== health;
+    if (health === 'CHECK_FAILED') {
+      if (this.options.incidents) events.push(event('CHECK_FAILED', 'check-' + ++state.sequence));
+    } else if (transitioned) {
+      if (health === 'UNAVAILABLE') {
+        state.incidents++;
+        if (this.options.incidents) events.push(event('INCIDENT', 'incident-' + ++state.sequence));
+      } else if (state.health === 'UNAVAILABLE' && this.options.incidents) {
+        events.push(event('RECOVERED', 'recovered-' + ++state.sequence));
+      }
       state.health = health;
     }
     const week = weekOf(now, this.options.timeZone);
@@ -48,6 +53,6 @@ export class OperationsReporter {
       atomicRecord(this.path, { ...state, pending: events });
       for (const item of events) this.log(item);
       atomicRecord(this.path, { ...state, pending: [] });
-    }
+    } else if (transitioned) atomicRecord(this.path, state);
   }
 }
