@@ -89,6 +89,7 @@ it('requires an exact anchored commit even when its deleted target is already ab
   const gone = await create('wrong-proof');
   await work.delete('home', 'member', gone.reminderId, 'delete-wrong-proof', gone.revision);
   await db.deletionCommit.updateMany({ data: { inputDigest: null } });
+  await db.$disconnect();
   const bindAndStartWorker = vi.fn();
   await expect(startManagedRuntime(fixture.state, bindAndStartWorker, { authority, journalPath }))
     .rejects.toThrow('RECOVERY_DATABASE_PROOF_MISMATCH');
