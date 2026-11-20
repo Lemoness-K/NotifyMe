@@ -19,6 +19,7 @@ import { HouseholdRateLimit, householdRuntimeDefaults, requestSource, startWorkM
 import type { SyntheticAccount } from './provider.js';
 import { catalog, prepareHouseholdSettings, prepareUserSettings } from './settings.js';
 import { DeleteJournal } from './delete-journal.js';
+import type { JournalAuthority } from './operations/authority.js';
 import { WorkService } from './work-service.js';
 import { actionInput, createWorkInput, editWorkInput, lifecycleInput } from './work-input.js';
 import { listHistory, listOccurrences } from './work-queries.js';
@@ -52,6 +53,8 @@ export interface AppOptions {
   installationSignalSender?: SignalSender;
   workLog?: (event: Record<string, unknown>) => void;
   workMaintenance?: boolean;
+  journalAuthority?: JournalAuthority;
+  onWorkService?: (service: WorkService) => void;
   trustedProxy?: boolean;
   log?: (record: { requestId: string; route: string; status: number; durationMs: number; code?: string }) => void;
 }
@@ -373,10 +376,12 @@ class CoreController {
 }
 
 export async function createApp(options: AppOptions) {
-  const journal = options.deleteJournalPath ? await DeleteJournal.open(options.db, options.deleteJournalPath) : undefined;
+  const journal = options.deleteJournalPath
+    ? await DeleteJournal.open(options.db, options.deleteJournalPath, options.journalAuthority) : undefined;
   const installations = new InstallationRepository(options.db, options.clock, options.installationTokenKey, options.installationGeneration);
   const plans = options.workPlanPort ?? installations;
   const work = new WorkService(options.db, options.clock, plans, journal, options.workLog);
+  options.onWorkService?.(work);
   @Module({
     controllers: [CoreController],
     providers: [{ provide: services, useValue: {

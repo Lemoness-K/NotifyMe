@@ -11,6 +11,7 @@ on:
       - '*config.ts'
       - 'tsconfig*.json'
       - 'deploy/u1/**'
+      - 'deploy/u5/**'
       - '.github/workflows/u1-app-ci.yml'
   pull_request:
     paths:
@@ -22,6 +23,7 @@ on:
       - '*config.ts'
       - 'tsconfig*.json'
       - 'deploy/u1/**'
+      - 'deploy/u5/**'
       - '.github/workflows/u1-app-ci.yml'
   workflow_dispatch:
 

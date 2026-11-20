@@ -1,0 +1,9 @@
+[Unit]
+Description=Observe Notify Me service health locally
+
+[Timer]
+OnCalendar=minutely
+Persistent=true
+
+[Install]
+WantedBy=timers.target

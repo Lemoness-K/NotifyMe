@@ -1,0 +1,17 @@
+[Unit]
+Description=Check local Notify Me service health and reporting
+
+[Service]
+Type=oneshot
+User=notify-me
+Group=notify-me
+WorkingDirectory=/opt/notify-me
+EnvironmentFile=/etc/notify-me/operations.env
+ExecStart=/usr/bin/node /opt/notify-me/dist/server/operations-cli.js observe
+StateDirectory=notify-me
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes

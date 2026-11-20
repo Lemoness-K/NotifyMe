@@ -1,0 +1,26 @@
+[Unit]
+Description=Notify Me with controlled recovery
+After=network-online.target
+Wants=network-online.target
+RequiresMountsFor=/mnt/notify-authority /var/lib/notify-backups
+
+[Service]
+Type=simple
+User=notify-me
+Group=notify-me
+WorkingDirectory=/opt/notify-me
+EnvironmentFile=/etc/notify-me/runtime.env
+EnvironmentFile=/etc/notify-me/operations.env
+ExecStart=/usr/bin/node /opt/notify-me/dist/server/main.js
+Restart=on-failure
+StateDirectory=notify-me
+StateDirectoryMode=0700
+ReadWritePaths=/mnt/notify-authority /var/lib/notify-backups
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+
+[Install]
+WantedBy=multi-user.target
