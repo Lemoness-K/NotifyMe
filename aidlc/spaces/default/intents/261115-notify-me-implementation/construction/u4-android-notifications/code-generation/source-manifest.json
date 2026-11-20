@@ -1,0 +1,310 @@
+{
+  "stage": "code-generation",
+  "unit": "u4-android-notifications",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".github/workflows/android-u4-ci.yml"
+    },
+    {
+      "path": "android/.gitignore"
+    },
+    {
+      "path": "android/app/.gitignore"
+    },
+    {
+      "path": "android/app/build.gradle"
+    },
+    {
+      "path": "android/app/capacitor.build.gradle"
+    },
+    {
+      "path": "android/app/proguard-rules.pro"
+    },
+    {
+      "path": "android/app/src/main/AndroidManifest.xml"
+    },
+    {
+      "path": "android/app/src/main/java/app/notifyme/client/DeviceNotifications.kt"
+    },
+    {
+      "path": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "path": "android/app/src/main/java/app/notifyme/client/LaunchEvidence.kt"
+    },
+    {
+      "path": "android/app/src/main/java/app/notifyme/client/MainActivity.java"
+    },
+    {
+      "path": "android/app/src/main/java/app/notifyme/client/NativeApi.kt"
+    },
+    {
+      "path": "android/app/src/main/java/app/notifyme/client/NotifyDevicePlugin.kt"
+    },
+    {
+      "path": "android/app/src/main/java/app/notifyme/client/ProtectedState.kt"
+    },
+    {
+      "path": "android/app/src/main/java/app/notifyme/client/ScheduleReceiver.kt"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-land-hdpi/splash.png"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-land-mdpi/splash.png"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-land-xhdpi/splash.png"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-land-xxhdpi/splash.png"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-land-xxxhdpi/splash.png"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-port-hdpi/splash.png"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-port-mdpi/splash.png"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-port-xhdpi/splash.png"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-port-xxhdpi/splash.png"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-port-xxxhdpi/splash.png"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml"
+    },
+    {
+      "path": "android/app/src/main/res/drawable/ic_launcher_background.xml"
+    },
+    {
+      "path": "android/app/src/main/res/drawable/splash.png"
+    },
+    {
+      "path": "android/app/src/main/res/layout/activity_main.xml"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+      "path": "android/app/src/main/res/values-ko/strings.xml"
+    },
+    {
+      "path": "android/app/src/main/res/values/ic_launcher_background.xml"
+    },
+    {
+      "path": "android/app/src/main/res/values/strings.xml"
+    },
+    {
+      "path": "android/app/src/main/res/values/styles.xml"
+    },
+    {
+      "path": "android/app/src/main/res/xml/file_paths.xml"
+    },
+    {
+      "path": "android/app/src/test/java/app/notifyme/client/NativeApiTest.kt"
+    },
+    {
+      "path": "android/build.gradle"
+    },
+    {
+      "path": "android/capacitor.settings.gradle"
+    },
+    {
+      "path": "android/gradle.properties"
+    },
+    {
+      "path": "android/gradle/wrapper/gradle-wrapper.jar"
+    },
+    {
+      "path": "android/gradle/wrapper/gradle-wrapper.properties"
+    },
+    {
+      "path": "android/gradlew"
+    },
+    {
+      "path": "android/gradlew.bat"
+    },
+    {
+      "path": "android/schedule-core/build.gradle.kts"
+    },
+    {
+      "path": "android/schedule-core/settings.gradle.kts"
+    },
+    {
+      "path": "android/schedule-core/src/main/kotlin/app/notifyme/schedule/ScheduleRules.kt"
+    },
+    {
+      "path": "android/schedule-core/src/main/kotlin/app/notifyme/schedule/ScheduleSafety.kt"
+    },
+    {
+      "path": "android/schedule-core/src/main/kotlin/app/notifyme/schedule/ScheduleState.kt"
+    },
+    {
+      "path": "android/schedule-core/src/test/kotlin/app/notifyme/schedule/ScheduleRulesTest.kt"
+    },
+    {
+      "path": "android/schedule-core/src/test/kotlin/app/notifyme/schedule/ScheduleSafetyTest.kt"
+    },
+    {
+      "path": "android/schedule-core/src/test/kotlin/app/notifyme/schedule/ScheduleStateTest.kt"
+    },
+    {
+      "path": "android/settings.gradle"
+    },
+    {
+      "path": "android/variables.gradle"
+    },
+    {
+      "path": "capacitor.config.ts"
+    },
+    {
+      "path": "package-lock.json"
+    },
+    {
+      "path": "package.json"
+    },
+    {
+      "path": "playwright.config.ts"
+    },
+    {
+      "path": "prisma/migrations/202611200001_u4_installations/migration.sql"
+    },
+    {
+      "path": "prisma/schema.prisma"
+    },
+    {
+      "path": "src/server/auth.ts"
+    },
+    {
+      "path": "src/server/config.ts"
+    },
+    {
+      "path": "src/server/household-runtime.ts"
+    },
+    {
+      "path": "src/server/households.ts"
+    },
+    {
+      "path": "src/server/http.ts"
+    },
+    {
+      "path": "src/server/installation-input.ts"
+    },
+    {
+      "path": "src/server/installation-plans.ts"
+    },
+    {
+      "path": "src/server/installations.ts"
+    },
+    {
+      "path": "src/server/notification-outbox.ts"
+    },
+    {
+      "path": "src/server/storage.ts"
+    },
+    {
+      "path": "src/server/work-effects.ts"
+    },
+    {
+      "path": "src/web/App.tsx"
+    },
+    {
+      "path": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "path": "src/web/Settings.tsx"
+    },
+    {
+      "path": "src/web/client.ts"
+    },
+    {
+      "path": "src/web/device.ts"
+    },
+    {
+      "path": "src/web/styles.css"
+    },
+    {
+      "path": "src/web/work-pages.tsx"
+    },
+    {
+      "path": "tests/e2e/u4/installation-notifications.spec.ts"
+    },
+    {
+      "path": "tests/u4/fixture.ts"
+    },
+    {
+      "path": "tests/u4/http.test.ts"
+    },
+    {
+      "path": "tests/u4/notification-rules.test.ts"
+    },
+    {
+      "path": "tests/u4/repository.test.ts"
+    },
+    {
+      "path": "tests/u4/storage-model.test.ts"
+    },
+    {
+      "path": "tests/u4/web-interactions.test.tsx"
+    },
+    {
+      "path": "vitest.config.ts"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ type Tx = Prisma.TransactionClient;
 
 export function workEffects(planPort?: InstallationPlanParticipant, additional?: HouseholdEffects): HouseholdEffects {
   return {
+    beforeRemoveTargets: additional?.beforeRemoveTargets,
     async removeTargets(tx, householdId, userId, now) {
       const affected = await tx.reminder.findMany({
         where: { householdId, OR: [

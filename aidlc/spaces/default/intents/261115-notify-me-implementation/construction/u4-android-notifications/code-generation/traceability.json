@@ -1,0 +1,632 @@
+{
+  "stage": "code-generation",
+  "unit": "u4-android-notifications",
+  "upstream_ids": [
+    "AC1.7.1",
+    "AC1.7.2",
+    "AC1.7.3",
+    "AC2.2.1",
+    "AC2.2.2",
+    "AC2.2.3",
+    "AC2.6.1",
+    "AC2.6.2",
+    "AC2.6.3",
+    "AC2.6.4",
+    "AC2.7.1",
+    "AC2.7.2",
+    "AC2.7.3",
+    "AC3.4.1",
+    "AC3.4.2",
+    "AC4.1.1",
+    "AC4.1.2",
+    "AC4.1.3",
+    "AC4.2.1",
+    "AC4.2.2",
+    "AC4.2.3",
+    "AC4.2.4",
+    "AC4.3.1",
+    "AC4.3.2",
+    "AC4.3.3",
+    "AC4.4.1",
+    "AC4.4.2",
+    "AC4.4.3",
+    "AC4.5.1",
+    "AC4.5.2",
+    "AC4.5.3",
+    "AC4.6.1",
+    "AC4.6.2",
+    "AC4.6.3",
+    "AC4.6.4",
+    "AC4.7.1",
+    "AC4.7.2",
+    "AC4.7.3",
+    "AC5.6.1",
+    "AC5.6.2",
+    "AC5.6.3",
+    "AC5.6.4",
+    "AC6.1.1",
+    "AC6.1.2",
+    "AC6.1.3",
+    "AC6.1.4",
+    "AC6.2.1",
+    "AC6.2.2",
+    "AC6.2.3",
+    "AC6.3.1",
+    "AC6.3.2",
+    "AC6.3.3",
+    "AC6.3.4",
+    "AC6.4.1",
+    "AC6.4.2",
+    "AC6.6.1",
+    "AC6.6.2",
+    "AC6.6.3",
+    "NFR5.1",
+    "NFR5.2",
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR1.4",
+    "NFR2.1",
+    "NFR2.2",
+    "NFR2.3",
+    "NFR5.3",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR3.3",
+    "NFR3.4",
+    "NFR4.1",
+    "NFR4.2",
+    "BR4.1",
+    "BR4.2",
+    "BR4.3",
+    "BR4.4",
+    "BR4.5",
+    "BR4.6",
+    "BR4.7",
+    "BR4.8",
+    "BR4.9",
+    "BR4.10",
+    "BR4.11",
+    "BR4.12",
+    "BR4.13",
+    "BR4.14",
+    "NFR6.1",
+    "NFR6.2",
+    "NFR6.3",
+    "NFR6.4",
+    "NFR7.1",
+    "NFR7.2",
+    "NFR7.3",
+    "NFR7.4",
+    "NFR7.5",
+    "NFR8.1",
+    "NFR8.2",
+    "NFR9.1",
+    "NFR9.2",
+    "NFR9.3",
+    "NFR10.1",
+    "NFR10.2"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.7.1",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "AC1.7.2",
+      "status": "N/A",
+      "target": "U3가 무담당 회차를 보존한다."
+    },
+    {
+      "id": "AC1.7.3",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "AC2.2.1",
+      "status": "N/A",
+      "target": "U3가 요청자와 담당자를 저장한다."
+    },
+    {
+      "id": "AC2.2.2",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "AC2.2.3",
+      "status": "N/A",
+      "target": "U3가 감사 이력을 저장한다."
+    },
+    {
+      "id": "AC2.6.1",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "AC2.6.2",
+      "status": "N/A",
+      "target": "U3가 보관을 복원하고 미래 회차를 계산한다."
+    },
+    {
+      "id": "AC2.6.3",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "AC2.6.4",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "AC2.7.1",
+      "status": "N/A",
+      "target": "U3가 삭제 확인 화면을 제공한다."
+    },
+    {
+      "id": "AC2.7.2",
+      "status": "N/A",
+      "target": "U3가 운영 업무와 회차를 삭제한다."
+    },
+    {
+      "id": "AC2.7.3",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "AC3.4.1",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "AC3.4.2",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "AC4.1.1",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "AC4.1.2",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "AC4.1.3",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "AC4.2.1",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "AC4.2.2",
+      "status": "N/A",
+      "target": "U3가 Trigger 상호 배제를 검증한다."
+    },
+    {
+      "id": "AC4.2.3",
+      "status": "N/A",
+      "target": "U3가 공유 폼의 반경 값을 구현했다."
+    },
+    {
+      "id": "AC4.2.4",
+      "status": "N/A",
+      "target": "U3가 지속 시간을 검증한다."
+    },
+    {
+      "id": "AC4.3.1",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC4.3.2",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC4.3.3",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC4.4.1",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "AC4.4.2",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceNotifications.kt"
+    },
+    {
+      "id": "AC4.4.3",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceNotifications.kt"
+    },
+    {
+      "id": "AC4.5.1",
+      "status": "OK",
+      "target": "src/server/installation-plans.ts"
+    },
+    {
+      "id": "AC4.5.2",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC4.5.3",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC4.6.1",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "AC4.6.2",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "AC4.6.3",
+      "status": "OK",
+      "target": "src/server/notification-outbox.ts"
+    },
+    {
+      "id": "AC4.6.4",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC4.7.1",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "AC4.7.2",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "AC4.7.3",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "AC5.6.1",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC5.6.2",
+      "status": "N/A",
+      "target": "대표 웹 검증 폭은 U1/U3 공용 검증에 남는다."
+    },
+    {
+      "id": "AC5.6.3",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC5.6.4",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC6.1.1",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC6.1.2",
+      "status": "N/A",
+      "target": "U2가 계정 설정을 저장한다."
+    },
+    {
+      "id": "AC6.1.3",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC6.1.4",
+      "status": "N/A",
+      "target": "U3가 업무별 Trigger와 반복 설정을 저장한다."
+    },
+    {
+      "id": "AC6.2.1",
+      "status": "N/A",
+      "target": "U2가 계정 언어 선택값을 저장한다."
+    },
+    {
+      "id": "AC6.2.2",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC6.2.3",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC6.3.1",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC6.3.2",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC6.3.3",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC6.3.4",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC6.4.1",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC6.4.2",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "AC6.6.1",
+      "status": "N/A",
+      "target": "U2가 가구 경계를 저장한다."
+    },
+    {
+      "id": "AC6.6.2",
+      "status": "N/A",
+      "target": "U3가 반경 조정을 업무에 원자 반영한다."
+    },
+    {
+      "id": "AC6.6.3",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "NFR5.1",
+      "status": "Deferred",
+      "target": "DS-014에서 측정 입력을 확정하고 대상 Raspberry Pi에서 부하와 자원을 측정한다."
+    },
+    {
+      "id": "NFR5.2",
+      "status": "Deferred",
+      "target": "DS-014에서 측정 입력을 확정하고 대상 Raspberry Pi에서 부하와 자원을 측정한다."
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "src/server/auth.ts"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "NFR1.4",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/ProtectedState.kt"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "NFR2.2",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceNotifications.kt"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "tests/u4/repository.test.ts"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "OK",
+      "target": "android/schedule-core/src/main/kotlin/app/notifyme/schedule/ScheduleState.kt"
+    },
+    {
+      "id": "NFR3.3",
+      "status": "OK",
+      "target": "tests/u4/notification-rules.test.ts"
+    },
+    {
+      "id": "NFR3.4",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "android/schedule-core/src/main/kotlin/app/notifyme/schedule/ScheduleRules.kt"
+    },
+    {
+      "id": "NFR4.2",
+      "status": "OK",
+      "target": "android/schedule-core/src/main/kotlin/app/notifyme/schedule/ScheduleRules.kt"
+    },
+    {
+      "id": "BR4.1",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "BR4.2",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "BR4.3",
+      "status": "OK",
+      "target": "src/server/installation-plans.ts"
+    },
+    {
+      "id": "BR4.4",
+      "status": "OK",
+      "target": "src/server/installation-plans.ts"
+    },
+    {
+      "id": "BR4.5",
+      "status": "OK",
+      "target": "src/server/notification-outbox.ts"
+    },
+    {
+      "id": "BR4.6",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "BR4.7",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "BR4.8",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "BR4.9",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "BR4.10",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceSchedule.kt"
+    },
+    {
+      "id": "BR4.11",
+      "status": "OK",
+      "target": "src/server/installations.ts"
+    },
+    {
+      "id": "BR4.12",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceNotifications.kt"
+    },
+    {
+      "id": "BR4.13",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "BR4.14",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "NFR6.1",
+      "status": "OK",
+      "target": "tests/e2e/u4/installation-notifications.spec.ts"
+    },
+    {
+      "id": "NFR6.2",
+      "status": "OK",
+      "target": "tests/e2e/u4/installation-notifications.spec.ts"
+    },
+    {
+      "id": "NFR6.3",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "NFR6.4",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "NFR7.1",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "NFR7.2",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceNotifications.kt"
+    },
+    {
+      "id": "NFR7.3",
+      "status": "OK",
+      "target": "src/web/InstallationSettings.tsx"
+    },
+    {
+      "id": "NFR7.4",
+      "status": "OK",
+      "target": "src/server/http.ts"
+    },
+    {
+      "id": "NFR7.5",
+      "status": "OK",
+      "target": "android/app/src/main/java/app/notifyme/client/DeviceNotifications.kt"
+    },
+    {
+      "id": "NFR8.1",
+      "status": "OK",
+      "target": "src/web/device.ts"
+    },
+    {
+      "id": "NFR8.2",
+      "status": "OK",
+      "target": ".github/workflows/android-u4-ci.yml"
+    },
+    {
+      "id": "NFR9.1",
+      "status": "OK",
+      "target": "tests/u4/notification-rules.test.ts"
+    },
+    {
+      "id": "NFR9.2",
+      "status": "OK",
+      "target": ".github/workflows/android-u4-ci.yml"
+    },
+    {
+      "id": "NFR9.3",
+      "status": "OK",
+      "target": "vitest.config.ts"
+    },
+    {
+      "id": "NFR10.1",
+      "status": "Deferred",
+      "target": "FCM 상태·시각의 내구 기록을 구현했다. 동기화·재조정·권한 및 삭제 적용의 운영 집계는 인수 검증에서 확인한다."
+    },
+    {
+      "id": "NFR10.2",
+      "status": "OK",
+      "target": "src/server/notification-outbox.ts"
+    }
+  ]
+}

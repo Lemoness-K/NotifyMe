@@ -1,0 +1,46 @@
+name: Notify Me Android checks
+
+on:
+  push:
+    branches: ['master', 'aidlc/u4-android-ci']
+    paths:
+      - 'android/**'
+      - 'src/web/**'
+      - 'package*.json'
+      - 'capacitor.config.ts'
+      - '.github/workflows/android-u4-ci.yml'
+  pull_request:
+    paths:
+      - 'android/**'
+      - 'src/web/**'
+      - 'package*.json'
+      - 'capacitor.config.ts'
+      - '.github/workflows/android-u4-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify Android SDK
+        run: |
+          test -f "$ANDROID_HOME/platforms/android-36/android.jar"
+          test -x "$ANDROID_HOME/build-tools/36.0.0/aapt2"
+      - run: npm ci
+      - run: npm run build
+      - run: npm exec -- cap sync android
+      - run: npm run test:android:jvm
+      - run: ./android/gradlew -p android :app:testDebugUnitTest :app:assembleDebug -PnotifyApiOrigin=https://notify.invalid

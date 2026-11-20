@@ -1,0 +1,207 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u4-android-notifications",
+  "upstream_ids": [
+    "NFR5.1",
+    "NFR5.2",
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR1.4",
+    "NFR2.1",
+    "NFR2.2",
+    "NFR2.3",
+    "NFR5.3",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR3.3",
+    "NFR3.4",
+    "NFR4.1",
+    "NFR4.2",
+    "NFR6.1",
+    "NFR6.2",
+    "NFR6.3",
+    "NFR6.4",
+    "NFR7.1",
+    "NFR7.2",
+    "NFR7.3",
+    "NFR7.4",
+    "NFR7.5",
+    "NFR8.1",
+    "NFR8.2",
+    "NFR9.1",
+    "NFR9.2",
+    "NFR9.3",
+    "NFR10.1",
+    "NFR10.2"
+  ],
+  "coverage": [
+    {
+      "id": "NFR5.1",
+      "status": "OK",
+      "target": "monitoring-design.md § Metrics & KPIs"
+    },
+    {
+      "id": "NFR5.2",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Deployment"
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Shared Infrastructure"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Shared Infrastructure"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Shared Infrastructure"
+    },
+    {
+      "id": "NFR1.4",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Shared Infrastructure"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Shared Infrastructure"
+    },
+    {
+      "id": "NFR2.2",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Shared Infrastructure"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Shared Infrastructure"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Deployment"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Shared Infrastructure"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Shared Infrastructure"
+    },
+    {
+      "id": "NFR3.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Shared Infrastructure"
+    },
+    {
+      "id": "NFR3.4",
+      "status": "OK",
+      "target": "infrastructure-specification.md § Shared Infrastructure"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "N/A",
+      "target": "infrastructure-specification.md § Application Boundaries",
+      "reason": "시간·언어 도메인 값은 앱과 테스트에서 검증한다."
+    },
+    {
+      "id": "NFR4.2",
+      "status": "N/A",
+      "target": "infrastructure-specification.md § Application Boundaries",
+      "reason": "시간·언어 도메인 값은 앱과 테스트에서 검증한다."
+    },
+    {
+      "id": "NFR6.1",
+      "status": "OK",
+      "target": "cicd-pipeline.md § Build and Test"
+    },
+    {
+      "id": "NFR6.2",
+      "status": "OK",
+      "target": "cicd-pipeline.md § Build and Test"
+    },
+    {
+      "id": "NFR6.3",
+      "status": "OK",
+      "target": "cicd-pipeline.md § Build and Test"
+    },
+    {
+      "id": "NFR6.4",
+      "status": "OK",
+      "target": "cicd-pipeline.md § Build and Test"
+    },
+    {
+      "id": "NFR7.1",
+      "status": "N/A",
+      "target": "infrastructure-specification.md § Application Boundaries",
+      "reason": "시간·언어 도메인 값은 앱과 테스트에서 검증한다."
+    },
+    {
+      "id": "NFR7.2",
+      "status": "N/A",
+      "target": "infrastructure-specification.md § Application Boundaries",
+      "reason": "시간·언어 도메인 값은 앱과 테스트에서 검증한다."
+    },
+    {
+      "id": "NFR7.3",
+      "status": "N/A",
+      "target": "infrastructure-specification.md § Application Boundaries",
+      "reason": "시간·언어 도메인 값은 앱과 테스트에서 검증한다."
+    },
+    {
+      "id": "NFR7.4",
+      "status": "N/A",
+      "target": "infrastructure-specification.md § Application Boundaries",
+      "reason": "시간·언어 도메인 값은 앱과 테스트에서 검증한다."
+    },
+    {
+      "id": "NFR7.5",
+      "status": "N/A",
+      "target": "infrastructure-specification.md § Application Boundaries",
+      "reason": "시간·언어 도메인 값은 앱과 테스트에서 검증한다."
+    },
+    {
+      "id": "NFR8.1",
+      "status": "OK",
+      "target": "cicd-pipeline.md § Build and Test"
+    },
+    {
+      "id": "NFR8.2",
+      "status": "OK",
+      "target": "cicd-pipeline.md § Build and Test"
+    },
+    {
+      "id": "NFR9.1",
+      "status": "OK",
+      "target": "cicd-pipeline.md § Build and Test"
+    },
+    {
+      "id": "NFR9.2",
+      "status": "OK",
+      "target": "cicd-pipeline.md § Build and Test"
+    },
+    {
+      "id": "NFR9.3",
+      "status": "OK",
+      "target": "cicd-pipeline.md § Build and Test"
+    },
+    {
+      "id": "NFR10.1",
+      "status": "OK",
+      "target": "monitoring-design.md § Metrics & KPIs"
+    },
+    {
+      "id": "NFR10.2",
+      "status": "OK",
+      "target": "monitoring-design.md § Metrics & KPIs"
+    }
+  ]
+}

@@ -1,0 +1,368 @@
+{
+  "stage": "functional-design",
+  "unit": "u4-android-notifications",
+  "upstream_ids": [
+    "AC1.7.1",
+    "AC1.7.2",
+    "AC1.7.3",
+    "AC2.2.1",
+    "AC2.2.2",
+    "AC2.2.3",
+    "AC2.6.1",
+    "AC2.6.2",
+    "AC2.6.3",
+    "AC2.6.4",
+    "AC2.7.1",
+    "AC2.7.2",
+    "AC2.7.3",
+    "AC3.4.1",
+    "AC3.4.2",
+    "AC4.1.1",
+    "AC4.1.2",
+    "AC4.1.3",
+    "AC4.2.1",
+    "AC4.2.2",
+    "AC4.2.3",
+    "AC4.2.4",
+    "AC4.3.1",
+    "AC4.3.2",
+    "AC4.3.3",
+    "AC4.4.1",
+    "AC4.4.2",
+    "AC4.4.3",
+    "AC4.5.1",
+    "AC4.5.2",
+    "AC4.5.3",
+    "AC4.6.1",
+    "AC4.6.2",
+    "AC4.6.3",
+    "AC4.6.4",
+    "AC4.7.1",
+    "AC4.7.2",
+    "AC4.7.3",
+    "AC5.6.1",
+    "AC5.6.2",
+    "AC5.6.3",
+    "AC5.6.4",
+    "AC6.1.1",
+    "AC6.1.2",
+    "AC6.1.3",
+    "AC6.1.4",
+    "AC6.2.1",
+    "AC6.2.2",
+    "AC6.2.3",
+    "AC6.3.1",
+    "AC6.3.2",
+    "AC6.3.3",
+    "AC6.3.4",
+    "AC6.4.1",
+    "AC6.4.2",
+    "AC6.6.1",
+    "AC6.6.2",
+    "AC6.6.3"
+  ],
+  "coverage": [
+    {
+      "id": "AC1.7.1",
+      "status": "OK",
+      "target": "BR4.7"
+    },
+    {
+      "id": "AC1.7.2",
+      "status": "N/A",
+      "target": "U3가 무담당 회차를 보존한다."
+    },
+    {
+      "id": "AC1.7.3",
+      "status": "OK",
+      "target": "BR4.7"
+    },
+    {
+      "id": "AC2.2.1",
+      "status": "N/A",
+      "target": "U3가 요청자와 담당자를 저장한다."
+    },
+    {
+      "id": "AC2.2.2",
+      "status": "OK",
+      "target": "BR4.2"
+    },
+    {
+      "id": "AC2.2.3",
+      "status": "N/A",
+      "target": "U3가 감사 이력을 저장한다."
+    },
+    {
+      "id": "AC2.6.1",
+      "status": "OK",
+      "target": "BR4.7"
+    },
+    {
+      "id": "AC2.6.2",
+      "status": "N/A",
+      "target": "U3가 보관을 복원하고 미래 회차를 계산한다."
+    },
+    {
+      "id": "AC2.6.3",
+      "status": "OK",
+      "target": "BR4.9"
+    },
+    {
+      "id": "AC2.6.4",
+      "status": "OK",
+      "target": "BR4.8"
+    },
+    {
+      "id": "AC2.7.1",
+      "status": "N/A",
+      "target": "U3가 삭제 확인 화면을 제공한다."
+    },
+    {
+      "id": "AC2.7.2",
+      "status": "N/A",
+      "target": "U3가 운영 업무와 회차를 삭제한다."
+    },
+    {
+      "id": "AC2.7.3",
+      "status": "OK",
+      "target": "BR4.7"
+    },
+    {
+      "id": "AC3.4.1",
+      "status": "OK",
+      "target": "BR4.7"
+    },
+    {
+      "id": "AC3.4.2",
+      "status": "OK",
+      "target": "BR4.8"
+    },
+    {
+      "id": "AC4.1.1",
+      "status": "OK",
+      "target": "BR4.9"
+    },
+    {
+      "id": "AC4.1.2",
+      "status": "OK",
+      "target": "BR4.8"
+    },
+    {
+      "id": "AC4.1.3",
+      "status": "OK",
+      "target": "BR4.9"
+    },
+    {
+      "id": "AC4.2.1",
+      "status": "OK",
+      "target": "BR4.10"
+    },
+    {
+      "id": "AC4.2.2",
+      "status": "N/A",
+      "target": "U3가 Trigger 상호 배제를 검증한다."
+    },
+    {
+      "id": "AC4.2.3",
+      "status": "N/A",
+      "target": "U3가 공유 폼의 반경 값을 구현했다."
+    },
+    {
+      "id": "AC4.2.4",
+      "status": "N/A",
+      "target": "U3가 지속 시간을 검증한다."
+    },
+    {
+      "id": "AC4.3.1",
+      "status": "OK",
+      "target": "BR4.13"
+    },
+    {
+      "id": "AC4.3.2",
+      "status": "OK",
+      "target": "BR4.13"
+    },
+    {
+      "id": "AC4.3.3",
+      "status": "OK",
+      "target": "BR4.13"
+    },
+    {
+      "id": "AC4.4.1",
+      "status": "OK",
+      "target": "BR4.2"
+    },
+    {
+      "id": "AC4.4.2",
+      "status": "OK",
+      "target": "BR4.12"
+    },
+    {
+      "id": "AC4.4.3",
+      "status": "OK",
+      "target": "BR4.12"
+    },
+    {
+      "id": "AC4.5.1",
+      "status": "OK",
+      "target": "BR4.3"
+    },
+    {
+      "id": "AC4.5.2",
+      "status": "OK",
+      "target": "BR4.4"
+    },
+    {
+      "id": "AC4.5.3",
+      "status": "OK",
+      "target": "BR4.4"
+    },
+    {
+      "id": "AC4.6.1",
+      "status": "OK",
+      "target": "BR4.6"
+    },
+    {
+      "id": "AC4.6.2",
+      "status": "OK",
+      "target": "BR4.6"
+    },
+    {
+      "id": "AC4.6.3",
+      "status": "OK",
+      "target": "BR4.5"
+    },
+    {
+      "id": "AC4.6.4",
+      "status": "OK",
+      "target": "BR4.13"
+    },
+    {
+      "id": "AC4.7.1",
+      "status": "OK",
+      "target": "BR4.8"
+    },
+    {
+      "id": "AC4.7.2",
+      "status": "OK",
+      "target": "BR4.8"
+    },
+    {
+      "id": "AC4.7.3",
+      "status": "OK",
+      "target": "BR4.8"
+    },
+    {
+      "id": "AC5.6.1",
+      "status": "OK",
+      "target": "BR4.13"
+    },
+    {
+      "id": "AC5.6.2",
+      "status": "N/A",
+      "target": "대표 웹 검증 폭은 U1/U3 공용 검증에 남는다."
+    },
+    {
+      "id": "AC5.6.3",
+      "status": "OK",
+      "target": "BR4.13"
+    },
+    {
+      "id": "AC5.6.4",
+      "status": "OK",
+      "target": "BR4.13"
+    },
+    {
+      "id": "AC6.1.1",
+      "status": "OK",
+      "target": "BR4.14"
+    },
+    {
+      "id": "AC6.1.2",
+      "status": "N/A",
+      "target": "U2가 계정 설정을 저장한다."
+    },
+    {
+      "id": "AC6.1.3",
+      "status": "OK",
+      "target": "BR4.13"
+    },
+    {
+      "id": "AC6.1.4",
+      "status": "N/A",
+      "target": "U3가 업무별 Trigger와 반복 설정을 저장한다."
+    },
+    {
+      "id": "AC6.2.1",
+      "status": "N/A",
+      "target": "U2가 계정 언어 선택값을 저장한다."
+    },
+    {
+      "id": "AC6.2.2",
+      "status": "OK",
+      "target": "BR4.14"
+    },
+    {
+      "id": "AC6.2.3",
+      "status": "OK",
+      "target": "BR4.14"
+    },
+    {
+      "id": "AC6.3.1",
+      "status": "OK",
+      "target": "BR4.14"
+    },
+    {
+      "id": "AC6.3.2",
+      "status": "OK",
+      "target": "BR4.14"
+    },
+    {
+      "id": "AC6.3.3",
+      "status": "OK",
+      "target": "BR4.14"
+    },
+    {
+      "id": "AC6.3.4",
+      "status": "OK",
+      "target": "BR4.14"
+    },
+    {
+      "id": "AC6.4.1",
+      "status": "OK",
+      "target": "BR4.13"
+    },
+    {
+      "id": "AC6.4.2",
+      "status": "OK",
+      "target": "BR4.13"
+    },
+    {
+      "id": "AC6.6.1",
+      "status": "N/A",
+      "target": "U2가 가구 경계를 저장한다."
+    },
+    {
+      "id": "AC6.6.2",
+      "status": "N/A",
+      "target": "U3가 반경 조정을 업무에 원자 반영한다."
+    },
+    {
+      "id": "AC6.6.3",
+      "status": "OK",
+      "target": "BR4.8"
+    }
+  ],
+  "reverse": [
+    {
+      "id": "BR4.1",
+      "status": "N/A",
+      "target": "설치 식별은 후속 동기화의 공통 기술 경계다."
+    },
+    {
+      "id": "BR4.11",
+      "status": "N/A",
+      "target": "D-043 및 NFR2.1의 위치 보존과 개인정보 정책을 구체화한다."
+    }
+  ]
+}

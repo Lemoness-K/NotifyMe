@@ -1,5 +1,5 @@
 import { createHash, randomBytes } from 'node:crypto';
-import type { PrismaClient } from './generated/client.js';
+import type { Prisma, PrismaClient } from './generated/client.js';
 import { AppError } from './errors.js';
 import { prismaCode } from './repository.js';
 
@@ -127,10 +127,11 @@ export class SessionService {
     return { userId: session.userId, displayName: session.user.displayName, sessionDigest: session.digest };
   }
 
-  async end(firebaseToken: string, secret: string) {
+  async end(firebaseToken: string, secret: string, cleanup?: (tx: Prisma.TransactionClient, digest: string) => Promise<void>) {
     const { sessionDigest } = await this.principal(firebaseToken, secret);
-    await this.db.session.updateMany({
-      where: { digest: sessionDigest, endedAt: null }, data: { endedAt: this.clock() },
+    await this.db.$transaction(async (tx) => {
+      await tx.session.updateMany({ where: { digest: sessionDigest, endedAt: null }, data: { endedAt: this.clock() } });
+      await cleanup?.(tx, sessionDigest);
     });
   }
 }

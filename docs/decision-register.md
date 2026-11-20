@@ -114,6 +114,7 @@
 - `D-094` 완료 검증자는 해당 Reminder의 담당자가 아닌 활성 가구 구성원이어야 한다. 여러 담당자 중 누구의 요청을 검증하더라도 자격 조건은 같다. `Q-066`을 해결한다(`D-091`, `PR-AC-069`, `FR8.1`).
 - `D-095` 완료 요청을 제출한 사람이 검증자 응답 전에 자신의 요청을 철회할 수 있다. 회차는 미완료로 돌아가며 철회 이력을 보존한다. `Q-067`을 해결한다(`D-091`, `PR-AC-069`, `FR8.2`).
 - `D-096` 검증 대기 중 지정 검증자의 가구 소속이 회수되면 회차를 미완료로 되돌리고 이력을 보존한다. 새 검증자를 지정한 뒤 완료를 다시 요청할 수 있다. `Q-068`을 해결한다(`D-059`, `D-091`, `PR-AC-069`, `FR1.9`, `FR8.2`).
+- `D-097` 신규 Android 설치에 배정된 장소 알림이 지오펜스 한도를 넘으면 해당 설치의 장소 감지를 대기시킨다. 업무 기능과 시간 알림은 사용할 수 있다. 사용자가 해당 설치에서 제외할 장소 알림을 선택해 한도에 맞추면 장소 감지를 시작한다. 가구 Reminder와 다른 설치는 유지한다. `Q-069`를 해결한다(`D-044`, `D-090`, `PR-AC-068`, `FR4.8`, `DS-011`).
 
 ## 질문 ID 이력
 
@@ -187,6 +188,7 @@
 | `Q-066` | 복수 담당자 회차의 검증자 자격 | 해결: 담당자가 아닌 활성 구성원(`D-094`) | [U3 설계 답변](../aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u3-reminder-workflows/functional-design/functional-design-questions.md#q-066--여러-담당자가-있는-회차의-검증자-자격) |
 | `Q-067` | 검증 대기 중 완료 요청 철회 | 해결: 제출자는 응답 전 철회 가능(`D-095`) | [U3 설계 답변](../aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u3-reminder-workflows/functional-design/functional-design-questions.md#q-067--검증-대기-중-완료-요청-철회) |
 | `Q-068` | 검증 대기 중 지정 검증자 제거 | 해결: 미완료로 복귀하고 새 검증자로 다시 요청(`D-096`) | [U3 설계 답변](../aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u3-reminder-workflows/functional-design/functional-design-questions.md#q-068--검증자가-가구에서-제거된-경우) |
+| `Q-069` | 신규 Android 설치에 기존 장소 알림을 적용할 때 용량 초과 처리 | 해결. 새 설치의 장소 감지를 대기시키고 사용자가 제외를 선택한다(`D-097`). | [U4 설계 답변](../aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/functional-design/functional-design-questions.md#q-069--새-설치의-지오펜스-용량-초과) |
 
 ## 질문 원문과 이력 찾기
 

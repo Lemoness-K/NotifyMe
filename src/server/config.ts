@@ -2,6 +2,8 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defaultVerificationPolicy, realProvider, syntheticProvider } from './provider.js';
 import { householdRuntimeDefaults } from './household-runtime.js';
+import { getMessaging } from 'firebase-admin/messaging';
+import { firebaseSignalSender } from './notification-outbox.js';
 
 function required(env: NodeJS.ProcessEnv, key: string): string {
   const value = env[key];
@@ -35,7 +37,11 @@ export function getRuntime(env: NodeJS.ProcessEnv = process.env) {
   };
   const deleteJournalPath = resolve(env.NOTIFY_DELETE_JOURNAL_PATH ?? path + '.delete.sqlite');
   if (deleteJournalPath === path) throw new Error('Delete journal path must differ from the operating database');
-  const common = { host, port, origin: origin.origin, path, deleteJournalPath, householdConfig, trustedProxy: mode === 'target' };
+  const installationGeneration = env.NOTIFY_INSTALLATION_GENERATION;
+  if (installationGeneration !== undefined && !/^[A-Za-z0-9_-]{1,128}$/.test(installationGeneration)) {
+    throw new Error('Invalid NOTIFY_INSTALLATION_GENERATION');
+  }
+  const common = { host, port, origin: origin.origin, path, deleteJournalPath, householdConfig, installationGeneration, trustedProxy: mode === 'target' };
   if (mode === 'local') {
     if (env.NOTIFY_SYNTHETIC_AUTH !== '1' || !['localhost', '127.0.0.1', '[::1]'].includes(origin.hostname)) {
       throw new Error('Local synthetic mode requires explicit opt-in and a loopback HTTPS origin');
@@ -63,5 +69,12 @@ export function getRuntime(env: NodeJS.ProcessEnv = process.env) {
   const firebaseConfig = {
     projectId, apiKey: required(env, 'FIREBASE_WEB_API_KEY'), authDomain: required(env, 'FIREBASE_WEB_AUTH_DOMAIN'),
   };
-  return { ...common, provider: realProvider(projectId, googleClientId, verificationPolicy), googleClientId, firebaseConfig };
+  const encodedKey = env.NOTIFY_INSTALLATION_TOKEN_KEY;
+  const installationTokenKey = encodedKey && /^[A-Za-z0-9_-]{43}$/.test(encodedKey) ? Buffer.from(encodedKey, 'base64url') : undefined;
+  if (encodedKey !== undefined && installationTokenKey?.toString('base64url') !== encodedKey) {
+    throw new Error('NOTIFY_INSTALLATION_TOKEN_KEY must encode 32 bytes as unpadded base64url');
+  }
+  const provider = realProvider(projectId, googleClientId, verificationPolicy);
+  const installationSignalSender = installationTokenKey ? firebaseSignalSender(getMessaging()) : undefined;
+  return { ...common, provider, googleClientId, firebaseConfig, installationTokenKey, installationSignalSender };
 }

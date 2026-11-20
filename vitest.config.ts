@@ -2,7 +2,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    include: ['tests/{u1,u2,u3}/**/*.test.{ts,tsx}'],
+    include: ['tests/{u1,u2,u3,u4}/**/*.test.{ts,tsx}'],
     hookTimeout: 90_000,
     testTimeout: 60_000,
     coverage: {

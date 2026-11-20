@@ -1,7 +1,9 @@
 import type { FirebaseOptions } from 'firebase/app';
+import { androidDevice, type NativeFailure } from './device.js';
 
 export type ClientConfig =
   | { mode: 'synthetic' }
+  | { mode: 'android' }
   | { mode: 'google'; googleClientId: string; firebaseConfig: FirebaseOptions };
 export type Role = 'ADMIN' | 'MEMBER';
 export type Me = { userId: string; householdId?: string; defaultTimeZone?: string; householdRole?: Role };
@@ -43,8 +45,26 @@ function retryDeadline(header: string | null, now: number): number | undefined {
   if (deadline > now && Number.isFinite(new Date(deadline).getTime())) return deadline;
 }
 
+export function deviceError(failure: unknown) {
+  const { code, data } = (typeof failure === 'object' && failure !== null ? failure : {}) as NativeFailure;
+  const status = data?.status;
+  const error = data?.body;
+  return new ApiError(status === 429 ? 'RATE_LIMITED' : error?.code ?? code ?? 'UNAVAILABLE',
+    typeof error?.details?.field === 'string' ? error.details.field : undefined, status,
+    retryDeadline(data?.retryAfter ?? null, Date.now()), error?.details);
+}
+
 export async function api<T>(path: string, token?: string, init: RequestInit = {}, key?: string): Promise<T> {
   const headers = new Headers(init.headers);
+  const device = androidDevice();
+  if (device) {
+    init.signal?.throwIfAborted();
+    try {
+      const result = await device.request({ path, method: init.method ?? 'GET', key, revision: headers.get('If-Match') ?? undefined,
+        ...(init.body ? { body: JSON.parse(String(init.body)) } : {}) });
+      return (result.status === 204 ? undefined : result.body) as T;
+    } catch (failure) { throw deviceError(failure); }
+  }
   if (init.body) headers.set('Content-Type', 'application/json');
   if (token) headers.set('Authorization', 'Bearer ' + token);
   if (key) headers.set('Idempotency-Key', key);
@@ -106,6 +126,13 @@ async function googleProof(clientId: string, nonce: string, elementId: string): 
 }
 
 export async function openSession(config: ClientConfig, buttonId: string, invitation?: { code: string; key: string }) {
+  if (config.mode === 'android') {
+    const device = androidDevice();
+    if (!device) throw new ApiError('UNAVAILABLE');
+    try { await device.signIn({ invitation }); }
+    catch (failure) { throw deviceError(failure); }
+    return { token: async () => undefined, signOut: () => device.clearSession() };
+  }
   const { nonce, issuedAt } = await api<{ nonce: string; issuedAt: string }>('/sessions/challenges', undefined, { method: 'POST' });
   let token: () => Promise<string>;
   let googleToken: string;
