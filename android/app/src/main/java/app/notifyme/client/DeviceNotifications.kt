@@ -69,9 +69,11 @@ internal class DeviceNotifications(private val context: Context) {
             .setData(Uri.Builder().scheme("notify-plan").authority("local").appendPath(id).build()),
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
-    private fun fenceIntent() = PendingIntent.getBroadcast(context, 0,
+    private fun fenceIntent(flags: Int) = PendingIntent.getBroadcast(context, 0,
         Intent(context, ScheduleReceiver::class.java).setAction("fence"),
-        PendingIntent.FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= 31) PendingIntent.FLAG_MUTABLE else 0)
+        flags or if (Build.VERSION.SDK_INT >= 31) PendingIntent.FLAG_MUTABLE else 0)
+
+    fun cancelFenceDelivery() { fenceIntent(PendingIntent.FLAG_NO_CREATE)?.cancel() }
 
     fun removeFences(ids: List<String>) {
         if (ids.isNotEmpty()) Tasks.await(geofences.removeGeofences(ids), 10, TimeUnit.SECONDS)
@@ -79,7 +81,8 @@ internal class DeviceNotifications(private val context: Context) {
 
     @SuppressLint("MissingPermission")
     fun addFences(plans: Map<String, JSONObject>) {
-        if (plans.isEmpty() || !locationAllowed()) return
+        if (plans.isEmpty()) return
+        if (!locationAllowed()) throw SecurityException("Location capability changed during registration")
         val fences = plans.map { (id, plan) ->
             val trigger = plan.getJSONObject("trigger")
             Geofence.Builder().setRequestId(id)
@@ -87,8 +90,10 @@ internal class DeviceNotifications(private val context: Context) {
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE).build()
         }
-        val request = GeofencingRequest.Builder().setInitialTrigger(0).addGeofences(fences).build()
-        Tasks.await(geofences.addGeofences(request, fenceIntent()), 10, TimeUnit.SECONDS)
+        val request = GeofencingRequest.Builder()
+            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER or GeofencingRequest.INITIAL_TRIGGER_EXIT)
+            .addGeofences(fences).build()
+        Tasks.await(geofences.addGeofences(request, requireNotNull(fenceIntent(PendingIntent.FLAG_UPDATE_CURRENT))), 10, TimeUnit.SECONDS)
     }
 
     private fun channelEnabled(id: String) = Build.VERSION.SDK_INT < 26 ||

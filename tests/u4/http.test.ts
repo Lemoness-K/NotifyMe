@@ -73,11 +73,14 @@ describe('installation HTTP contract', () => {
     const row = await fixture.db.installation.findUniqueOrThrow({ where: { id: 'device' } });
     expect(row.tokenCiphertext).not.toContain('synthetic');
     expect(recoverToken(tokenKey, 'device', row.tokenCiphertext!)).toBe('synthetic-token-2');
-    const plan = (await (await send(scope('device') + '/sync')).json()).plans[0];
-    const event = { eventId: 'location-event', occurrenceId: plan.occurrenceId, triggerVersion: plan.version, condition: 'ENTER' };
+    const snapshot = await (await send(scope('device') + '/sync')).json();
+    const [plan] = snapshot.plans;
+    const event = { epoch: snapshot.epoch, eventId: 'location-event', occurrenceId: plan.occurrenceId, triggerVersion: plan.version, condition: 'ENTER' };
     expect(await (await send(scope('device') + '/events', 'POST', { ...event, detectedAt: '2031-01-01T00:00:00Z' })).json())
       .toMatchObject({ code: 'LOCATION_EVENT_EXPIRED' });
     expect((await send(scope('device') + '/events', 'POST', { ...event, detectedAt: clock().toISOString() })).status).toBe(204);
+    expect(await (await send(scope('device') + '/events', 'POST', { ...event, epoch: 'previous-epoch', detectedAt: clock().toISOString() })).json())
+      .toMatchObject({ code: 'STALE_REVISION' });
     expect((await register('other-device', undefined, 'register', 'other')).status).toBe(200);
     expect((await send('/households/home/members/other', 'DELETE', undefined, 'member', 'remove', { 'If-Match': '0' })).status).toBe(204);
     expect(await (await send(scope('other-device') + '/sync', 'GET', undefined, 'other')).json()).toMatchObject({ code: 'HOUSEHOLD_ACCESS_REVOKED' });

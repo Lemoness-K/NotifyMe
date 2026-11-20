@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.webkit.WebViewFeature
+import app.notifyme.schedule.ScheduleEntry
 import com.getcapacitor.JSObject
 import com.getcapacitor.Plugin
 import com.getcapacitor.PluginCall
@@ -147,8 +148,8 @@ class NotifyDevicePlugin : Plugin() {
     fun bind(call: PluginCall) = safely(call) {
         applyScope()
         ScheduleWork.periodic(context)
-        ScheduleWork.enqueue(context, "recover")
-        schedule.refresh(full = true)
+        schedule.beginForeground()
+        schedule.recover(ScheduleEntry.FOREGROUND)
         JSObject(schedule.identity().toString())
     }
 
@@ -193,7 +194,8 @@ class NotifyDevicePlugin : Plugin() {
     }
 
     override fun handleOnResume() {
-        ScheduleWork.enqueue(context, "recover")
+        schedule.beginForeground()
+        ScheduleWork.enqueue(context, "foreground")
         notifyListeners("capabilitiesChanged", JSObject())
     }
 

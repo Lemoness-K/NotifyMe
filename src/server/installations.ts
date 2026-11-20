@@ -8,7 +8,7 @@ import type { InstallationPlanParticipant, PlanCandidate } from './work-scheduli
 
 export interface Registration { installationId: string; appVersion: string; pushToken?: string }
 export interface LocationReport {
-  eventId: string; occurrenceId: string; triggerVersion: number; condition: string; detectedAt: Date;
+  epoch: string; eventId: string; occurrenceId: string; triggerVersion: number; condition: string; detectedAt: Date;
 }
 type InstallationResponse = { installationId: string; revision: number };
 const digest = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -256,11 +256,14 @@ export class InstallationRepository implements InstallationPlanParticipant {
   recordEvent(householdId: string, installationId: string, userId: string, key: string, input: LocationReport) {
     return this.transact(async (tx) => {
       const scope = await this.scope(tx, householdId, installationId, userId);
+      const { epoch } = wireScope(scope, this.generation);
+      if (input.epoch !== epoch) throw stale();
       const now = this.clock();
       const age = now.getTime() - input.detectedAt.getTime();
       if (age >= eventLifetimeMs || age < -60_000) throw new AppError(422, 'LOCATION_EVENT_EXPIRED');
-      await command(tx, JSON.stringify(['event', scope.id, this.generation, userId]), key, input, now, async () => {
-        const identity = { scopeId: scope.id, id: input.eventId };
+      await command(tx, JSON.stringify(['event', scope.id, epoch, userId]), key, input, now, async () => {
+        // The wire epoch changes after recovery even when the restored database IDs do not.
+        const identity = { scopeId: scope.id, id: digest([epoch, input.eventId]) };
         const hash = digest(input);
         const saved = await tx.locationEvent.findUnique({ where: { scopeId_id: identity } });
         if (saved) {

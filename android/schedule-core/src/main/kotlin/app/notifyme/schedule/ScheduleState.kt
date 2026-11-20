@@ -8,6 +8,7 @@ data class ConditionEvent(
     val detectedAt: Long,
     val posted: Boolean = false,
     val uploaded: Boolean = false,
+    val epoch: String = "",
 )
 
 enum class Boundary { UNKNOWN, INSIDE, OUTSIDE }

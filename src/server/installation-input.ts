@@ -44,10 +44,10 @@ export function locationPageQuery(query: Record<string, unknown>) {
 }
 
 export function locationEventInput(input: unknown): LocationReport {
-  const { detectedAt, eventId, occurrenceId, triggerVersion, condition } = record(input);
+  const { detectedAt, epoch, eventId, occurrenceId, triggerVersion, condition } = record(input);
   if (condition !== 'ENTER' && condition !== 'EXIT' && condition !== 'DWELL' && condition !== 'AFTER_EXIT') throw invalidField('condition');
   if (typeof detectedAt !== 'string' || !/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{1,9})?(?:Z|[+-]\d\d:\d\d)$/.test(detectedAt) ||
       !Number.isFinite(Date.parse(detectedAt))) throw invalidField('detectedAt');
-  return { eventId: installationId(eventId, 'eventId'), occurrenceId: installationId(occurrenceId, 'occurrenceId'),
+  return { epoch: installationId(epoch, 'epoch'), eventId: installationId(eventId, 'eventId'), occurrenceId: installationId(occurrenceId, 'occurrenceId'),
     triggerVersion: validateRevision(triggerVersion, 'triggerVersion'), condition, detectedAt: new Date(detectedAt) };
 }

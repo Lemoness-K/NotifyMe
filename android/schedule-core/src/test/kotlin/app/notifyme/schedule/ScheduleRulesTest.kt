@@ -8,6 +8,48 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ScheduleRulesTest {
+    @Test fun foregroundEntryNeverAppliesCachedPlansBeforeAuthorization() {
+        val calls = mutableListOf<String>()
+        assertFalse(runCatching {
+            restoreSchedule(ScheduleEntry.FOREGROUND, { calls.add("cached") }, {
+                calls.add("FULL")
+                error("revoked or unreachable")
+            })
+        }.isSuccess)
+        assertEquals(listOf("FULL"), calls)
+        calls.clear()
+        restoreSchedule(ScheduleEntry.BOOT, { calls.add("cached time") }, { calls.add("FULL") })
+        assertEquals(listOf("cached time", "FULL"), calls)
+    }
+
+    @Test fun interruptedMonitoringInvalidatesTimerAndRequiresNewObservedTransition() {
+        val running = changeBoundary("p", "DWELL", 100, LocationState(2), Boundary.INSIDE, 100, 100, "boot")
+        val interrupted = suspendMonitoring(running.state)
+        assertEquals(Boundary.UNKNOWN, interrupted.boundary)
+        assertNull(timerEvent("p", interrupted, 300, 300, "boot").event)
+        val baseline = changeBoundary("p", "DWELL", 100, interrupted, Boundary.INSIDE, 300, 300, "boot", initial = true)
+        assertNull(baseline.state.timer)
+        val exit = changeBoundary("p", "DWELL", 100, baseline.state, Boundary.OUTSIDE, 400, 400, "boot")
+        val reentry = changeBoundary("p", "DWELL", 100, exit.state, Boundary.INSIDE, 500, 500, "boot")
+        assertNotNull(timerEvent("p", reentry.state, 600, 600, "boot").event)
+    }
+
+    @Test fun failedLocationReconciliationCannotPreventTimePlansAndLeavesRetryableLocationWork() {
+        val calls = mutableListOf<String>()
+        assertFalse(applyIndependentSchedules({ calls.add("schedule time") }, {
+            calls.add("register location")
+            error("provider unavailable")
+        }))
+        assertEquals(listOf("schedule time", "register location"), calls)
+    }
+
+    @Test fun locationEventIdentifiersIncludeAuthoritativeEpoch() {
+        fun enter(epoch: String) = changeBoundary("p", "ENTER", 0, LocationState(1), Boundary.INSIDE,
+            100, 100, "boot", epoch = epoch).event!!
+        assertEquals("after", enter("after").epoch)
+        assertEquals(enter("after").id, enter("after").id)
+        assertFalse(enter("before").id == enter("after").id)
+    }
     @Test fun exactAndInexactBeforeDeadline() {
         assertEquals(TimeAction.EXACT, timeAction(1_000, 999, true, false))
         assertEquals(TimeAction.INEXACT, timeAction(1_000, 999, false, false))

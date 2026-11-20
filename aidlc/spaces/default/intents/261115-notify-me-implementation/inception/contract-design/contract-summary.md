@@ -2464,6 +2464,7 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
       "DeviceEvent": {
         "type": "object",
         "properties": {
+          "epoch": { "type": "string", "minLength": 1, "description": "The current installation scope epoch from SyncSnapshot. Previous epochs are rejected before replay handling." },
           "eventId": {
             "type": "string",
             "minLength": 1
@@ -2491,6 +2492,7 @@ Android ── 알람·지오펜스 등록 ──▶ Android OS
           }
         },
         "required": [
+          "epoch",
           "eventId",
           "occurrenceId",
           "condition",

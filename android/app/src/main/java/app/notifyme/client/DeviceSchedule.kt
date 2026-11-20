@@ -11,12 +11,15 @@ import app.notifyme.schedule.LocationResult
 import app.notifyme.schedule.LocationState
 import app.notifyme.schedule.LocationTimer
 import app.notifyme.schedule.ScheduleVersion
+import app.notifyme.schedule.ScheduleEntry
 import app.notifyme.schedule.TimeAction
+import app.notifyme.schedule.applyIndependentSchedules
 import app.notifyme.schedule.canApplyAfterCleanup
 import app.notifyme.schedule.changeBoundary
-import app.notifyme.schedule.recoverTimer
 import app.notifyme.schedule.requiresCleanup
+import app.notifyme.schedule.restoreSchedule
 import app.notifyme.schedule.stableId
+import app.notifyme.schedule.suspendMonitoring
 import app.notifyme.schedule.timeAction
 import app.notifyme.schedule.timerEvent
 import com.google.android.gms.tasks.Tasks
@@ -26,15 +29,22 @@ import org.json.JSONObject
 import java.time.Instant
 import java.util.UUID
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicLong
 
 internal class DeviceSchedule(private val context: Context) {
     private val protected = ProtectedState(context)
     val api = NativeApi(context)
     val os = DeviceNotifications(context)
+    private val foregroundRequest = AtomicLong()
+    private var confirmedForeground = 0L
 
     // Mutations, network responses and receiver callbacks are serialized in the app process.
     private fun state() = protected.read("schedule")
     private fun save(state: JSONObject) = protected.write("schedule", state)
+
+    fun beginForeground() { foregroundRequest.incrementAndGet() }
+
+    private fun awaitsFull(state: JSONObject) = state.optBoolean("awaitingFull") || foregroundRequest.get() != confirmedForeground
 
     @Synchronized
     fun identity(): JSONObject {
@@ -86,6 +96,12 @@ internal class DeviceSchedule(private val context: Context) {
     @Synchronized
     fun refresh(full: Boolean = false, signal: JSONObject? = null) {
         val state = state()
+        val foreground = foregroundRequest.get()
+        val needsFull = full || awaitsFull(state)
+        if (awaitsFull(state) && !state.optBoolean("awaitingFull")) {
+            state.put("awaitingFull", true)
+            save(state)
+        }
         finishRetirement(state)
         val current = state.optJSONObject("active")
         if (signal != null) {
@@ -102,7 +118,7 @@ internal class DeviceSchedule(private val context: Context) {
             register(latest, id)
             val base = "/households/$household/installations/$id"
             val active = latest.optJSONObject("active")
-            val cursor = if (full) "" else active?.let { "?afterEpoch=${it.getString("epoch")}&afterRevision=${it.getLong("revision")}" }.orEmpty()
+            val cursor = if (needsFull) "" else active?.let { "?afterEpoch=${it.getString("epoch")}&afterRevision=${it.getLong("revision")}" }.orEmpty()
             var reply = api.userRequest("GET", "$base/sync$cursor").body
 
             if (active != null && requiresCleanup(version(active), version(reply))) {
@@ -112,7 +128,16 @@ internal class DeviceSchedule(private val context: Context) {
                 reply = api.userRequest("GET", "$base/sync").body
                 check(reply.getString("mode") == "FULL" && canApplyAfterCleanup(pending, version(reply)))
             }
-            reconcile(latest, reply, false)
+            if (foreground != foregroundRequest.get()) return
+            val currentVersion = version(reply)
+            val previous = latest.optJSONObject("active")?.let(::version)
+            if (needsFull && reply.getString("mode") != "FULL") return
+            if (previous != null && previous.revision > currentVersion.revision) return
+            if (needsFull) {
+                latest.remove("awaitingFull")
+                confirmedForeground = foreground
+            }
+            reconcile(latest, reply)
             drain(latest, base)
         } catch (failure: ApiFailure) {
             when {
@@ -124,16 +149,20 @@ internal class DeviceSchedule(private val context: Context) {
     }
 
     @Synchronized
-    fun recover() {
+    fun recover(entry: ScheduleEntry) = restoreSchedule(entry, {
+        replanTime(afterBoot = true)
+    }, { refresh(full = true) })
+
+    @Synchronized
+    fun replanTime(afterBoot: Boolean = false) {
         val state = state()
         finishRetirement(state)
         val active = state.optJSONObject("active")
-        if (active != null) {
-            val cached = JSONObject(active.toString()).put("mode", "DELTA")
-                .put("plans", org.json.JSONArray()).put("removedPlanIds", org.json.JSONArray())
-            reconcile(state, cached, true)
+        if (active != null && !awaitsFull(state)) {
+            if (afterBoot) interruptLocation(state, active)
+            active.collection("plans").objects().filterNot { (_, plan) -> plan.location() }
+                .forEach { (_, plan) -> applyTime(state, plan) }
         }
-        refresh(full = true)
     }
 
     private fun register(state: JSONObject, id: String) {
@@ -183,19 +212,23 @@ internal class DeviceSchedule(private val context: Context) {
             os.cancelPost(timeId(state, plan))
         }
         events.keys().asSequence().forEach(os::cancelPost)
-        os.removeFences(plans.objects().filter { (_, plan) -> plan.location() }.map { (_, plan) -> planId(pending, plan) } +
-            cancelled.objects().filter { (_, plan) -> plan.location() }.map { (id, _) -> id })
+        val fences = state.collection("pendingFenceRemovals")
+        plans.objects().filter { (_, plan) -> plan.location() }.forEach { (_, plan) -> fences.put(planId(pending, plan), true) }
+        cancelled.objects().filter { (_, plan) -> plan.location() }.forEach { (id, _) -> fences.put(id, true) }
+        os.cancelFenceDelivery()
         state.remove("retiring")
         save(state)
+        ScheduleWork.enqueue(context, "location")
     }
 
-    private fun reconcile(state: JSONObject, reply: JSONObject, recover: Boolean) {
+    private fun reconcile(state: JSONObject, reply: JSONObject) {
         val previous = state.optJSONObject("active")
         val currentVersion = version(reply)
         val delta = reply.getString("mode") == "DELTA"
         if (delta && (previous == null || requiresCleanup(version(previous), currentVersion))) return
         if (previous != null && version(previous).revision > currentVersion.revision) return
         val applied = if (previous == null) JSONObject() else JSONObject(previous.toString())
+        if (!applied.has("fenceRound")) applied.put("fenceRound", if (previous == null) UUID.randomUUID().toString() else "")
         applied.put("scopeRef", currentVersion.scopeRef).put("epoch", currentVersion.epoch).put("revision", currentVersion.revision)
         val before = previous?.collection("plans") ?: JSONObject()
         val plans = if (delta) applied.collection("plans") else JSONObject()
@@ -223,7 +256,6 @@ internal class DeviceSchedule(private val context: Context) {
             os.cancel(id)
             if (!plans.has(old.getString("planId"))) os.cancelPost(timeId(state, old))
         }
-        os.removeFences(cancelled.objects().filter { (_, plan) -> plan.location() }.map { (id, _) -> id })
         events.objects().forEach { (id, event) ->
             if (plans.optJSONObject(event.getString("occurrenceId"))?.optInt("version") != event.getInt("triggerVersion") ||
                 System.currentTimeMillis() - instant(event.getString("detectedAt")) >= 30 * DAY_MS) {
@@ -231,39 +263,82 @@ internal class DeviceSchedule(private val context: Context) {
                 events.remove(id)
             }
         }
+        val pending = state.collection("pendingFenceRemovals")
+        cancelled.objects().filter { (_, plan) -> plan.location() }.forEach { (id, _) -> pending.put(id, true) }
         applied.remove("cancelled")
         save(state)
+        if (!applyIndependentSchedules({
+            plans.objects().filterNot { (_, plan) -> plan.location() }.forEach { (_, plan) -> applyTime(state, plan) }
+        }, { reconcileLocation(state) })) ScheduleWork.enqueue(context, "location")
+    }
 
-        val desired = plans.objects().filter { (_, plan) -> plan.location() }.associate { (_, plan) -> planId(applied, plan) to plan }
-        val registered = applied.collection("fences")
-        val obsolete = registered.keys().asSequence().filter { it !in desired || !os.locationAllowed() }.toList()
-        os.removeFences(obsolete)
-        obsolete.forEach(registered::remove)
-        val unregistered = desired.filterKeys { recover || !registered.has(it) }
-        os.addFences(unregistered)
-        if (os.locationAllowed()) unregistered.keys.forEach { registered.put(it, true) }
-        plans.objects().forEach { (id, plan) ->
-            if (plan.location()) {
-                val existing = locations.optJSONObject(id)?.locationState() ?: return@forEach
-                val recovered = recoverTimer(existing, System.currentTimeMillis(), SystemClock.elapsedRealtime(), bootId(), false)
-                updateLocation(state, plan, LocationResult(recovered))
-            } else {
-                applyTime(state, plan)
-            }
-        }
+    private fun locationPlans(active: JSONObject) = active.collection("plans").objects().filter { (_, plan) -> plan.location() }
+
+    private fun interruptLocation(state: JSONObject, active: JSONObject) {
+        if (active.optBoolean("locationInterrupted")) return
+        val plans = locationPlans(active)
+        val previousIds = plans.map { (_, plan) -> planId(active, plan) }
+        val pending = state.collection("pendingFenceRemovals")
+        previousIds.forEach { pending.put(it, true) }
+        val locations = active.collection("locations")
+        locations.objects().forEach { (id, data) -> locations.put(id, suspendMonitoring(data.locationState()).toJson()) }
+        active.put("locationInterrupted", true).put("fenceRound", UUID.randomUUID().toString()).remove("fences")
         save(state)
+        previousIds.forEach(os::cancel)
+        os.cancelFenceDelivery()
+    }
+
+    @Synchronized
+    fun retryLocation() = reconcileLocation(state())
+
+    @Synchronized
+    fun locationInterrupted() {
+        val state = state()
+        state.optJSONObject("active")?.let { interruptLocation(state, it) }
+        ScheduleWork.enqueue(context, "location")
+    }
+
+    private fun reconcileLocation(state: JSONObject) {
+        val active = state.optJSONObject("active")
+        if (!os.locationAllowed()) {
+            if (active != null) interruptLocation(state, active)
+            return
+        }
+        if (active != null && active.has("monitoringBoot") && active.optString("monitoringBoot") != bootId()) {
+            interruptLocation(state, active)
+        }
+        val pending = state.collection("pendingFenceRemovals")
+        pending.keys().asSequence().toList().chunked(100).forEach { batch ->
+            os.removeFences(batch)
+            batch.forEach(pending::remove)
+            save(state)
+        }
+        if (active == null || awaitsFull(state)) return
+        val desired = locationPlans(active).associate { (_, plan) -> planId(active, plan) to plan }
+        val registered = active.collection("fences")
+        registered.keys().asSequence().filter { it !in desired }.toList().forEach(registered::remove)
+        val unregistered = desired.filterKeys { !registered.has(it) }
+        os.addFences(unregistered)
+        unregistered.keys.forEach { registered.put(it, true) }
+        active.put("monitoringBoot", bootId()).remove("locationInterrupted")
+        save(state)
+        locationPlans(active).forEach { (id, plan) ->
+            val existing = active.collection("locations").optJSONObject(id)?.locationState() ?: return@forEach
+            updateLocation(state, plan, LocationResult(existing))
+        }
     }
 
     @Synchronized
     fun fired(id: String, timer: Boolean) {
         val state = state()
+        if (awaitsFull(state)) return
         val active = state.optJSONObject("active") ?: return
         val plan = active.collection("plans").objects().firstOrNull { (_, plan) -> planId(active, plan) == id }?.second ?: return
         if (timer) {
-            if (!os.locationAllowed()) return
+            if (!os.locationAllowed()) { interruptLocation(state, active); return }
             val location = active.collection("locations").optJSONObject(plan.getString("planId"))?.locationState() ?: return
             updateLocation(state, plan, timerEvent(plan.getString("occurrenceId"), location, System.currentTimeMillis(),
-                SystemClock.elapsedRealtime(), bootId()))
+                SystemClock.elapsedRealtime(), bootId(), epoch = active.getString("epoch")))
         } else applyTime(state, plan)
         drain(state, upload = false)
         ScheduleWork.enqueue(context, "refresh")
@@ -271,16 +346,18 @@ internal class DeviceSchedule(private val context: Context) {
 
     @Synchronized
     fun boundary(ids: List<String>, boundary: Boundary) {
-        if (!os.locationAllowed()) return
         val state = state()
+        if (awaitsFull(state)) return
         val active = state.optJSONObject("active") ?: return
-        active.collection("plans").objects().filter { (_, plan) -> plan.location() && planId(active, plan) in ids }
+        if (!os.locationAllowed()) { interruptLocation(state, active); return }
+        val registered = active.collection("fences")
+        locationPlans(active).filter { (_, plan) -> planId(active, plan).let { it in ids && registered.has(it) } }
             .forEach { (id, plan) ->
                 val trigger = plan.getJSONObject("trigger")
                 val location = active.collection("locations").optJSONObject(id)?.locationState() ?: LocationState(plan.getInt("version"))
                 updateLocation(state, plan, changeBoundary(plan.getString("occurrenceId"), trigger.getString("event"),
                     trigger.optLong("durationMinutes") * 60_000, location, boundary, System.currentTimeMillis(),
-                    SystemClock.elapsedRealtime(), bootId()))
+                    SystemClock.elapsedRealtime(), bootId(), initial = location.boundary == Boundary.UNKNOWN, epoch = active.getString("epoch")))
             }
         drain(state, upload = false)
         ScheduleWork.enqueue(context, "refresh")
@@ -297,6 +374,7 @@ internal class DeviceSchedule(private val context: Context) {
     }
 
     private fun applyTime(state: JSONObject, plan: JSONObject) {
+        if (awaitsFull(state)) return
         val active = state.getJSONObject("active")
         val alarmId = planId(active, plan)
         val tag = timeId(state, plan)
@@ -315,11 +393,13 @@ internal class DeviceSchedule(private val context: Context) {
     }
 
     private fun drain(state: JSONObject, base: String? = null, upload: Boolean = true) {
+        if (awaitsFull(state)) return
         val active = state.optJSONObject("active") ?: return
         val endpoint = base ?: "/households/${state.getString("household")}/installations/${state.getString("installationId")}"
         val plans = active.collection("plans")
         active.collection("events").objects().forEach { (id, event) ->
-            if (System.currentTimeMillis() - instant(event.getString("detectedAt")) >= 30 * DAY_MS) return@forEach
+            if (event.optString("epoch") != active.getString("epoch") ||
+                System.currentTimeMillis() - instant(event.getString("detectedAt")) >= 30 * DAY_MS) return@forEach
             val plan = plans.optJSONObject(event.getString("occurrenceId")) ?: return@forEach
             if (!event.optBoolean("posted") && os.post(id, true, english(state), plan)) {
                 event.put("posted", true)
@@ -353,7 +433,11 @@ internal class DeviceSchedule(private val context: Context) {
 
     private fun bootId() = Settings.Global.getString(context.contentResolver, Settings.Global.BOOT_COUNT) ?: processBootFallback
     private fun instant(raw: String) = Instant.parse(raw).toEpochMilli()
-    private fun planId(active: JSONObject, plan: JSONObject) = stableId(active.getString("epoch"), plan.getString("planId"), plan.getString("version"))
+    private fun planId(active: JSONObject, plan: JSONObject): String {
+        val identity = arrayOf(active.getString("epoch"), plan.getString("planId"), plan.getString("version"))
+        val round = active.optString("fenceRound")
+        return if (plan.location() && round.isNotEmpty()) stableId(*identity, round) else stableId(*identity)
+    }
     private fun timeId(state: JSONObject, plan: JSONObject) = stableId(state.getString("installationId"), plan.getString("occurrenceId"))
     private fun JSONObject.location() = getJSONObject("trigger").getString("kind") == "LOCATION"
     private fun JSONObject.collection(key: String) = optJSONObject(key) ?: JSONObject().also { put(key, it) }
@@ -367,7 +451,7 @@ internal class DeviceSchedule(private val context: Context) {
         .put("timer", timer?.let { JSONObject().put("transition", it.transition).put("condition", it.condition)
             .put("elapsedDeadline", it.elapsedDeadline).put("utcDeadline", it.utcDeadline).put("bootId", it.bootId) })
 
-    private fun ConditionEvent.toJson() = JSONObject().put("eventId", id).put("occurrenceId", occurrenceId)
+    private fun ConditionEvent.toJson() = JSONObject().put("epoch", epoch).put("eventId", id).put("occurrenceId", occurrenceId)
         .put("triggerVersion", version).put("condition", condition).put("detectedAt", Instant.ofEpochMilli(detectedAt).toString())
         .put("posted", posted).put("uploaded", uploaded)
 

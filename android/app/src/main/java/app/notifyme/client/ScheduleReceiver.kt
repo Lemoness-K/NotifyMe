@@ -3,6 +3,7 @@ package app.notifyme.client
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.ExistingWorkPolicy
@@ -15,6 +16,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import app.notifyme.schedule.Boundary
+import app.notifyme.schedule.ScheduleEntry
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -38,9 +40,18 @@ class ScheduleReceiver : BroadcastReceiver() {
                 val ids = event.triggeringGeofences?.map(Geofence::getRequestId).orEmpty()
                 ids.chunked(25).forEach { ScheduleWork.enqueue(context, action, it) }
             }
-            Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_MY_PACKAGE_REPLACED, Intent.ACTION_TIME_CHANGED,
+            Intent.ACTION_BOOT_COMPLETED -> ScheduleWork.enqueue(context, "boot")
+            Intent.ACTION_MY_PACKAGE_REPLACED -> {
+                DeviceSchedule.get(context).beginForeground()
+                ScheduleWork.enqueue(context, "foreground")
+            }
+            Intent.ACTION_TIME_CHANGED,
             Intent.ACTION_TIMEZONE_CHANGED, "android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" ->
-                ScheduleWork.enqueue(context, "recover")
+                ScheduleWork.enqueue(context, "clock")
+            LocationManager.MODE_CHANGED_ACTION -> {
+                val action = if (DeviceSchedule.get(context).os.locationAllowed()) "location" else "location-interrupted"
+                ScheduleWork.enqueue(context, action)
+            }
         }
     }
 }
@@ -68,7 +79,11 @@ class ScheduleWork(context: Context, params: WorkerParameters) : Worker(context,
                 "alarm", "timer" -> schedule.fired(values.single(), inputData.getString("action") == "timer")
                 "enter", "exit" -> schedule.boundary(values, if (inputData.getString("action") == "enter") Boundary.INSIDE else Boundary.OUTSIDE)
                 "signal" -> schedule.refresh(signal = JSONObject(values.single()))
-                "recover" -> schedule.recover()
+                "boot" -> schedule.recover(ScheduleEntry.BOOT)
+                "foreground" -> schedule.recover(ScheduleEntry.FOREGROUND)
+                "clock" -> schedule.replanTime()
+                "location" -> schedule.retryLocation()
+                "location-interrupted" -> schedule.locationInterrupted()
                 else -> schedule.refresh()
             }
             Result.success()
@@ -86,7 +101,7 @@ class ScheduleWork(context: Context, params: WorkerParameters) : Worker(context,
                 .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
             if (action == "refresh") request.setConstraints(connected)
             val manager = WorkManager.getInstance(context)
-            if (action in setOf("enter", "exit", "alarm", "timer")) {
+            if (action in setOf("enter", "exit", "alarm", "timer", "location-interrupted")) {
                 manager.enqueueUniqueWork("notify-schedule-events", ExistingWorkPolicy.APPEND_OR_REPLACE, request.build())
             } else manager.enqueue(request.build())
         }

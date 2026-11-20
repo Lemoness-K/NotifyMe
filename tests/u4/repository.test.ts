@@ -97,3 +97,21 @@ it('advances the retained cursor when an expired removal marker is pruned', asyn
   expect(await later.sync('home', 'device', 'member', initial.epoch, initial.revision)).toMatchObject({ mode: 'FULL', plans: [] });
   expect(await later.sync('home', 'device', 'member', initial.epoch, next.revision)).toMatchObject({ mode: 'DELTA', plans: [] });
 });
+
+it('rejects previous epoch reports and accepts independent event and replay keys after recovery', async () => {
+  await seedReminders(fixture.db, 1);
+  await repository.register('member', undefined, 'register', registration());
+  const before = await repository.sync('home', 'device', 'member');
+  const [plan] = before.plans;
+  const report = { epoch: before.epoch, eventId: 'same-client-id', occurrenceId: plan.occurrenceId,
+    triggerVersion: plan.version, condition: 'ENTER', detectedAt: clock() };
+  await repository.recordEvent('home', 'device', 'member', 'replay-key', report);
+  const recovered = new InstallationRepository(fixture.db, clock, tokenKey, 'restored-generation');
+  const after = await recovered.sync('home', 'device', 'member', before.epoch, before.revision);
+  expect(after.plans[0].version).toBe(plan.version);
+  await expect(recovered.recordEvent('home', 'device', 'member', 'replay-key', report)).rejects.toMatchObject({ code: 'STALE_REVISION' });
+  const current = { ...report, epoch: after.epoch };
+  await recovered.recordEvent('home', 'device', 'member', 'replay-key', current);
+  await recovered.recordEvent('home', 'device', 'member', 'replay-key', current);
+  expect(await fixture.db.locationEvent.count()).toBe(2);
+});

@@ -7,6 +7,25 @@ const val DAY_MS = 86_400_000L
 
 enum class TimeAction { EXACT, INEXACT, POST, DROP }
 
+enum class ScheduleEntry { FOREGROUND, BOOT }
+
+fun restoreSchedule(entry: ScheduleEntry, restoreBootTime: () -> Unit, fetchAuthorizedFull: () -> Unit) {
+    if (entry == ScheduleEntry.BOOT) restoreBootTime()
+    fetchAuthorizedFull()
+}
+
+fun applyIndependentSchedules(applyTime: () -> Unit, applyLocation: () -> Unit): Boolean {
+    applyTime()
+    try {
+        applyLocation()
+    } catch (interrupted: InterruptedException) {
+        throw interrupted
+    } catch (_: Exception) {
+        return false
+    }
+    return true
+}
+
 fun timeAction(scheduled: Long, utc: Long, exactAllowed: Boolean, posted: Boolean): TimeAction {
     if (posted || (utc >= scheduled && utc - scheduled > DAY_MS)) return TimeAction.DROP
     if (utc >= scheduled) return TimeAction.POST
@@ -29,15 +48,15 @@ data class LocationResult(val state: LocationState, val event: ConditionEvent? =
 fun stableId(vararg values: String): String =
     UUID.nameUUIDFromBytes(values.joinToString("") { "${it.length}:$it" }.toByteArray(UTF_8)).toString()
 
-private fun event(occurrenceId: String, state: LocationState, condition: String, utc: Long) =
+private fun event(epoch: String, occurrenceId: String, state: LocationState, condition: String, utc: Long) =
     ConditionEvent(
-        stableId(occurrenceId, state.version.toString(), state.transition.toString(), condition),
-        occurrenceId, state.version, condition, utc,
+        stableId(epoch, occurrenceId, state.version.toString(), state.transition.toString(), condition),
+        occurrenceId, state.version, condition, utc, epoch = epoch,
     )
 
 fun changeBoundary(
     occurrenceId: String, condition: String, durationMs: Long, state: LocationState,
-    boundary: Boundary, utc: Long, elapsed: Long, bootId: String, initial: Boolean = false,
+    boundary: Boundary, utc: Long, elapsed: Long, bootId: String, initial: Boolean = false, epoch: String = "",
 ): LocationResult {
     if (boundary == Boundary.UNKNOWN || state.boundary == boundary) return LocationResult(state)
     if (initial) return LocationResult(state.copy(boundary = boundary, timer = null))
@@ -47,24 +66,26 @@ fun changeBoundary(
         "EXIT" -> boundary == Boundary.OUTSIDE
         else -> false
     }
-    if (immediate) return LocationResult(next, event(occurrenceId, next, condition, utc))
+    if (immediate) return LocationResult(next, event(epoch, occurrenceId, next, condition, utc))
     val timed = (condition == "DWELL" && boundary == Boundary.INSIDE) ||
         (condition == "AFTER_EXIT" && boundary == Boundary.OUTSIDE)
     if (!timed || durationMs <= 0) return LocationResult(next)
     return LocationResult(next.copy(timer = LocationTimer(next.transition, condition, elapsed + durationMs, utc + durationMs, bootId)))
 }
 
-fun timerEvent(occurrenceId: String, state: LocationState, utc: Long, elapsed: Long, bootId: String): LocationResult {
+fun timerEvent(occurrenceId: String, state: LocationState, utc: Long, elapsed: Long, bootId: String, epoch: String = ""): LocationResult {
     val timer = state.timer ?: return LocationResult(state)
     if (timer.bootId != bootId || timer.transition != state.transition || elapsed < timer.elapsedDeadline) {
         return LocationResult(state)
     }
-    return LocationResult(state.copy(timer = null), event(occurrenceId, state, timer.condition, utc))
+    return LocationResult(state.copy(timer = null), event(epoch, occurrenceId, state, timer.condition, utc))
 }
+
+fun suspendMonitoring(state: LocationState): LocationState = state.copy(boundary = Boundary.UNKNOWN, timer = null)
 
 fun recoverTimer(state: LocationState, utc: Long, elapsed: Long, bootId: String, continuity: Boolean): LocationState {
     val timer = state.timer ?: return state
     if (timer.bootId == bootId) return state
-    if (!continuity) return state.copy(timer = null, boundary = Boundary.UNKNOWN)
+    if (!continuity) return suspendMonitoring(state)
     return state.copy(timer = timer.copy(elapsedDeadline = elapsed + (timer.utcDeadline - utc).coerceAtLeast(0), bootId = bootId))
 }
