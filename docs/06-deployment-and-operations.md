@@ -129,6 +129,7 @@ SQLite WAL online 백업은 Online Backup API 또는 이에 준하는 일관된 
 - RPi OS 기본 시간대는 운영 표시용 `Asia/Seoul`로 둘 수 있지만, 업무 일정 계산은 OS 기본 시간대를 암묵적으로 사용하지 않는다. API/Worker는 household 또는 반복 규칙에 명시된 IANA zone과 UTC instant를 사용하고, NTP 동기화 실패·시계 변경을 감지한다(`D-064`, `D-065`).
 - 서비스 재시작 후 미완료 알람, 완료 이력, 반복 일정의 다음 발생 시각이 보존되는지 확인한다.
 - 서비스 상태와 오류 로그, 로컬 헬스체크, 디스크 사용량, 메모리, 백업 결과는 명령으로 확인한다. MVP 운영 대시보드는 두지 않는다(`D-077`, `PR-AC-062`).
+- 주간 운영 요약과 감지 즉시 생성되는 장애 기록은 각각 선택적으로 활성화하며, 운영 호스트의 명령과 journald에서 확인한다(`D-092`, `D-098`). 외부 수신 채널과 독립 호스트 장애 감지는 후속이다.
 - 외부 공개가 필요해지면 라우터와 OS의 방화벽 정책, HTTPS 인증서 갱신, 취약점 업데이트, 로그인 시도 제한을 함께 운영한다.
 
 SQLite 데이터베이스는 선택됐다(`D-053`). Web UI는 React Router + Vite SPA build를 사용한다(`D-054`). API는 Node.js runtime 위에서 NestJS framework로 실행하고(`D-055`), Prisma ORM 7과 better-sqlite3 driver adapter로 SQLite에 접근한다(`D-056`). 외부 ingress와 HTTPS는 Caddy로 정했다(`D-057`). MVP 프로세스 실행과 최소 관측은 `systemd`·`journald`·명령 기반 점검을 사용한다(`D-077`, `PR-AC-062`, [ADR-038](./decisions/ADR-038-systemd-rpi-service-management.md)). 실제 호스트 Node.js 버전과 ARM64 native adapter 호환성은 구현 착수 시 확인한다.

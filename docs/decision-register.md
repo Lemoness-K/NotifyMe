@@ -116,6 +116,8 @@
 - `D-096` 검증 대기 중 지정 검증자의 가구 소속이 회수되면 회차를 미완료로 되돌리고 이력을 보존한다. 새 검증자를 지정한 뒤 완료를 다시 요청할 수 있다. `Q-068`을 해결한다(`D-059`, `D-091`, `PR-AC-069`, `FR1.9`, `FR8.2`).
 - `D-097` 신규 Android 설치에 배정된 장소 알림이 지오펜스 한도를 넘으면 해당 설치의 장소 감지를 대기시킨다. 업무 기능과 시간 알림은 사용할 수 있다. 사용자가 해당 설치에서 제외할 장소 알림을 선택해 한도에 맞추면 장소 감지를 시작한다. 가구 Reminder와 다른 설치는 유지한다. `Q-069`를 해결한다(`D-044`, `D-090`, `PR-AC-068`, `FR4.8`, `DS-011`).
 
+- `D-098` U5에서 선택적으로 생성하는 주간 요약과 감지 즉시 기록되는 장애 상태는 운영 호스트의 명령과 journald에서 확인한다. 외부 수신 채널 연동과 독립 호스트 감지는 후속으로 둔다. `Q-070` A안이며 `D-092`의 기능 포함 결정을 유지한다.
+
 ## 질문 ID 이력
 
 이 색인은 열린 질문뿐 아니라 해결·대체·범위 제외된 모든 `Q-NNN`의 요약 상태와 연결 결정을 보존한다. 질문 원문과 대화 맥락은 인터뷰 기록에서 확인한다. 미래 단계에 속한 질문은 해당 단계가 오기 전에는 미결정으로 유지한다.
@@ -189,6 +191,7 @@
 | `Q-067` | 검증 대기 중 완료 요청 철회 | 해결: 제출자는 응답 전 철회 가능(`D-095`) | [U3 설계 답변](../aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u3-reminder-workflows/functional-design/functional-design-questions.md#q-067--검증-대기-중-완료-요청-철회) |
 | `Q-068` | 검증 대기 중 지정 검증자 제거 | 해결: 미완료로 복귀하고 새 검증자로 다시 요청(`D-096`) | [U3 설계 답변](../aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u3-reminder-workflows/functional-design/functional-design-questions.md#q-068--검증자가-가구에서-제거된-경우) |
 | `Q-069` | 신규 Android 설치에 기존 장소 알림을 적용할 때 용량 초과 처리 | 해결. 새 설치의 장소 감지를 대기시키고 사용자가 제외를 선택한다(`D-097`). | [U4 설계 답변](../aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/functional-design/functional-design-questions.md#q-069--새-설치의-지오펜스-용량-초과) |
+| `Q-070` | U5 주간 운영 보고·장애 알림 전달 범위 | 해결. 운영 호스트에 주간 요약과 장애 기록부터 구현한다(`D-098`). | [U5 설계 답변](../aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/functional-design-questions.md) |
 
 ## 질문 원문과 이력 찾기
 

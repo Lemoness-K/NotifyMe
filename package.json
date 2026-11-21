@@ -13,6 +13,7 @@
     "typecheck": "npm run generate && tsc --noEmit",
     "start": "node dist/server/main.js",
     "admin:bootstrap": "node dist/server/bootstrap-admin.js",
+    "operations": "node dist/server/operations-cli.js",
     "test:unit": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",

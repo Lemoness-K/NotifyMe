@@ -1,0 +1,134 @@
+{
+  "stage": "infrastructure-design",
+  "unit": "u5-operations-and-recovery",
+  "upstream_ids": [
+    "NFR5.1",
+    "NFR5.2",
+    "NFR1.1",
+    "NFR1.3",
+    "NFR1.4",
+    "NFR2.1",
+    "NFR2.3",
+    "NFR5.3",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR3.3",
+    "NFR3.4",
+    "NFR4.1",
+    "NFR7.4",
+    "NFR8.2",
+    "NFR9.1",
+    "NFR9.3",
+    "NFR1.2",
+    "NFR10.1",
+    "NFR10.2",
+    "NFR9.2"
+  ],
+  "coverage": [
+    {
+      "id": "NFR5.1",
+      "status": "OK",
+      "target": "monitoring-design.md"
+    },
+    {
+      "id": "NFR5.2",
+      "status": "OK",
+      "target": "monitoring-design.md"
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md"
+    },
+    {
+      "id": "NFR1.4",
+      "status": "OK",
+      "target": "infrastructure-specification.md"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "infrastructure-specification.md"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "OK",
+      "target": "infrastructure-specification.md"
+    },
+    {
+      "id": "NFR3.3",
+      "status": "OK",
+      "target": "infrastructure-specification.md"
+    },
+    {
+      "id": "NFR3.4",
+      "status": "OK",
+      "target": "infrastructure-specification.md"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "monitoring-design.md"
+    },
+    {
+      "id": "NFR7.4",
+      "status": "OK",
+      "target": "monitoring-design.md"
+    },
+    {
+      "id": "NFR8.2",
+      "status": "OK",
+      "target": "cicd-pipeline.md"
+    },
+    {
+      "id": "NFR9.1",
+      "status": "OK",
+      "target": "cicd-pipeline.md"
+    },
+    {
+      "id": "NFR9.3",
+      "status": "OK",
+      "target": "cicd-pipeline.md"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "infrastructure-specification.md"
+    },
+    {
+      "id": "NFR10.1",
+      "status": "OK",
+      "target": "monitoring-design.md"
+    },
+    {
+      "id": "NFR10.2",
+      "status": "OK",
+      "target": "monitoring-design.md"
+    },
+    {
+      "id": "NFR9.2",
+      "status": "OK",
+      "target": "cicd-pipeline.md"
+    }
+  ]
+}

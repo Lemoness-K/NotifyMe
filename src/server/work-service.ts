@@ -361,6 +361,7 @@ export class WorkService {
   private async removeWithEvidence(journal: DeleteJournal, request: Parameters<DeleteJournal['request']>[0], actorId: string, revision: number) {
     const { requestId, householdId, reminderId, at } = request;
     let hasRequest = false;
+    let newlyRequested = false;
     let committed = false;
     try {
       const prior = journal.find(requestId);
@@ -372,6 +373,7 @@ export class WorkService {
       const entry = journal.request(request);
       if (entry.state === 'ABORTED') throw new AppError(409, 'DELETE_ABORTED');
       hasRequest = true;
+      newlyRequested = prior === undefined;
       const proof = await this.transact(async (tx) => {
         await requireMember(tx, householdId, actorId);
         const saved = await tx.deletionCommit.findUnique({ where: { requestId } });
@@ -406,7 +408,8 @@ export class WorkService {
     } catch (error) {
       if (hasRequest) {
         if (!committed && error instanceof AppError &&
-            ['STALE_REVISION', 'DELETE_SUPERSEDED', 'GEOFENCE_CAPACITY_EXCEEDED'].includes(error.code)) {
+            (['STALE_REVISION', 'DELETE_SUPERSEDED', 'GEOFENCE_CAPACITY_EXCEEDED'].includes(error.code) ||
+             (newlyRequested && error.code === 'HOUSEHOLD_ACCESS_DENIED'))) {
           try { journal.finish(request, 'ABORTED', null); } catch { /* Keep the request unsettled on journal failure. */ }
         }
         const unsettled = journal.unsettled(at);

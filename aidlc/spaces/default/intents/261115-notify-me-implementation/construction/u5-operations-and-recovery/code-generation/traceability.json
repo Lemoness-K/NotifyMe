@@ -1,0 +1,302 @@
+{
+  "stage": "code-generation",
+  "unit": "u5-operations-and-recovery",
+  "upstream_ids": [
+    "AC2.7.1",
+    "AC2.7.2",
+    "AC2.7.3",
+    "AC8.1.1",
+    "AC8.1.2",
+    "AC8.1.3",
+    "AC8.2.1",
+    "AC8.2.2",
+    "AC8.2.3",
+    "AC8.2.4",
+    "AC8.3.1",
+    "AC8.3.2",
+    "AC8.3.3",
+    "AC8.3.4",
+    "AC8.4.1",
+    "AC8.4.2",
+    "AC8.4.3",
+    "AC8.5.1",
+    "AC8.5.2",
+    "AC8.5.3",
+    "AC8.5.4",
+    "NFR5.1",
+    "NFR5.2",
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR1.4",
+    "NFR2.1",
+    "NFR2.3",
+    "NFR5.3",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR3.3",
+    "NFR3.4",
+    "NFR4.1",
+    "BR5.1",
+    "BR5.2",
+    "BR5.3",
+    "BR5.4",
+    "BR5.5",
+    "BR5.6",
+    "BR5.7",
+    "NFR7.4",
+    "NFR8.2",
+    "NFR9.1",
+    "NFR9.2",
+    "NFR9.3",
+    "NFR10.1",
+    "NFR10.2"
+  ],
+  "coverage": [
+    {
+      "id": "AC2.7.1",
+      "status": "N/A",
+      "target": "사용자의 삭제 UI와 직접 삭제는 U3 범위다. U5는 복구의 삭제 증거와 재적용을 담당한다."
+    },
+    {
+      "id": "AC2.7.2",
+      "status": "N/A",
+      "target": "사용자의 삭제 UI와 직접 삭제는 U3 범위다. U5는 복구의 삭제 증거와 재적용을 담당한다."
+    },
+    {
+      "id": "AC2.7.3",
+      "status": "OK",
+      "target": "src/server/operations/restore.ts"
+    },
+    {
+      "id": "AC8.1.1",
+      "status": "OK",
+      "target": "src/server/operations/reporting.ts"
+    },
+    {
+      "id": "AC8.1.2",
+      "status": "OK",
+      "target": "src/server/operations/reporting.ts"
+    },
+    {
+      "id": "AC8.1.3",
+      "status": "OK",
+      "target": "src/server/operations/reporting.ts"
+    },
+    {
+      "id": "AC8.2.1",
+      "status": "OK",
+      "target": "src/server/operations/runtime.ts"
+    },
+    {
+      "id": "AC8.2.2",
+      "status": "OK",
+      "target": "deploy/u5/notify-me.service"
+    },
+    {
+      "id": "AC8.2.3",
+      "status": "OK",
+      "target": "tests/u5/runtime.test.ts"
+    },
+    {
+      "id": "AC8.2.4",
+      "status": "OK",
+      "target": "src/server/operations/runtime.ts"
+    },
+    {
+      "id": "AC8.3.1",
+      "status": "OK",
+      "target": "src/server/operations/backup.ts"
+    },
+    {
+      "id": "AC8.3.2",
+      "status": "OK",
+      "target": "src/server/operations/runtime.ts"
+    },
+    {
+      "id": "AC8.3.3",
+      "status": "OK",
+      "target": "src/server/operations/archive.ts"
+    },
+    {
+      "id": "AC8.3.4",
+      "status": "OK",
+      "target": "deploy/u5/notify-me-backup.timer"
+    },
+    {
+      "id": "AC8.4.1",
+      "status": "OK",
+      "target": "src/server/operations/backup.ts"
+    },
+    {
+      "id": "AC8.4.2",
+      "status": "OK",
+      "target": "tests/u5/backup.test.ts"
+    },
+    {
+      "id": "AC8.4.3",
+      "status": "OK",
+      "target": "src/server/operations/restore.ts"
+    },
+    {
+      "id": "AC8.5.1",
+      "status": "OK",
+      "target": "deploy/u5/notify-me.service"
+    },
+    {
+      "id": "AC8.5.2",
+      "status": "OK",
+      "target": "src/server/operations/activation.ts"
+    },
+    {
+      "id": "AC8.5.3",
+      "status": "OK",
+      "target": "deploy/u5/notify-me.service"
+    },
+    {
+      "id": "AC8.5.4",
+      "status": "OK",
+      "target": "deploy/u5/notify-me.service"
+    },
+    {
+      "id": "NFR5.1",
+      "status": "Deferred",
+      "target": "DS-014에서 대상 Raspberry Pi 응답·자원 실측을 수행한다."
+    },
+    {
+      "id": "NFR5.2",
+      "status": "Deferred",
+      "target": "DS-014에서 대상 Raspberry Pi 응답·자원 실측을 수행한다."
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "src/server/operations/socket.ts"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "tests/u5/runtime.test.ts"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "src/server/operations/restore.ts"
+    },
+    {
+      "id": "NFR1.4",
+      "status": "OK",
+      "target": "src/server/operations/files.ts"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "src/server/operations/archive.ts"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "src/server/operations/backup.ts"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "src/server/operations/activation.ts"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "src/server/work-service.ts"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "OK",
+      "target": "tests/u5/journal.test.ts"
+    },
+    {
+      "id": "NFR3.3",
+      "status": "OK",
+      "target": "tests/u5/runtime.test.ts"
+    },
+    {
+      "id": "NFR3.4",
+      "status": "OK",
+      "target": "tests/u5/backup.test.ts"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "src/server/operations/reporting.ts"
+    },
+    {
+      "id": "BR5.1",
+      "status": "OK",
+      "target": "src/server/operations/runtime.ts"
+    },
+    {
+      "id": "BR5.2",
+      "status": "OK",
+      "target": "src/server/operations/reporting.ts"
+    },
+    {
+      "id": "BR5.3",
+      "status": "OK",
+      "target": "src/server/operations/backup.ts"
+    },
+    {
+      "id": "BR5.4",
+      "status": "OK",
+      "target": "src/server/operations/backup.ts"
+    },
+    {
+      "id": "BR5.5",
+      "status": "OK",
+      "target": "deploy/u5/notify-me-backup.timer"
+    },
+    {
+      "id": "BR5.6",
+      "status": "OK",
+      "target": "src/server/operations/restore.ts"
+    },
+    {
+      "id": "BR5.7",
+      "status": "OK",
+      "target": "deploy/u5/notify-me.service"
+    },
+    {
+      "id": "NFR7.4",
+      "status": "OK",
+      "target": "src/server/operations/reporting.ts"
+    },
+    {
+      "id": "NFR8.2",
+      "status": "OK",
+      "target": "tests/u5/backup.test.ts"
+    },
+    {
+      "id": "NFR9.1",
+      "status": "OK",
+      "target": "tests/u5/journal.test.ts"
+    },
+    {
+      "id": "NFR9.2",
+      "status": "OK",
+      "target": ".github/workflows/u1-app-ci.yml"
+    },
+    {
+      "id": "NFR9.3",
+      "status": "OK",
+      "target": "vitest.config.ts"
+    },
+    {
+      "id": "NFR10.1",
+      "status": "OK",
+      "target": "src/server/operations/runtime.ts"
+    },
+    {
+      "id": "NFR10.2",
+      "status": "OK",
+      "target": "tests/u5/runtime.test.ts"
+    }
+  ]
+}

@@ -117,7 +117,8 @@ export function startWorkMaintenance(work: WorkService, intervalMs: number, prun
       if (!stopped) {
         const now = work.clock();
         await work.db.reminderFeedEntry.deleteMany({ where: { expiresAt: { lte: now } } });
-        await pruneInstallations?.();
+        try { await pruneInstallations?.(); }
+        catch { work.log?.({ event: 'INSTALLATION_RETENTION_FAILED', runId }); }
         if (work.journal) {
           const reconciled = await work.reconcileCommittedDeletes();
           const unsettled = work.journal.unsettled(now);

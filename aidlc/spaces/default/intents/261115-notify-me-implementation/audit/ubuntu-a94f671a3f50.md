@@ -20910,3 +20910,2106 @@
 **Review Finding Dispositions**: {"version":1,"dispositions":[{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/functional-design/functional-spec.md","id":"R-04","fingerprint":"sha256:a6ed9b65da36c466426cc078125dfead1c44dd5c53dedcc8031e0cdb602ec507","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/functional-design/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:4383f3a14949e2526a0d44846a6b893de14521c0a4da664eb02c5e80983b5713"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/functional-design/functional-spec.md","id":"R-05","fingerprint":"sha256:90988db3a0647b9a868d523b0fe78374acf60b9e7be3062f083ef07682dbb3f3","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/functional-design/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:4383f3a14949e2526a0d44846a6b893de14521c0a4da664eb02c5e80983b5713"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/functional-design/functional-spec.md","id":"R-06","fingerprint":"sha256:fe9dff0c7653edbc7b3554d4ca0e5d66e3c7043ecb1ce39cbf4564895234aa6e","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/functional-design/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:4383f3a14949e2526a0d44846a6b893de14521c0a4da664eb02c5e80983b5713"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/infrastructure-design/cicd-pipeline.md","id":"R-02","fingerprint":"sha256:fa6e1391eae01a7065686abd0aa1b23ddb8b04d34aa2c31f90fca02884df41a6","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/infrastructure-design/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:02d819a13378b3baef86aadb35c36c7015c7d56e57b56e56b7e3884af8eeb535"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/infrastructure-design/cicd-pipeline.md","id":"R-03","fingerprint":"sha256:a870d088b1a84531df8144c38f8a8d3dc4dd37fa8b0b6cdadbcd2f5fa50bb571","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/infrastructure-design/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:02d819a13378b3baef86aadb35c36c7015c7d56e57b56e56b7e3884af8eeb535"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/nfr-design/security-design.md","id":"R-01","fingerprint":"sha256:8e6ff1c613c6b69f7c33e6ac0ee2875e46a797a2658e6b64e88956d69ac5e905","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/nfr-design/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:5af7a98fd57df46ee3809385f425e7195c8c7e0c81f94d0a37e71fe602ab6be3"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/nfr-design/security-design.md","id":"R-02","fingerprint":"sha256:377a3eb222b731c975e584fe202676422db82365d26ae6c1ffbb5f3a1fdcd243","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/nfr-design/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:5af7a98fd57df46ee3809385f425e7195c8c7e0c81f94d0a37e71fe602ab6be3"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/nfr-design/security-design.md","id":"R-03","fingerprint":"sha256:1accadbb3f5c2491a5b65a78b3ec84ef14b7872dc24b67274e32afb8d165ccb1","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/nfr-design/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:5af7a98fd57df46ee3809385f425e7195c8c7e0c81f94d0a37e71fe602ab6be3"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/nfr-design/security-design.md","id":"R-04","fingerprint":"sha256:b7ac8db45824d8f5568bf23fd7cb27b06355b456ddc9070378946e6d833043ee","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/nfr-design/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:5af7a98fd57df46ee3809385f425e7195c8c7e0c81f94d0a37e71fe602ab6be3"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/nfr-requirements/security-requirements.md","id":"R-01","fingerprint":"sha256:9144535ad2cfae29ac57d134ae290283fb8eb77ca970ffb4050108a2012b4892","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/nfr-requirements/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:918eafbbc108ba7c326b1559cd6dd6ef1b754a3351120aef727b54725da2fc76"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/nfr-requirements/security-requirements.md","id":"R-02","fingerprint":"sha256:55ae46508c22548380a331e6260c2cf5dd6ee83e0e61434fa6abfcd768940e4a","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/nfr-requirements/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:918eafbbc108ba7c326b1559cd6dd6ef1b754a3351120aef727b54725da2fc76"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/nfr-requirements/security-requirements.md","id":"R-03","fingerprint":"sha256:45fcc914750fb5d82fc161c1332600ab63382839bb05c91a426e87dc40f2f000","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/nfr-requirements/units/u4-android-notifications/b2597fb79325abbd/1.json","digest":"sha256:918eafbbc108ba7c326b1559cd6dd6ef1b754a3351120aef727b54725da2fc76"}}]}
 
 ---
+
+## Unit Started
+**Timestamp**: 2026-11-20T13:35:08Z
+**Event**: UNIT_STARTED
+**Stage**: functional-design
+**Unit**: u5-operations-and-recovery
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T13:35:25Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/functional-design-questions.md
+**Context**: construction > u5-operations-and-recovery > functional-design > functional-design-questions.md
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-11-20T13:35:34Z
+**Event**: DECISION_RECORDED
+**Stage**: functional-design
+**Decision**: Q-070 D-092 주간 운영 보고와 즉시 장애 알림의 이번 U5 전달 범위
+**Options**: A. 로컬 운영 기록부터 구현 (권장),B. 기존 외부 채널까지 연동,C. 보고·장애 알림은 후속으로 보류,X. Other (please specify)
+**Unit**: u5-operations-and-recovery
+**Question Id**: 77283595
+**Question Type**: stage-question
+**Question Chat**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Question Shows**: sha256:3e00441ecf7bb86019e43117f95f3d0a163baa6ca3ea43701b7e712730d0361e
+
+---
+
+## Session Resume
+**Timestamp**: 2026-11-20T14:55:30Z
+**Event**: SESSION_RESUMED
+**Source**: resume
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-20T14:55:31Z
+**Event**: HUMAN_TURN
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Origin**: person
+**Source**: typed
+**Message Id**: c8126b00
+**Open Questions**: ba47e238, ca4318da, 2a56be24, fbac805c, 77283595
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/functional-design-questions.md","entries":{"Q-070 — Q-064 운영 보고·장애 전달 상세":"b6f0ca871a68dc25"}}
+
+---
+
+## Question Answered
+**Timestamp**: 2026-11-20T14:55:40Z
+**Event**: QUESTION_ANSWERED
+**Stage**: functional-design
+**Details**: Q-070: A. 로컬 운영 기록부터 구현 (권장)
+**Unit**: u5-operations-and-recovery
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T14:55:53Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/functional-design-questions.md
+**Context**: construction > u5-operations-and-recovery > functional-design > functional-design-questions.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T14:57:38Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/functional-spec.md
+**Context**: construction > u5-operations-and-recovery > functional-design > functional-spec.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T14:57:39Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/entities.md
+**Context**: construction > u5-operations-and-recovery > functional-design > entities.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T14:57:39Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/rules.md
+**Context**: construction > u5-operations-and-recovery > functional-design > rules.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T14:58:17Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/traceability.json
+**Context**: construction > u5-operations-and-recovery > functional-design > traceability.json
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T14:58:18Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/rules.md
+**Context**: construction > u5-operations-and-recovery > functional-design > rules.md
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T14:58:46Z
+**Event**: SENSOR_FIRED
+**Fire id**: 8f8ad837
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/entities.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T14:58:47Z
+**Event**: SENSOR_PASSED
+**Fire id**: 8f8ad837
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/entities.md
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T14:58:47Z
+**Event**: SENSOR_FIRED
+**Fire id**: 61a7d4d3
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/rules.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T14:58:47Z
+**Event**: SENSOR_PASSED
+**Fire id**: 61a7d4d3
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/rules.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T14:58:47Z
+**Event**: SENSOR_FIRED
+**Fire id**: 1e9ef9d5
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/functional-spec.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T14:58:47Z
+**Event**: SENSOR_PASSED
+**Fire id**: 1e9ef9d5
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/functional-spec.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T14:58:47Z
+**Event**: SENSOR_FIRED
+**Fire id**: 9799b7a9
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T14:58:48Z
+**Event**: SENSOR_PASSED
+**Fire id**: 9799b7a9
+**Sensor ID**: required-sections
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/traceability.json
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T14:58:48Z
+**Event**: SENSOR_FIRED
+**Fire id**: 46de1d18
+**Sensor ID**: upstream-coverage
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/entities.md
+
+---
+
+## Sensor Failed
+**Timestamp**: 2026-11-20T14:58:48Z
+**Event**: SENSOR_FAILED
+**Fire id**: 46de1d18
+**Sensor ID**: upstream-coverage
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/entities.md
+**Detail path**: aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/sensors/functional-design/upstream-coverage-46de1d18.md
+**Findings count**: 3
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T14:58:48Z
+**Event**: SENSOR_FIRED
+**Fire id**: 94cee627
+**Sensor ID**: traceability
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T14:58:48Z
+**Event**: SENSOR_PASSED
+**Fire id**: 94cee627
+**Sensor ID**: traceability
+**Stage slug**: functional-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/traceability.json
+**Duration ms**: 193
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T14:59:10Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/functional-spec.md
+**Context**: construction > u5-operations-and-recovery > functional-design > functional-spec.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-20T14:59:15Z
+**Event**: REVIEW_REQUESTED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:09cd7c2389b676e3bb00506d22b23a2b9e9bc6e7378455371c4cbe35a00ff1a1
+**Request Id**: review:ef94c160f712d9ec0d8fb3ee3b41bf40
+**Review File**: .aidlc-engine/reviews/functional-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.ef94c160f712d9ec0d8fb3ee3b41bf40.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T14:59:27Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:01:14Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/functional-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.ef94c160f712d9ec0d8fb3ee3b41bf40.review.md
+**Context**: .aidlc-engine > reviews > functional-design > units > u5-operations-and-recovery > 6a9232c36f0fe5b7 > 1.ef94c160f712d9ec0d8fb3ee3b41bf40.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-20T15:01:30Z
+**Event**: REVIEW_COMPLETED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:09cd7c2389b676e3bb00506d22b23a2b9e9bc6e7378455371c4cbe35a00ff1a1
+**Artifact Fingerprint**: sha256:09cd7c2389b676e3bb00506d22b23a2b9e9bc6e7378455371c4cbe35a00ff1a1
+**Request Id**: review:ef94c160f712d9ec0d8fb3ee3b41bf40
+**Review Record**: .aidlc-engine/reviews/functional-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json
+**Review Record Digest**: sha256:44b424591318279a8d7b889fd732156d2a941b7f7f67b7faa9b16b1c387c50c5
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-20T15:01:32Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f793-e741-7461-895c-90f8aafa7285
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**NOT-READY.** 복원 시 삭제 데이터가 되살아나지 않도록 세 가지를 명시해야 합니다.\n\n- 복구 사본과 독립적으로 최신 삭제 원장의 끝을 검증하는 방법\n- 백업 만료와 삭제 원장 정리의 순서\n- 재부팅이나 서비스 재시작 뒤에도 검증되지 않은 DB와 서버 세대의
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/4.e07ec128d83ea41cb57d3e64e748abb7.review.md=5c11c446792f55a3b5fa19c4f6f707d5ea94d47e2da8fdbc4fbe24c66d787b60; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.0710bfdd0a8d0c722be1c3c18cdffa2a.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.15b8766857e4cfbfbad2a7fc0b7a4284.review.md=16c1d2d362ddd9c66e6c63015a32d1b39c8871fa1bf4b4397a21c7c302f44145; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.dfb1f11a6e3ef27b0d0a1bd0ae91d601.review.md=98e7a88cff4d355cf41783f1f7a020931a26f67cc1ce2b50876f288b2381006f; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.ae7ad93cb0a7314e93ea5b7a1cc1749b.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/2.42374532bb5ebc44c4ce0ec20179fae9.review.md=absent
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T15:02:17Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/functional-spec.md
+**Context**: construction > u5-operations-and-recovery > functional-design > functional-spec.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T15:02:18Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/functional-design/entities.md
+**Context**: construction > u5-operations-and-recovery > functional-design > entities.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-20T15:02:27Z
+**Event**: REVIEW_REQUESTED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:caf62fad571d79940204797fdf2b331188266df44d527adfcfa1d37ab23712ad
+**Request Id**: review:86f0829c8ec99ed70ecde479d1027edf
+**Review File**: .aidlc-engine/reviews/functional-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/2.86f0829c8ec99ed70ecde479d1027edf.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:02:36Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:03:27Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/functional-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/2.86f0829c8ec99ed70ecde479d1027edf.review.md
+**Context**: .aidlc-engine > reviews > functional-design > units > u5-operations-and-recovery > 6a9232c36f0fe5b7 > 2.86f0829c8ec99ed70ecde479d1027edf.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-20T15:03:42Z
+**Event**: REVIEW_COMPLETED
+**Stage**: functional-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 2
+**Verdict**: READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:caf62fad571d79940204797fdf2b331188266df44d527adfcfa1d37ab23712ad
+**Artifact Fingerprint**: sha256:caf62fad571d79940204797fdf2b331188266df44d527adfcfa1d37ab23712ad
+**Request Id**: review:86f0829c8ec99ed70ecde479d1027edf
+**Review Record**: .aidlc-engine/reviews/functional-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/2.json
+**Review Record Digest**: sha256:c5e3dbce379b8ed32d5ba2eda245f24cbb42c6cb0a2458a94cc7acf6d4221b55
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-20T15:03:43Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f793-e741-7461-895c-90f8aafa7285
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**READY.** 독립적인 최신 삭제 증거, 백업과 원장 정리의 순서, 재시작 후 공개 차단에 관한 세 지적이 해결됐습니다. 새 지적은 없으며 추적성 검사도 통과했습니다.
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/4.e07ec128d83ea41cb57d3e64e748abb7.review.md=5c11c446792f55a3b5fa19c4f6f707d5ea94d47e2da8fdbc4fbe24c66d787b60; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.0710bfdd0a8d0c722be1c3c18cdffa2a.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.15b8766857e4cfbfbad2a7fc0b7a4284.review.md=16c1d2d362ddd9c66e6c63015a32d1b39c8871fa1bf4b4397a21c7c302f44145; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.dfb1f11a6e3ef27b0d0a1bd0ae91d601.review.md=98e7a88cff4d355cf41783f1f7a020931a26f67cc1ce2b50876f288b2381006f; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.ae7ad93cb0a7314e93ea5b7a1cc1749b.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/2.42374532bb5ebc44c4ce0ec20179fae9.review.md=absent
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-20T15:03:48Z
+**Event**: UNIT_COMPLETED
+**Stage**: functional-design
+**Unit**: u5-operations-and-recovery
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-20T15:04:33Z
+**Event**: UNIT_STARTED
+**Stage**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:05:18Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/security-requirements.md
+**Context**: construction > u5-operations-and-recovery > nfr-requirements > security-requirements.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:05:18Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/reliability-requirements.md
+**Context**: construction > u5-operations-and-recovery > nfr-requirements > reliability-requirements.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:05:19Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/performance-requirements.md
+**Context**: construction > u5-operations-and-recovery > nfr-requirements > performance-requirements.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:05:19Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/scalability-requirements.md
+**Context**: construction > u5-operations-and-recovery > nfr-requirements > scalability-requirements.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:05:20Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/observability-requirements.md
+**Context**: construction > u5-operations-and-recovery > nfr-requirements > observability-requirements.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:05:20Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/tech-stack-decisions.md
+**Context**: construction > u5-operations-and-recovery > nfr-requirements > tech-stack-decisions.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T15:05:21Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/traceability.json
+**Context**: construction > u5-operations-and-recovery > nfr-requirements > traceability.json
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:05:34Z
+**Event**: SENSOR_FIRED
+**Fire id**: 59c2fc87
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/performance-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:05:34Z
+**Event**: SENSOR_PASSED
+**Fire id**: 59c2fc87
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/performance-requirements.md
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:05:34Z
+**Event**: SENSOR_FIRED
+**Fire id**: 551d8da8
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/security-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:05:35Z
+**Event**: SENSOR_PASSED
+**Fire id**: 551d8da8
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/security-requirements.md
+**Duration ms**: 181
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:05:35Z
+**Event**: SENSOR_FIRED
+**Fire id**: 9429bf2f
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/scalability-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:05:35Z
+**Event**: SENSOR_PASSED
+**Fire id**: 9429bf2f
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/scalability-requirements.md
+**Duration ms**: 181
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:05:35Z
+**Event**: SENSOR_FIRED
+**Fire id**: af306c2c
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/reliability-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:05:35Z
+**Event**: SENSOR_PASSED
+**Fire id**: af306c2c
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/reliability-requirements.md
+**Duration ms**: 185
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:05:36Z
+**Event**: SENSOR_FIRED
+**Fire id**: 9f644860
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/observability-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:05:36Z
+**Event**: SENSOR_PASSED
+**Fire id**: 9f644860
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/observability-requirements.md
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:05:36Z
+**Event**: SENSOR_FIRED
+**Fire id**: 91d9666f
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/tech-stack-decisions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:05:36Z
+**Event**: SENSOR_PASSED
+**Fire id**: 91d9666f
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/tech-stack-decisions.md
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:05:36Z
+**Event**: SENSOR_FIRED
+**Fire id**: a4cb7386
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:05:36Z
+**Event**: SENSOR_PASSED
+**Fire id**: a4cb7386
+**Sensor ID**: required-sections
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/traceability.json
+**Duration ms**: 183
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:05:37Z
+**Event**: SENSOR_FIRED
+**Fire id**: 7702c3d9
+**Sensor ID**: upstream-coverage
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/performance-requirements.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:05:37Z
+**Event**: SENSOR_PASSED
+**Fire id**: 7702c3d9
+**Sensor ID**: upstream-coverage
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/performance-requirements.md
+**Duration ms**: 183
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:05:37Z
+**Event**: SENSOR_FIRED
+**Fire id**: bbac14c5
+**Sensor ID**: traceability
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:05:37Z
+**Event**: SENSOR_PASSED
+**Fire id**: bbac14c5
+**Sensor ID**: traceability
+**Stage slug**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/traceability.json
+**Duration ms**: 190
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-20T15:05:37Z
+**Event**: REVIEW_REQUESTED
+**Stage**: nfr-requirements
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:facc61243adcce8358275dbc1a0be68e9c6410ad8c670d2df07669c8ecf30833
+**Request Id**: review:43e2354a79691a0a39b72bff2ab04616
+**Review File**: .aidlc-engine/reviews/nfr-requirements/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.43e2354a79691a0a39b72bff2ab04616.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:05:39Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:07:02Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/nfr-requirements/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.43e2354a79691a0a39b72bff2ab04616.review.md
+**Context**: .aidlc-engine > reviews > nfr-requirements > units > u5-operations-and-recovery > 6a9232c36f0fe5b7 > 1.43e2354a79691a0a39b72bff2ab04616.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-20T15:07:14Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f793-e741-7461-895c-90f8aafa7285
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**READY.** 복구 차단 기준과 로컬 운영 기록의 검증 범위를 확인했습니다. 추적성 검사에서 NFR 21건이 연결됐고, 적용 제외 11건은 범위와 일치했습니다.\n\n원본 호스트 유실 시 독립 증거로 최신 삭제 지점을 확인하는 시험과, 30일이 지난 모든 백업 사본의 
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/4.e07ec128d83ea41cb57d3e64e748abb7.review.md=5c11c446792f55a3b5fa19c4f6f707d5ea94d47e2da8fdbc4fbe24c66d787b60; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.0710bfdd0a8d0c722be1c3c18cdffa2a.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.15b8766857e4cfbfbad2a7fc0b7a4284.review.md=16c1d2d362ddd9c66e6c63015a32d1b39c8871fa1bf4b4397a21c7c302f44145; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.dfb1f11a6e3ef27b0d0a1bd0ae91d601.review.md=98e7a88cff4d355cf41783f1f7a020931a26f67cc1ce2b50876f288b2381006f; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.ae7ad93cb0a7314e93ea5b7a1cc1749b.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/2.42374532bb5ebc44c4ce0ec20179fae9.review.md=absent; .aidlc-engine/reviews/nfr-requirements/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.43e2354a79691a0a39b72bff2ab04616.review.md=6c2b27d23adb57ee7da7dd976c8deabcbec1dc2cbb442b14761cf2fec35a3311
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-20T15:07:15Z
+**Event**: REVIEW_COMPLETED
+**Stage**: nfr-requirements
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 1
+**Verdict**: READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:facc61243adcce8358275dbc1a0be68e9c6410ad8c670d2df07669c8ecf30833
+**Artifact Fingerprint**: sha256:facc61243adcce8358275dbc1a0be68e9c6410ad8c670d2df07669c8ecf30833
+**Request Id**: review:43e2354a79691a0a39b72bff2ab04616
+**Review Record**: .aidlc-engine/reviews/nfr-requirements/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json
+**Review Record Digest**: sha256:98f1d28848b6d38264795699402db97d558940b211138cce79806e5ff11fb3ae
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-20T15:07:27Z
+**Event**: UNIT_COMPLETED
+**Stage**: nfr-requirements
+**Unit**: u5-operations-and-recovery
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-20T15:08:06Z
+**Event**: UNIT_STARTED
+**Stage**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:08:57Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/performance-design.md
+**Context**: construction > u5-operations-and-recovery > nfr-design > performance-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:08:58Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/security-design.md
+**Context**: construction > u5-operations-and-recovery > nfr-design > security-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:08:58Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/scalability-design.md
+**Context**: construction > u5-operations-and-recovery > nfr-design > scalability-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:08:59Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/reliability-design.md
+**Context**: construction > u5-operations-and-recovery > nfr-design > reliability-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:08:59Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/observability-design.md
+**Context**: construction > u5-operations-and-recovery > nfr-design > observability-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:09:00Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/logical-components.md
+**Context**: construction > u5-operations-and-recovery > nfr-design > logical-components.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T15:09:00Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/traceability.json
+**Context**: construction > u5-operations-and-recovery > nfr-design > traceability.json
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:09:12Z
+**Event**: SENSOR_FIRED
+**Fire id**: 2c0cdd29
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/performance-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:09:12Z
+**Event**: SENSOR_PASSED
+**Fire id**: 2c0cdd29
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/performance-design.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:09:12Z
+**Event**: SENSOR_FIRED
+**Fire id**: f3e4e7d1
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/security-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:09:12Z
+**Event**: SENSOR_PASSED
+**Fire id**: f3e4e7d1
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/security-design.md
+**Duration ms**: 181
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:09:13Z
+**Event**: SENSOR_FIRED
+**Fire id**: 93eb8696
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/scalability-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:09:13Z
+**Event**: SENSOR_PASSED
+**Fire id**: 93eb8696
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/scalability-design.md
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:09:13Z
+**Event**: SENSOR_FIRED
+**Fire id**: ee12dedb
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/reliability-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:09:13Z
+**Event**: SENSOR_PASSED
+**Fire id**: ee12dedb
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/reliability-design.md
+**Duration ms**: 182
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:09:13Z
+**Event**: SENSOR_FIRED
+**Fire id**: ac4f5fa7
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/observability-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:09:14Z
+**Event**: SENSOR_PASSED
+**Fire id**: ac4f5fa7
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/observability-design.md
+**Duration ms**: 185
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:09:14Z
+**Event**: SENSOR_FIRED
+**Fire id**: 636fb62e
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/logical-components.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:09:14Z
+**Event**: SENSOR_PASSED
+**Fire id**: 636fb62e
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/logical-components.md
+**Duration ms**: 185
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:09:14Z
+**Event**: SENSOR_FIRED
+**Fire id**: 7f69e11c
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:09:14Z
+**Event**: SENSOR_PASSED
+**Fire id**: 7f69e11c
+**Sensor ID**: required-sections
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/traceability.json
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:09:14Z
+**Event**: SENSOR_FIRED
+**Fire id**: 368fd15a
+**Sensor ID**: upstream-coverage
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/performance-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:09:15Z
+**Event**: SENSOR_PASSED
+**Fire id**: 368fd15a
+**Sensor ID**: upstream-coverage
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/performance-design.md
+**Duration ms**: 186
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:09:15Z
+**Event**: SENSOR_FIRED
+**Fire id**: 79a139e8
+**Sensor ID**: traceability
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:09:15Z
+**Event**: SENSOR_PASSED
+**Fire id**: 79a139e8
+**Sensor ID**: traceability
+**Stage slug**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/traceability.json
+**Duration ms**: 190
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-20T15:09:15Z
+**Event**: REVIEW_REQUESTED
+**Stage**: nfr-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:e4065835f9222ee6ed3916c38e628f59538a64a5f75688403544441add84fefd
+**Request Id**: review:9664b37561e2ece39d143eaf209f00ea
+**Review File**: .aidlc-engine/reviews/nfr-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.9664b37561e2ece39d143eaf209f00ea.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:09:17Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:10:31Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/nfr-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.9664b37561e2ece39d143eaf209f00ea.review.md
+**Context**: .aidlc-engine > reviews > nfr-design > units > u5-operations-and-recovery > 6a9232c36f0fe5b7 > 1.9664b37561e2ece39d143eaf209f00ea.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-20T15:10:45Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f793-e741-7461-895c-90f8aafa7285
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**READY.** 구현 전에 백업 게시 시 원장 보존 바닥을 다시 확인하는 절차와, 원장 정리 후에도 연속성을 검증할 인증값을 명시해야 합니다. 스트리밍 복호화 중 생성되는 평문 임시 파일의 격리와 정리도 보완 사항으로 기록했습니다. 추적성 검사는 통과했습니다.
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/4.e07ec128d83ea41cb57d3e64e748abb7.review.md=5c11c446792f55a3b5fa19c4f6f707d5ea94d47e2da8fdbc4fbe24c66d787b60; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.0710bfdd0a8d0c722be1c3c18cdffa2a.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.15b8766857e4cfbfbad2a7fc0b7a4284.review.md=16c1d2d362ddd9c66e6c63015a32d1b39c8871fa1bf4b4397a21c7c302f44145; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.dfb1f11a6e3ef27b0d0a1bd0ae91d601.review.md=98e7a88cff4d355cf41783f1f7a020931a26f67cc1ce2b50876f288b2381006f; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.ae7ad93cb0a7314e93ea5b7a1cc1749b.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/2.42374532bb5ebc44c4ce0ec20179fae9.review.md=absent; .aidlc-engine/reviews/nfr-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.9664b37561e2ece39d143eaf209f00ea.review.md=4076b26bc4da2f39cd24e1379a4801ac06305708f06ab5499184a4fafc9cafb0
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-20T15:10:46Z
+**Event**: REVIEW_COMPLETED
+**Stage**: nfr-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 1
+**Verdict**: READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:e4065835f9222ee6ed3916c38e628f59538a64a5f75688403544441add84fefd
+**Artifact Fingerprint**: sha256:e4065835f9222ee6ed3916c38e628f59538a64a5f75688403544441add84fefd
+**Request Id**: review:9664b37561e2ece39d143eaf209f00ea
+**Review Record**: .aidlc-engine/reviews/nfr-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json
+**Review Record Digest**: sha256:ef92f42f26cebe2567c423dbdf14d1d6f987bde29251f4c149b6872cbd9bbb5f
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-20T15:10:52Z
+**Event**: UNIT_COMPLETED
+**Stage**: nfr-design
+**Unit**: u5-operations-and-recovery
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-20T15:11:54Z
+**Event**: UNIT_STARTED
+**Stage**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:12:31Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/infrastructure-specification.md
+**Context**: construction > u5-operations-and-recovery > infrastructure-design > infrastructure-specification.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:12:32Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/monitoring-design.md
+**Context**: construction > u5-operations-and-recovery > infrastructure-design > monitoring-design.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:12:32Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/cicd-pipeline.md
+**Context**: construction > u5-operations-and-recovery > infrastructure-design > cicd-pipeline.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T15:12:33Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/traceability.json
+**Context**: construction > u5-operations-and-recovery > infrastructure-design > traceability.json
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:12:44Z
+**Event**: SENSOR_FIRED
+**Fire id**: 6d59f92e
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/infrastructure-specification.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:12:44Z
+**Event**: SENSOR_PASSED
+**Fire id**: 6d59f92e
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/infrastructure-specification.md
+**Duration ms**: 185
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:12:44Z
+**Event**: SENSOR_FIRED
+**Fire id**: 10528af9
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/monitoring-design.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:12:44Z
+**Event**: SENSOR_PASSED
+**Fire id**: 10528af9
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/monitoring-design.md
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:12:44Z
+**Event**: SENSOR_FIRED
+**Fire id**: 1d21ec61
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/cicd-pipeline.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:12:45Z
+**Event**: SENSOR_PASSED
+**Fire id**: 1d21ec61
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/cicd-pipeline.md
+**Duration ms**: 183
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:12:45Z
+**Event**: SENSOR_FIRED
+**Fire id**: e9640aa9
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:12:45Z
+**Event**: SENSOR_PASSED
+**Fire id**: e9640aa9
+**Sensor ID**: required-sections
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/traceability.json
+**Duration ms**: 183
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:12:45Z
+**Event**: SENSOR_FIRED
+**Fire id**: 879cce02
+**Sensor ID**: upstream-coverage
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/infrastructure-specification.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:12:45Z
+**Event**: SENSOR_PASSED
+**Fire id**: 879cce02
+**Sensor ID**: upstream-coverage
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/infrastructure-specification.md
+**Duration ms**: 186
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T15:12:45Z
+**Event**: SENSOR_FIRED
+**Fire id**: 51fe8985
+**Sensor ID**: traceability
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T15:12:46Z
+**Event**: SENSOR_PASSED
+**Fire id**: 51fe8985
+**Sensor ID**: traceability
+**Stage slug**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/traceability.json
+**Duration ms**: 193
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-20T15:12:46Z
+**Event**: REVIEW_REQUESTED
+**Stage**: infrastructure-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:78a7f2bb85cc92772b375dcd7f3d21d5010f2b3d6c6f31b9d2328456879c3838
+**Request Id**: review:e7129ad46386f50a5b233573d490604d
+**Review File**: .aidlc-engine/reviews/infrastructure-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.e7129ad46386f50a5b233573d490604d.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:12:48Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:13:51Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/infrastructure-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.e7129ad46386f50a5b233573d490604d.review.md
+**Context**: .aidlc-engine > reviews > infrastructure-design > units > u5-operations-and-recovery > 6a9232c36f0fe5b7 > 1.e7129ad46386f50a5b233573d490604d.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-20T15:14:07Z
+**Event**: REVIEW_COMPLETED
+**Stage**: infrastructure-design
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 1
+**Verdict**: READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:78a7f2bb85cc92772b375dcd7f3d21d5010f2b3d6c6f31b9d2328456879c3838
+**Artifact Fingerprint**: sha256:78a7f2bb85cc92772b375dcd7f3d21d5010f2b3d6c6f31b9d2328456879c3838
+**Request Id**: review:e7129ad46386f50a5b233573d490604d
+**Review Record**: .aidlc-engine/reviews/infrastructure-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json
+**Review Record Digest**: sha256:3b7fa2353dc7b50aab594fcb5707326a0a5908f71f881f2cf1b085e80ca3d440
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-20T15:14:07Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f793-e741-7461-895c-90f8aafa7285
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**READY.** 원장 정리 후 인증값 보존, 백업 게시 직전 재검증, 복호화 임시 파일 격리가 인프라 설계에 반영됐습니다. 추적성 검사도 통과했습니다.\n\n독립 저장 매체가 누락됐을 때 삭제를 차단하는 조건과, 복원 중 Caddy를 경유한 실제 API 접근을 차단하는 
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/4.e07ec128d83ea41cb57d3e64e748abb7.review.md=5c11c446792f55a3b5fa19c4f6f707d5ea94d47e2da8fdbc4fbe24c66d787b60; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.0710bfdd0a8d0c722be1c3c18cdffa2a.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.15b8766857e4cfbfbad2a7fc0b7a4284.review.md=16c1d2d362ddd9c66e6c63015a32d1b39c8871fa1bf4b4397a21c7c302f44145; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.dfb1f11a6e3ef27b0d0a1bd0ae91d601.review.md=98e7a88cff4d355cf41783f1f7a020931a26f67cc1ce2b50876f288b2381006f; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.ae7ad93cb0a7314e93ea5b7a1cc1749b.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/2.42374532bb5ebc44c4ce0ec20179fae9.review.md=absent
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-20T15:14:14Z
+**Event**: UNIT_COMPLETED
+**Stage**: infrastructure-design
+**Unit**: u5-operations-and-recovery
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:15:51Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:15:52Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/unit-test-instructions.md
+**Context**: construction > u5-operations-and-recovery > code-generation > unit-test-instructions.md
+
+---
+
+## Question Asked
+**Timestamp**: 2026-11-20T15:16:05Z
+**Event**: QUESTION_ASKED
+**Question Id**: 55650f20
+**Question Type**: plan-approval
+**Question Chat**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Question Shows**: sha256:a9dc1f53b18a275b3cdd5e37ee1d1a0cb18ad03bc8cfaf1cb2d59af908d4a1e1
+**Stage**: code-generation
+**Unit**: u5-operations-and-recovery
+**Ask Id**: e09a6f9ad45d42ca3a564d857e82aa3f
+**Options**: ["Approve Plan","Request Changes","I'll edit the files"]
+**Question Text SHA-256**: 958d98c88d8e3b4adcd603c1555dfe21c8cc800a327d3c9c5ffcf4df04d67210
+**Questions File**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-questions.md
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-20T15:20:47Z
+**Event**: HUMAN_TURN
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Origin**: person
+**Source**: typed
+**Message Id**: 9d6904a3
+**Open Questions**: ba47e238, ca4318da, 2a56be24, fbac805c, 77283595, 55650f20
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-questions.md","entries":{"Plan Approval":"5c55a416f5fb674f"}}
+
+---
+
+## Plan Approval Recorded
+**Timestamp**: 2026-11-20T15:21:01Z
+**Event**: PLAN_APPROVAL_RECORDED
+**Stage**: code-generation
+**Details**: Approve Plan
+**Checkpoint**: plan-approval
+**Plan Target**: unit:u5-operations-and-recovery
+**Intent**: 01a1e180-8a76-7c04-92db-b37176f3e225
+**Directive Epoch**: sha256:c8941f55fafd5f5e17f02b158586433c36a4a7d1c270e3b9d6994dca6527d6e9
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+**Approval Fingerprint**: sha256:v3:1012183e5c5bffc06cc656f44793df50e0bdaf1fda697b5c540b1a02e6118289
+**Questions File**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-questions.md
+**Questions SHA-256**: 599cae86d982dec3b282f77b8b596aa460e1729ac6c644f4bb21332f9ad3b137
+**Prompt SHA-256**: ac17c733c1365ec0ee8717f1c1368d05aa7c4f622c2a01f505875b4ded067a86
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Asked By**: engine
+**Person Reply**: 승인할게
+**Message Id**: 9d6904a3
+**Unit**: u5-operations-and-recovery
+
+---
+
+## Unit Started
+**Timestamp**: 2026-11-20T15:21:54Z
+**Event**: UNIT_STARTED
+**Stage**: code-generation
+**Unit**: u5-operations-and-recovery
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T15:22:29Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/u5-developer-brief.md
+**Context**: .aidlc-engine > u5-developer-brief.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T15:27:04Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T15:27:43Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T15:29:03Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T15:30:32Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T15:31:52Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-generation-plan.md
+
+---
+
+## Session Resume
+**Timestamp**: 2026-11-20T16:06:22Z
+**Event**: SESSION_RESUMED
+**Source**: resume
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-20T16:06:22Z
+**Event**: HUMAN_TURN
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Origin**: person
+**Source**: typed
+**Message Id**: 8b4cb31c
+**Open Questions**: ba47e238, ca4318da, 2a56be24, fbac805c, 77283595
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-questions.md","entries":{"Plan Approval":"5c55a416f5fb674f"}}
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-20T16:07:20Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-core-flow
+**Iteration**: 6
+**Recovery**: stale-receipt
+**Recovery Cause**: artifact
+**Artifact Fingerprint**: sha256:5de38c5c7a19f5511ce85eedf55a316902dffedec14498bc7d21c695ddaa0b9c
+**Request Id**: review:59cfd17fece6f34e1eaf764e26f7dde1
+**Source Fingerprint**: e0a9c874f76ab5807a2eb024f4baae48d04b049b9f03fec8ee1b676387c1ea39
+**Unit Source Fingerprint**: sha256:5cf486433bdbfaae0f6b120e6fe3b325983a8221e678ef6fa726e7a9dbd9e957
+**Review File**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/6.59cfd17fece6f34e1eaf764e26f7dde1.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T16:07:33Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T16:10:04Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/6.59cfd17fece6f34e1eaf764e26f7dde1.review.md
+**Context**: .aidlc-engine > reviews > code-generation > units > u1-core-flow > 6a9232c36f0fe5b7 > 6.59cfd17fece6f34e1eaf764e26f7dde1.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-20T16:10:16Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f793-e741-7461-895c-90f8aafa7285
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**READY.** U1 전용 Vitest 69건이 통과했고 검토한 U1 소스에서 새 회귀는 발견하지 않았습니다.\n\n전체 검증과 제품 빌드는 U5의 파일 읽기 코드에서 TypeScript 오류로 중단됐습니다. Playwright 1건은 기존 빌드로 통과했으므로 현재 체크
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/4.e07ec128d83ea41cb57d3e64e748abb7.review.md=5c11c446792f55a3b5fa19c4f6f707d5ea94d47e2da8fdbc4fbe24c66d787b60; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.0710bfdd0a8d0c722be1c3c18cdffa2a.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.15b8766857e4cfbfbad2a7fc0b7a4284.review.md=16c1d2d362ddd9c66e6c63015a32d1b39c8871fa1bf4b4397a21c7c302f44145; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.dfb1f11a6e3ef27b0d0a1bd0ae91d601.review.md=98e7a88cff4d355cf41783f1f7a020931a26f67cc1ce2b50876f288b2381006f; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.ae7ad93cb0a7314e93ea5b7a1cc1749b.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/2.42374532bb5ebc44c4ce0ec20179fae9.review.md=absent; .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/6.59cfd17fece6f34e1eaf764e26f7dde1.review.md=cd1ecc506763dd52615d3a634a2e6326773514f4bb62457d45bac94e33c66af1
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-20T16:10:19Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u1-core-flow
+**Iteration**: 6
+**Verdict**: READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:5de38c5c7a19f5511ce85eedf55a316902dffedec14498bc7d21c695ddaa0b9c
+**Artifact Fingerprint**: sha256:5de38c5c7a19f5511ce85eedf55a316902dffedec14498bc7d21c695ddaa0b9c
+**Request Id**: review:59cfd17fece6f34e1eaf764e26f7dde1
+**Request Source Fingerprint**: e0a9c874f76ab5807a2eb024f4baae48d04b049b9f03fec8ee1b676387c1ea39
+**Source Fingerprint**: e0a9c874f76ab5807a2eb024f4baae48d04b049b9f03fec8ee1b676387c1ea39
+**Source Listing**: sha256:ce974184f681d742f9199859c803310bcd7f60e2554df5eece0fe20eb3e401eb
+**Unit Source Fingerprint**: sha256:5cf486433bdbfaae0f6b120e6fe3b325983a8221e678ef6fa726e7a9dbd9e957
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/6.json
+**Review Record Digest**: sha256:abceb2ae1be4f39141539dac918ef7692e18ad5c6dc43e2a2f35fc6908fa73c4
+**Testing Contract**: sha256:db2da083c5032971c34e88a0118abbc7e7e1e1d718fd17056cb266c3a392dadb
+
+---
+
+## Checkpoint Verification Recorded
+**Timestamp**: 2026-11-20T16:11:18Z
+**Event**: CHECKPOINT_VERIFICATION_RECORDED
+**Unit**: u1-core-flow
+**Kind**: skeleton
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Verification Id**: 61cf5718-8bff-4cf6-855c-6c23a4cb4e96
+**Fingerprint**: sha256:2f481723d1c33a952a65c100bb43df2594826c2b8ddd4d5532bba2577f938b01
+**Command SHA-256**: 8710f9975963f43f56a57f9f7d3d94297c9cdbb9be35dadc24c815991ea2a740
+**Exit Code**: 2
+**Verified**: false
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Checkpoint Verification Recorded
+**Timestamp**: 2026-11-20T16:15:06Z
+**Event**: CHECKPOINT_VERIFICATION_RECORDED
+**Unit**: u1-core-flow
+**Kind**: skeleton
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Verification Id**: b9afb33f-2c4e-4213-956a-f278b75c4635
+**Fingerprint**: sha256:2f481723d1c33a952a65c100bb43df2594826c2b8ddd4d5532bba2577f938b01
+**Command SHA-256**: 8710f9975963f43f56a57f9f7d3d94297c9cdbb9be35dadc24c815991ea2a740
+**Exit Code**: 0
+**Verified**: true
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Decision Recorded
+**Timestamp**: 2026-11-20T16:16:01Z
+**Event**: DECISION_RECORDED
+**Checkpoint**: Construction Unit Approval
+**Unit**: u1-core-flow
+**Kind**: skeleton
+**Stage**: code-generation
+**Fingerprint**: sha256:2f481723d1c33a952a65c100bb43df2594826c2b8ddd4d5532bba2577f938b01
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Options**: Approve,Request Changes
+**Asked Evidence**: {"functional-design":["sha256:3f4defa05af477fc63abbc49ecdf39cf996171f57a7789a838f9d7a2af40c4a5",null],"nfr-requirements":["sha256:078f81c874c76b0da8d27fbf21ece4683d3ae7bb51777006ce1325a62ddad904",null],"nfr-design":["sha256:e40d230b1f24c4771ebf0a8a4d825b897f6b0f108aabc2f82070eede981d3eb9",null],"infrastructure-design":["sha256:595bf1e245ee0b4266a25fe5613bb3e8d1987d33bbb9b004b6a973b818a4f220",null],"code-generation":["sha256:5de38c5c7a19f5511ce85eedf55a316902dffedec14498bc7d21c695ddaa0b9c","sha256:5cf486433bdbfaae0f6b120e6fe3b325983a8221e678ef6fa726e7a9dbd9e957",{"\u0000.github/workflows/u1-app-ci.yml":"100644 02581fff36dece1baec53e074b40dd6c9686fe26d7a639e89806ca2063033d47","\u0000.gitignore":"100644 d98ce088bd256c292352b206a5a8e316c67c8367b958e8caede859172bcf4a37","\u0000deploy/u1/Caddyfile.example":"100644 c9a7d9f89ab5c4968599813e7ef82213153ee0653b1e423590abdb4cfe23ecd0","\u0000deploy/u1/notify-me.service.example":"100644 70efcf7cbe4b4660a4a69453ebf12297bd66d8f318271c8cd9a2eb4b99ec32a5","\u0000docs/08-test-strategy.md":"100644 01630bf463efd0835aad667f6b3769dfe6e0eac16566ec3381715917c5a0be53","\u0000docs/u1-local-run.md":"100644 06628b06312302f917d37b4ec44c776f165e2a1662354d919af207e33f6a8445","\u0000index.html":"100644 598fe37dc29382e9d6e5161d44dab86340ee2ebf797a2d541b454100d4311132","\u0000package-lock.json":"100644 20a652443b4a972b7dc44c6ae6b8f45d30f3d3ab45516829c16900cba945fb99","\u0000package.json":"100644 eeb3870911b94ae846764c7f4ed9634df134591342f604d5d5aaf841ba078261","\u0000playwright.config.ts":"100644 20270d5f84b4579dae369115c3d7dc99ed6000314b5ff1ca56f8961b2946db56","\u0000prisma/migrations/202611180001_u1/migration.sql":"100644 4959f628e6f61b5d5fa18b5220a32c98a8b18d83d3898577a9f214e77eee3bf2","\u0000prisma/migrations/migration_lock.toml":"100644 5bd63ee987f5ad53bfa5709a067052f2b8a897f5250c191b8b80271251e2571b","\u0000prisma/schema.prisma":"100644 940635151d2a3e7760706b76686f495d3e47475a8373bc5c086dc72abb48ca7b","\u0000prisma.config.ts":"100644 74d1c55bb2ac585e68f423d08bfa8fa7859ba89be50791edc8eb74b68e843c6a","\u0000src/server/auth.ts":"100644 5dfd2886fc239a85f47d3914a858192ceff6a8248b1313178266134fc6b40789","\u0000src/server/bootstrap-admin.ts":"100644 ee87e0db15eb5e152038a6be0e3dd641b6875db1e9537b4d76b47467c76f300f","\u0000src/server/config.ts":"100644 4d776c39826b4f6087c9c50161a080807d1d45495da21e7aecf771f48ea5b30f","\u0000src/server/errors.ts":"100644 86799f0e0e02cb4d7b9da3f63224f42e1520b40f187c9f5b64cf5afc6dfe89c0","\u0000src/server/http.ts":"100644 083327365a058bc237d58625c7e381b747ba105c2ccffff811693dd3d93baf87","\u0000src/server/main.ts":"100644 ae3aeb4a7a8ba750378524e49ddb4b1fb45e1fc9755d621e62519e27820965d4","\u0000src/server/provider.ts":"100644 f68e30f7ae0601619d545e07ebab5893dcb8d1a016333775b128eb1814129593","\u0000src/server/reminders.ts":"100644 09507225a4b50f14310992cdd7423b0aff9d00784b66289f7835418c9f43aa63","\u0000src/server/repository.ts":"100644 f11af6feedcd001b8b883f511ade8a074178525b16e2601c9c31583ed36bd155","\u0000src/server/storage.ts":"100644 8288ce78ace00b2a279e03d5289d0996ba011b78dbf996388c5fbaaf84760c91","\u0000src/server/time.ts":"100644 bc03821caaf18cafab178e7498ae0238cf10c2ab4fd8c9ca80f83ff9262973a4","\u0000src/web/App.tsx":"100644 08f9cbf650cde53cee255351886d238efafcc9579aac19b66606215494a69d5e","\u0000src/web/client.ts":"100644 f300d88150f1b592d29650cabd8a7fa397345092821ef16ce0eb0912b6211afe","\u0000src/web/main.tsx":"100644 6868e799e857520adcbe828afaa549b8b5e78168e2a8fc47a858593b21ab26e1","\u0000src/web/messages.ts":"100644 4c3a6b938978c30fb55136f3cfe8aa63f716c68985bededf885f9a2d71919d26","\u0000src/web/styles.css":"100644 5cb927ca4d9f60376ccb7e0d40fd3f9421ac525e04494b9196a11a79b16fbd60","\u0000tests/e2e/u1/core-flow.spec.ts":"100644 2ea0a17a1523e8ad692cf8e90bd9dcdec943cea1e3bc287d94c5d0d686f65236","\u0000tests/u1/auth-session.test.ts":"100644 74037b6c94f37d1861def60df2af7bb8e27c97f79a8bfe82ae3b66d46e05b67d","\u0000tests/u1/fixtures.ts":"100644 febde8dbc07e3fda6e1a16e7cf3ea58b16cb53483cd2c0962c93f77a7b5a5817","\u0000tests/u1/http.test.ts":"100644 b07b1090ef374da36a94ce14811dec979c799bd937542af887eae71257b8c944","\u0000tests/u1/provider.test.ts":"100644 7ef8fa7a89bdcbddbb7bb0bfc9f0b104debe3f69f8260457ef11fb1e725587d3","\u0000tests/u1/reminder-rules.test.ts":"100644 298df9f44156efa9436c573d0d365186ba3d75c80aaf271589537728102f2d4f","\u0000tests/u1/repository.test.ts":"100644 447c2615815fe0c93bbc88feaabe24e587ac3f485391e40093e3a51f6049ba27","\u0000tests/u1/runtime.test.ts":"100644 29fded142fb7352cf6091b0151f0c0bbf3dd1a8c97de27a0d46954d5777c3cc5","\u0000tests/u1/storage-model.test.ts":"100644 d93952701ab7471eaf0c079f9ec459cd542b9c369a52383df3ede4bd85aea234","\u0000tests/u1/web-interactions.test.tsx":"100644 df7c2475d5b1b29db391e18a4cae31dee02e0bed73f1efc56c96c16585d9d898","\u0000tests/u1/web.test.ts":"100644 e5877c7850f55e47c820d3a80e2d9b3ec64dd035317c589994af5373bdc0a68e","\u0000tsconfig.build.json":"100644 33c36322592d21d21523a8d69a85ec5aff2b88fc5bdf69b3c496c20885945306","\u0000tsconfig.json":"100644 ec228363d79af995b9ccd8aa2e63ecc36662161903e627d42b96b07f102edc53","\u0000vite.config.ts":"100644 20b851b83cd6b069cb623f50d69f81ac8ceaa9e5fe0d481251fad129e56a0a04","\u0000vitest.config.ts":"100644 1e7d9f61a0106194354132f45033514975515843ec71ad8c2f1493d5094e0a71"}]}
+**Run floors**: {"functional-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","nfr-requirements":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","nfr-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","infrastructure-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","code-generation":"STAGE_JUMPED:2026-11-17T06:51:16Z#2"}
+**Question Id**: 28494ee1
+**Question Type**: unit-checkpoint
+**Question Chat**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Question Shows**: sha256:59463066f2d7eb188f16362f8ab5726110411899a13e0ee645304c1549674c39
+
+---
+
+## Session Resume
+**Timestamp**: 2026-11-20T16:28:42Z
+**Event**: SESSION_RESUMED
+**Source**: resume
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-20T16:28:43Z
+**Event**: HUMAN_TURN
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Origin**: person
+**Source**: typed
+**Message Id**: e5a78e48
+**Open Questions**: ba47e238, ca4318da, 2a56be24, fbac805c, 77283595, 28494ee1
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/code-generation/code-generation-questions.md","entries":{"Plan Approval":"954e7ed401b5e1e2"}}
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-11-20T16:28:59Z
+**Event**: GATE_APPROVED
+**Unit**: u1-core-flow
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Gate Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Gate Scope**: unit-end
+**Checkpoint**: walking-skeleton
+**Fingerprint**: sha256:2f481723d1c33a952a65c100bb43df2594826c2b8ddd4d5532bba2577f938b01
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+**Run floors**: {"functional-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","nfr-requirements":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","nfr-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","infrastructure-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","code-generation":"STAGE_JUMPED:2026-11-17T06:51:16Z#2"}
+**Verification Command SHA-256**: 8710f9975963f43f56a57f9f7d3d94297c9cdbb9be35dadc24c815991ea2a740
+**Verification Id**: b9afb33f-2c4e-4213-956a-f278b75c4635
+**Approved Evidence**: {"functional-design":["sha256:3f4defa05af477fc63abbc49ecdf39cf996171f57a7789a838f9d7a2af40c4a5",null],"nfr-requirements":["sha256:078f81c874c76b0da8d27fbf21ece4683d3ae7bb51777006ce1325a62ddad904",null],"nfr-design":["sha256:e40d230b1f24c4771ebf0a8a4d825b897f6b0f108aabc2f82070eede981d3eb9",null],"infrastructure-design":["sha256:595bf1e245ee0b4266a25fe5613bb3e8d1987d33bbb9b004b6a973b818a4f220",null],"code-generation":["sha256:5de38c5c7a19f5511ce85eedf55a316902dffedec14498bc7d21c695ddaa0b9c","sha256:5cf486433bdbfaae0f6b120e6fe3b325983a8221e678ef6fa726e7a9dbd9e957",{"\u0000.github/workflows/u1-app-ci.yml":"100644 02581fff36dece1baec53e074b40dd6c9686fe26d7a639e89806ca2063033d47","\u0000.gitignore":"100644 d98ce088bd256c292352b206a5a8e316c67c8367b958e8caede859172bcf4a37","\u0000deploy/u1/Caddyfile.example":"100644 c9a7d9f89ab5c4968599813e7ef82213153ee0653b1e423590abdb4cfe23ecd0","\u0000deploy/u1/notify-me.service.example":"100644 70efcf7cbe4b4660a4a69453ebf12297bd66d8f318271c8cd9a2eb4b99ec32a5","\u0000docs/08-test-strategy.md":"100644 01630bf463efd0835aad667f6b3769dfe6e0eac16566ec3381715917c5a0be53","\u0000docs/u1-local-run.md":"100644 06628b06312302f917d37b4ec44c776f165e2a1662354d919af207e33f6a8445","\u0000index.html":"100644 598fe37dc29382e9d6e5161d44dab86340ee2ebf797a2d541b454100d4311132","\u0000package-lock.json":"100644 20a652443b4a972b7dc44c6ae6b8f45d30f3d3ab45516829c16900cba945fb99","\u0000package.json":"100644 eeb3870911b94ae846764c7f4ed9634df134591342f604d5d5aaf841ba078261","\u0000playwright.config.ts":"100644 20270d5f84b4579dae369115c3d7dc99ed6000314b5ff1ca56f8961b2946db56","\u0000prisma/migrations/202611180001_u1/migration.sql":"100644 4959f628e6f61b5d5fa18b5220a32c98a8b18d83d3898577a9f214e77eee3bf2","\u0000prisma/migrations/migration_lock.toml":"100644 5bd63ee987f5ad53bfa5709a067052f2b8a897f5250c191b8b80271251e2571b","\u0000prisma/schema.prisma":"100644 940635151d2a3e7760706b76686f495d3e47475a8373bc5c086dc72abb48ca7b","\u0000prisma.config.ts":"100644 74d1c55bb2ac585e68f423d08bfa8fa7859ba89be50791edc8eb74b68e843c6a","\u0000src/server/auth.ts":"100644 5dfd2886fc239a85f47d3914a858192ceff6a8248b1313178266134fc6b40789","\u0000src/server/bootstrap-admin.ts":"100644 ee87e0db15eb5e152038a6be0e3dd641b6875db1e9537b4d76b47467c76f300f","\u0000src/server/config.ts":"100644 4d776c39826b4f6087c9c50161a080807d1d45495da21e7aecf771f48ea5b30f","\u0000src/server/errors.ts":"100644 86799f0e0e02cb4d7b9da3f63224f42e1520b40f187c9f5b64cf5afc6dfe89c0","\u0000src/server/http.ts":"100644 083327365a058bc237d58625c7e381b747ba105c2ccffff811693dd3d93baf87","\u0000src/server/main.ts":"100644 ae3aeb4a7a8ba750378524e49ddb4b1fb45e1fc9755d621e62519e27820965d4","\u0000src/server/provider.ts":"100644 f68e30f7ae0601619d545e07ebab5893dcb8d1a016333775b128eb1814129593","\u0000src/server/reminders.ts":"100644 09507225a4b50f14310992cdd7423b0aff9d00784b66289f7835418c9f43aa63","\u0000src/server/repository.ts":"100644 f11af6feedcd001b8b883f511ade8a074178525b16e2601c9c31583ed36bd155","\u0000src/server/storage.ts":"100644 8288ce78ace00b2a279e03d5289d0996ba011b78dbf996388c5fbaaf84760c91","\u0000src/server/time.ts":"100644 bc03821caaf18cafab178e7498ae0238cf10c2ab4fd8c9ca80f83ff9262973a4","\u0000src/web/App.tsx":"100644 08f9cbf650cde53cee255351886d238efafcc9579aac19b66606215494a69d5e","\u0000src/web/client.ts":"100644 f300d88150f1b592d29650cabd8a7fa397345092821ef16ce0eb0912b6211afe","\u0000src/web/main.tsx":"100644 6868e799e857520adcbe828afaa549b8b5e78168e2a8fc47a858593b21ab26e1","\u0000src/web/messages.ts":"100644 4c3a6b938978c30fb55136f3cfe8aa63f716c68985bededf885f9a2d71919d26","\u0000src/web/styles.css":"100644 5cb927ca4d9f60376ccb7e0d40fd3f9421ac525e04494b9196a11a79b16fbd60","\u0000tests/e2e/u1/core-flow.spec.ts":"100644 2ea0a17a1523e8ad692cf8e90bd9dcdec943cea1e3bc287d94c5d0d686f65236","\u0000tests/u1/auth-session.test.ts":"100644 74037b6c94f37d1861def60df2af7bb8e27c97f79a8bfe82ae3b66d46e05b67d","\u0000tests/u1/fixtures.ts":"100644 febde8dbc07e3fda6e1a16e7cf3ea58b16cb53483cd2c0962c93f77a7b5a5817","\u0000tests/u1/http.test.ts":"100644 b07b1090ef374da36a94ce14811dec979c799bd937542af887eae71257b8c944","\u0000tests/u1/provider.test.ts":"100644 7ef8fa7a89bdcbddbb7bb0bfc9f0b104debe3f69f8260457ef11fb1e725587d3","\u0000tests/u1/reminder-rules.test.ts":"100644 298df9f44156efa9436c573d0d365186ba3d75c80aaf271589537728102f2d4f","\u0000tests/u1/repository.test.ts":"100644 447c2615815fe0c93bbc88feaabe24e587ac3f485391e40093e3a51f6049ba27","\u0000tests/u1/runtime.test.ts":"100644 29fded142fb7352cf6091b0151f0c0bbf3dd1a8c97de27a0d46954d5777c3cc5","\u0000tests/u1/storage-model.test.ts":"100644 d93952701ab7471eaf0c079f9ec459cd542b9c369a52383df3ede4bd85aea234","\u0000tests/u1/web-interactions.test.tsx":"100644 df7c2475d5b1b29db391e18a4cae31dee02e0bed73f1efc56c96c16585d9d898","\u0000tests/u1/web.test.ts":"100644 e5877c7850f55e47c820d3a80e2d9b3ec64dd035317c589994af5373bdc0a68e","\u0000tsconfig.build.json":"100644 33c36322592d21d21523a8d69a85ec5aff2b88fc5bdf69b3c496c20885945306","\u0000tsconfig.json":"100644 ec228363d79af995b9ccd8aa2e63ecc36662161903e627d42b96b07f102edc53","\u0000vite.config.ts":"100644 20b851b83cd6b069cb623f50d69f81ac8ceaa9e5fe0d481251fad129e56a0a04","\u0000vitest.config.ts":"100644 1e7d9f61a0106194354132f45033514975515843ec71ad8c2f1493d5094e0a71"}]}
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**User Input**: Approve
+**Person Reply**: 승인할게
+**Message Id**: e5a78e48
+**Review Finding Dispositions**: {"version":1,"dispositions":[{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/code-generation/code-generation-plan.md","id":"R-08","fingerprint":"sha256:2eed1d3d685256adb9ca74f7db5cf11478821d0bef50d30280f69e3804c3a831","status":"Accepted risk","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/6.json","digest":"sha256:abceb2ae1be4f39141539dac918ef7692e18ad5c6dc43e2a2f35fc6908fa73c4"}}]}
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T16:30:53Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T16:31:27Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T16:37:34Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-generation-plan.md
+
+---
+
+## Session Compacted
+**Timestamp**: 2026-11-20T16:45:39Z
+**Event**: SESSION_COMPACTED
+**Current Stage**: functional-design
+**State Validity**: valid
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T16:47:32Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-generation-plan.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T16:47:56Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/source-manifest.json
+**Context**: construction > u5-operations-and-recovery > code-generation > source-manifest.json
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-20T16:48:09Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-developer-agent
+**Agent ID**: 01a1f98d-8c3b-7340-8c0c-6b0eb8e49038
+**Message**: U5 구현과 계획 1–14단계를 완료했습니다. 합성 SQLite 데이터로 암호화 백업과 격리 복원을 실행해 삭제 데이터가 복원되지 않고, 최신 독립 증거를 검증할 수 없으면 API와 Worker가 시작되지 않는 것을 확인했습니다.\n\n`npm run verify:u1`은 타입 검사, 빌드, Vitest 201건, Playwright 4건을 통과했습니다. 전체
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T16:48:20Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/traceability.json
+**Context**: construction > u5-operations-and-recovery > code-generation > traceability.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T16:48:57Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-summary.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-summary.md
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T16:48:58Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-generation-plan.md
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T16:49:09Z
+**Event**: SENSOR_FIRED
+**Fire id**: 009ceb14
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T16:49:10Z
+**Event**: SENSOR_PASSED
+**Fire id**: 009ceb14
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T16:49:10Z
+**Event**: SENSOR_FIRED
+**Fire id**: 53cfa8a1
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/unit-test-instructions.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T16:49:10Z
+**Event**: SENSOR_PASSED
+**Fire id**: 53cfa8a1
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/unit-test-instructions.md
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T16:49:10Z
+**Event**: SENSOR_FIRED
+**Fire id**: 79781df2
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-summary.md
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T16:49:10Z
+**Event**: SENSOR_PASSED
+**Fire id**: 79781df2
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-summary.md
+**Duration ms**: 184
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T16:49:11Z
+**Event**: SENSOR_FIRED
+**Fire id**: 0ac22acf
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T16:49:11Z
+**Event**: SENSOR_PASSED
+**Fire id**: 0ac22acf
+**Sensor ID**: required-sections
+**Stage slug**: code-generation
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/traceability.json
+**Duration ms**: 183
+
+---
+
+## Sensor Fired
+**Timestamp**: 2026-11-20T16:49:11Z
+**Event**: SENSOR_FIRED
+**Fire id**: 90f75bab
+**Sensor ID**: traceability
+**Stage slug**: code-generation
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/traceability.json
+
+---
+
+## Sensor Passed
+**Timestamp**: 2026-11-20T16:49:11Z
+**Event**: SENSOR_PASSED
+**Fire id**: 90f75bab
+**Sensor ID**: traceability
+**Stage slug**: code-generation
+**Unit**: u5-operations-and-recovery
+**Output path**: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/traceability.json
+**Duration ms**: 197
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-20T16:49:17Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 1
+**Artifact Fingerprint**: sha256:4cddd7e3b83553a3b4ced8a29f93ff939bae719b024ce91fe7a5ed55100dfea7
+**Request Id**: review:37ae51786e88e4c096e5425b5155a173
+**Source Fingerprint**: dac3346f70457ebf17e3856f0d80f11a10047844a07bad00e487753bd36b020e
+**Unit Source Fingerprint**: sha256:1696615ab581346599bf439bdb5ff144558ab93915fb146a45343acae338e39e
+**Review File**: .aidlc-engine/reviews/code-generation/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.37ae51786e88e4c096e5425b5155a173.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T16:49:30Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T16:52:44Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/code-generation/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.37ae51786e88e4c096e5425b5155a173.review.md
+**Context**: .aidlc-engine > reviews > code-generation > units > u5-operations-and-recovery > 6a9232c36f0fe5b7 > 1.37ae51786e88e4c096e5425b5155a173.review.md
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-20T16:53:02Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 1
+**Verdict**: NOT-READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:4cddd7e3b83553a3b4ced8a29f93ff939bae719b024ce91fe7a5ed55100dfea7
+**Artifact Fingerprint**: sha256:4cddd7e3b83553a3b4ced8a29f93ff939bae719b024ce91fe7a5ed55100dfea7
+**Request Id**: review:37ae51786e88e4c096e5425b5155a173
+**Request Source Fingerprint**: dac3346f70457ebf17e3856f0d80f11a10047844a07bad00e487753bd36b020e
+**Source Fingerprint**: dac3346f70457ebf17e3856f0d80f11a10047844a07bad00e487753bd36b020e
+**Source Listing**: sha256:42aa1eaadd3b221dd3a1bd82e24fee1ceceaab4675043fe7685097da1aad5a64
+**Unit Source Fingerprint**: sha256:1696615ab581346599bf439bdb5ff144558ab93915fb146a45343acae338e39e
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json
+**Review Record Digest**: sha256:c218debad502439062de4740e8fee4fb49619c3298dd6648749f0bcd463bc496
+**Testing Contract**: sha256:db2da083c5032971c34e88a0118abbc7e7e1e1d718fd17056cb266c3a392dadb
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-20T16:53:02Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f793-e741-7461-895c-90f8aafa7285
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**NOT-READY.** 같은 운영 세대의 오래된 DB를 최신 원장과 함께 기동할 때 이미 삭제된 리마인더가 다시 공개될 수 있습니다. 복원 전 세션 무효화, 첫 공개 직전 백업 만료 확인, 주간 요약의 장애 집계도 보완이 필요합니다.\n\n전체 Vitest 201건과 P
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/4.e07ec128d83ea41cb57d3e64e748abb7.review.md=5c11c446792f55a3b5fa19c4f6f707d5ea94d47e2da8fdbc4fbe24c66d787b60; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.0710bfdd0a8d0c722be1c3c18cdffa2a.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.15b8766857e4cfbfbad2a7fc0b7a4284.review.md=16c1d2d362ddd9c66e6c63015a32d1b39c8871fa1bf4b4397a21c7c302f44145; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.dfb1f11a6e3ef27b0d0a1bd0ae91d601.review.md=98e7a88cff4d355cf41783f1f7a020931a26f67cc1ce2b50876f288b2381006f; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.ae7ad93cb0a7314e93ea5b7a1cc1749b.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/2.42374532bb5ebc44c4ce0ec20179fae9.review.md=absent; .aidlc-engine/reviews/code-generation/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.37ae51786e88e4c096e5425b5155a173.review.md=572cf40c27283c2fd346252e76d447a5bfaeed46e3c85d452595c528112972f6
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T17:04:00Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/source-manifest.json
+**Context**: construction > u5-operations-and-recovery > code-generation > source-manifest.json
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T17:10:06Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-summary.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-summary.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-20T17:10:24Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-developer-agent
+**Agent ID**: 01a1f98d-8c3b-7340-8c0c-6b0eb8e49038
+**Message**: U5 독립 리뷰에서 발견한 4건을 수정했습니다. 오래된 동일 세대 DB는 삭제 증거가 맞지 않으면 API와 Worker 시작을 차단합니다. 복원한 앱 세션은 무효화하며, 백업 만료 시각은 복원 완료와 최초 공개 시점에 다시 확인합니다. 주간 요약만 켜도 관측된 장애 횟수가 집계됩니다.\n\n전체 검증에서 Vitest 211건과 Playwright 4건이 통과했
+
+---
+
+## Artifact Updated
+**Timestamp**: 2026-11-20T17:10:28Z
+**Event**: ARTIFACT_UPDATED
+**Tool**: Edit
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-summary.md
+**Context**: construction > u5-operations-and-recovery > code-generation > code-summary.md
+
+---
+
+## Review Requested
+**Timestamp**: 2026-11-20T17:10:39Z
+**Event**: REVIEW_REQUESTED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 2
+**Artifact Fingerprint**: sha256:00c23bf4cb486c1cd2aee34a1bd2a88afe803dad5be81527ddf83b3f72b3a5cd
+**Request Id**: review:d4058c9e5c8aeb99d1238e7dbdbd7246
+**Source Fingerprint**: 480929a897bacad224b23e0fd3a37e8bddd313200872c3007e1c4b6a416681e1
+**Unit Source Fingerprint**: sha256:28b8027a23abc68aff60172fddc314d6ffc92db5af48c69307d6373235658e6e
+**Review File**: .aidlc-engine/reviews/code-generation/units/u5-operations-and-recovery/6a9232c36f0fe5b7/2.d4058c9e5c8aeb99d1238e7dbdbd7246.review.md
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T17:10:47Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviewer-dispatch.json
+**Context**: .aidlc-engine > reviewer-dispatch.json
+
+---
+
+## Session Compacted
+**Timestamp**: 2026-11-20T17:15:37Z
+**Event**: SESSION_COMPACTED
+**Current Stage**: functional-design
+**State Validity**: valid
+
+---
+
+## Artifact Created
+**Timestamp**: 2026-11-20T17:16:26Z
+**Event**: ARTIFACT_CREATED
+**Tool**: Write
+**File**: <project-dir>/aidlc/spaces/default/intents/261115-notify-me-implementation/.aidlc-engine/reviews/code-generation/units/u5-operations-and-recovery/6a9232c36f0fe5b7/2.d4058c9e5c8aeb99d1238e7dbdbd7246.review.md
+**Context**: .aidlc-engine > reviews > code-generation > units > u5-operations-and-recovery > 6a9232c36f0fe5b7 > 2.d4058c9e5c8aeb99d1238e7dbdbd7246.review.md
+
+---
+
+## Subagent Completed
+**Timestamp**: 2026-11-20T17:16:36Z
+**Event**: SUBAGENT_COMPLETED
+**Agent Type**: aidlc-architecture-reviewer-agent
+**Agent ID**: 01a1f793-e741-7461-895c-90f8aafa7285
+**Message**: **Reviewer:** aidlc-architecture-reviewer-agent\n\n**READY.** U5의 기존 지적 R-01~R-04가 모두 수정됐으며 새 지적은 없습니다. 전체 검증에서 Vitest 211건과 Playwright 4건이 통과했고, 줄 커버리지는 87.26%였습니다. U5와 U3 HTTP 집중 검증도 모두 통과했습니다. 실제 Pi에
+**Review File Digest**: .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/3.b82f1b1eba6ffa9985bc57cc4c78b866.review.md=c79fc28178087676e792de98f7eea1d07bd8fee0755e0417acf0696eb5cecfbe; .aidlc-engine/reviews/code-generation/units/u1-core-flow/6a9232c36f0fe5b7/4.e07ec128d83ea41cb57d3e64e748abb7.review.md=5c11c446792f55a3b5fa19c4f6f707d5ea94d47e2da8fdbc4fbe24c66d787b60; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.0710bfdd0a8d0c722be1c3c18cdffa2a.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.15b8766857e4cfbfbad2a7fc0b7a4284.review.md=16c1d2d362ddd9c66e6c63015a32d1b39c8871fa1bf4b4397a21c7c302f44145; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.dfb1f11a6e3ef27b0d0a1bd0ae91d601.review.md=98e7a88cff4d355cf41783f1f7a020931a26f67cc1ce2b50876f288b2381006f; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/1.ae7ad93cb0a7314e93ea5b7a1cc1749b.review.md=absent; .aidlc-engine/reviews/code-generation/units/u4-android-notifications/6a9232c36f0fe5b7/2.42374532bb5ebc44c4ce0ec20179fae9.review.md=absent; .aidlc-engine/reviews/code-generation/units/u5-operations-and-recovery/6a9232c36f0fe5b7/2.d4058c9e5c8aeb99d1238e7dbdbd7246.review.md=17c996365a2ba0a9646ccea9e3c763495addf604e00c27c35e3d0d8f19ce15af
+
+---
+
+## Review Completed
+**Timestamp**: 2026-11-20T17:16:42Z
+**Event**: REVIEW_COMPLETED
+**Stage**: code-generation
+**Reviewer**: aidlc-architecture-reviewer-agent
+**Unit**: u5-operations-and-recovery
+**Iteration**: 2
+**Verdict**: READY
+**Review Verdict Dictated**: no
+**Request Fingerprint**: sha256:00c23bf4cb486c1cd2aee34a1bd2a88afe803dad5be81527ddf83b3f72b3a5cd
+**Artifact Fingerprint**: sha256:00c23bf4cb486c1cd2aee34a1bd2a88afe803dad5be81527ddf83b3f72b3a5cd
+**Request Id**: review:d4058c9e5c8aeb99d1238e7dbdbd7246
+**Request Source Fingerprint**: 480929a897bacad224b23e0fd3a37e8bddd313200872c3007e1c4b6a416681e1
+**Source Fingerprint**: 480929a897bacad224b23e0fd3a37e8bddd313200872c3007e1c4b6a416681e1
+**Source Listing**: sha256:c0a0af3554ba726f34a3acca767e04afd737bf6271c9504728a9d9d1c848ab2d
+**Unit Source Fingerprint**: sha256:28b8027a23abc68aff60172fddc314d6ffc92db5af48c69307d6373235658e6e
+**Review Record**: .aidlc-engine/reviews/code-generation/units/u5-operations-and-recovery/6a9232c36f0fe5b7/2.json
+**Review Record Digest**: sha256:9a5efbdd20b3b7f725b210c7b300076cd0c5ff4f50df742a3de3d644cad76d4f
+**Testing Contract**: sha256:db2da083c5032971c34e88a0118abbc7e7e1e1d718fd17056cb266c3a392dadb
+
+---
+
+## Unit Completed
+**Timestamp**: 2026-11-20T17:16:51Z
+**Event**: UNIT_COMPLETED
+**Stage**: code-generation
+**Unit**: u5-operations-and-recovery
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Session Resume
+**Timestamp**: 2026-11-21T11:32:54Z
+**Event**: SESSION_RESUMED
+**Source**: resume
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+
+---
+
+## Human Turn
+**Timestamp**: 2026-11-21T11:32:55Z
+**Event**: HUMAN_TURN
+**Session**: 01a1d554-df82-76f3-bf3f-9b0c0dbfcbff
+**Origin**: person
+**Source**: typed
+**Message Id**: 8bfb93af
+**Open Questions**: ba47e238, ca4318da, 2a56be24, fbac805c, 77283595
+**Questions Digest**: {"file":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-questions.md","entries":{"Plan Approval":"5c55a416f5fb674f"}}
+
+---
+
+## Checkpoint Verification Recorded
+**Timestamp**: 2026-11-21T11:37:11Z
+**Event**: CHECKPOINT_VERIFICATION_RECORDED
+**Unit**: u5-operations-and-recovery
+**Kind**: unit
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Verification Id**: 4497bd66-fff2-47c6-9448-d2936ead9d9c
+**Fingerprint**: sha256:b9b69c0246b831a1e767e18f712b908585cafc579c1ee87d846d89ef4ce122ac
+**Command SHA-256**: 8710f9975963f43f56a57f9f7d3d94297c9cdbb9be35dadc24c815991ea2a740
+**Exit Code**: 0
+**Verified**: true
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+
+---
+
+## Gate Approved
+**Timestamp**: 2026-11-21T11:37:41Z
+**Event**: GATE_APPROVED
+**Unit**: u5-operations-and-recovery
+**Stage**: code-generation
+**Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Gate Stages**: functional-design, nfr-requirements, nfr-design, infrastructure-design, code-generation
+**Gate Scope**: unit-end
+**Checkpoint**: construction-unit
+**Fingerprint**: sha256:b9b69c0246b831a1e767e18f712b908585cafc579c1ee87d846d89ef4ce122ac
+**Run floor**: STAGE_JUMPED:2026-11-17T06:51:16Z#2
+**Run floors**: {"functional-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","nfr-requirements":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","nfr-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","infrastructure-design":"STAGE_JUMPED:2026-11-17T06:51:16Z#2","code-generation":"STAGE_JUMPED:2026-11-17T06:51:16Z#2"}
+**Verification Command SHA-256**: 8710f9975963f43f56a57f9f7d3d94297c9cdbb9be35dadc24c815991ea2a740
+**Verification Id**: 4497bd66-fff2-47c6-9448-d2936ead9d9c
+**Approved Evidence**: {"functional-design":["sha256:caf62fad571d79940204797fdf2b331188266df44d527adfcfa1d37ab23712ad",null],"nfr-requirements":["sha256:facc61243adcce8358275dbc1a0be68e9c6410ad8c670d2df07669c8ecf30833",null],"nfr-design":["sha256:e4065835f9222ee6ed3916c38e628f59538a64a5f75688403544441add84fefd",null],"infrastructure-design":["sha256:78a7f2bb85cc92772b375dcd7f3d21d5010f2b3d6c6f31b9d2328456879c3838",null],"code-generation":["sha256:00c23bf4cb486c1cd2aee34a1bd2a88afe803dad5be81527ddf83b3f72b3a5cd","sha256:28b8027a23abc68aff60172fddc314d6ffc92db5af48c69307d6373235658e6e",{"\u0000.github/workflows/u1-app-ci.yml":"100644 02581fff36dece1baec53e074b40dd6c9686fe26d7a639e89806ca2063033d47","\u0000deploy/u5/README.md":"100644 2f38a2ead40c41c7e3a9df0894e8e96c7729b80d3e68b6db8be93ccb80232b3e","\u0000deploy/u5/notify-me-backup.service":"100644 ee73d4ac25aab660f5db74f78031acdb330bc71a2c83bb2a66d53e841c664d82","\u0000deploy/u5/notify-me-backup.timer":"100644 428b54d35bb57177f9a68cdc16f224b19776602a8951d4c170ed3a1752d3e6e2","\u0000deploy/u5/notify-me-observe.service":"100644 855cd4959bba4f584693b3edeec2bef1566bed6c358bdf2a24148b47569e6689","\u0000deploy/u5/notify-me-observe.timer":"100644 102ab81e25959b3caf90578e409ebeaa972aea22a570f85baebf47d1f0276fa2","\u0000deploy/u5/notify-me.service":"100644 b5d8f5a543478ee892748be55b9af1a9cd7d9f1402cad9341963587a0fc791bd","\u0000deploy/u5/operations.env.example":"100644 815a13104a1d8b75261db8141094248760664137bac094fc7cf64c21a16b4c5e","\u0000package.json":"100644 6010569bee31866fa14dde14cab365efb86cdbf17a1e91ed05408b947dc58b63","\u0000src/server/delete-journal.ts":"100644 da4847710fd466889331ca1bc02b2a984b4995698b4ff20b2ebbb0f10f966897","\u0000src/server/household-runtime.ts":"100644 d0e3818ee423548d0c7e45b8dc74f307a02498bb76f790c9e856d764de5ee62d","\u0000src/server/http.ts":"100644 50b7005467077c7f5bb5180b40eca1e2414e1eea1743812816131f714a7b6cca","\u0000src/server/main.ts":"100644 5b03def204edf68bd228b73a95baccafb2ef29f39577a109965cda6d6008b9e4","\u0000src/server/operations/activation.ts":"100644 d612dd7ca3d868b332dab0f5cee938af4985b4ffe3c9b5495a88b9c3ab33974a","\u0000src/server/operations/archive.ts":"100644 3c8cbad2ccb3c0e753f23e7101b4f126d3e25fd82c09335d90f6c40081145613","\u0000src/server/operations/authority.ts":"100644 1aa7d89979896d822bebe00c69c674452186524db41a0432c67405728ef6c39e","\u0000src/server/operations/backup.ts":"100644 934ceedcedcb7d357bd0a58bbcac5850a814a4ec5b8a10c4568c57dedb866abf","\u0000src/server/operations/deletion-proof.ts":"100644 101b31fd18ed73348492a24d8f8cabe88738ec40c893737866a90b7004c61625","\u0000src/server/operations/files.ts":"100644 b4ee53f2a270f96e121225d2d500c210d1c92ddfcc6d3b9df5800c53b46565bf","\u0000src/server/operations/reporting.ts":"100644 63b4a97a16ccb7b95c9f17eb03aca8b708ad27daae6c37f21e2add63f44157ba","\u0000src/server/operations/restore.ts":"100644 7ace6770e05e568d100f2f74914a9eadf2a2aec8c35f1d9070432dc9449bba90","\u0000src/server/operations/runtime.ts":"100644 5fa9c57fd287b9360dc3f66a3ab3ca274f02064cfa37b7418dc4041b2a7bebb8","\u0000src/server/operations/settings.ts":"100644 54e1d66f89888f51d167543d641a87781ba0cec452f0e40f52515f3ec79ca632","\u0000src/server/operations/socket.ts":"100644 b8dc9ce94953df70962f40e152840f908a77f525423ff2131ca407680f577566","\u0000src/server/operations-cli.ts":"100644 baa6dabae441c1c2edbf342324564fb74d7e196ac50a42894c9b5d95c1bffc77","\u0000src/server/work-service.ts":"100644 19383f0ff11aa1cfe50f5e7e83336123c022c9c4c68eaa4037ebf39bfc618a1d","\u0000tests/u5/backup.test.ts":"100644 d4615c6e1c8f09c6616b2c379eb2e46c0a2ec15669f9e30a890ba7acde424e50","\u0000tests/u5/fixture.ts":"100644 5067fe315991c4ce4f0596b69dc2302deb6cc255642013de8127732494b7552b","\u0000tests/u5/journal.test.ts":"100644 fbd5d76d6f166fcda6c6d9c8f807332c333e1e94e778e4f01be92f70c05ac0db","\u0000tests/u5/model.test.ts":"100644 2ab83deeb2d8c0b7868161b585b58ea7d539ce03f53e8fe08dc67ca3c41a0e17","\u0000tests/u5/runner.test.ts":"100644 ea0b18716524d6e9ddb2bc9729e133a9c148104b05cf65e4d8f4e5a4dd89fba1","\u0000tests/u5/runtime.test.ts":"100644 8b0aecabd79b6d5405cdcfb99b83ad50438d22d955b69204fb506f589cd8acbc","\u0000vitest.config.ts":"100644 1e7d9f61a0106194354132f45033514975515843ec71ad8c2f1493d5094e0a71"}]}
+**Autonomous**: true
+**Review Finding Dispositions**: {"version":1,"dispositions":[{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/cicd-pipeline.md","id":"R-01","fingerprint":"sha256:01c2d6dfe26f3ae69db970476191213b3694af5f5352ebb99036485de7385af9","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/infrastructure-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json","digest":"sha256:3b7fa2353dc7b50aab594fcb5707326a0a5908f71f881f2cf1b085e80ca3d440"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/cicd-pipeline.md","id":"R-02","fingerprint":"sha256:b820d9c5cba748f605d612e0b09cc6862aa9cbf078be71e06e9aff1e9e7afb9a","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/infrastructure-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json","digest":"sha256:3b7fa2353dc7b50aab594fcb5707326a0a5908f71f881f2cf1b085e80ca3d440"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/infrastructure-design/cicd-pipeline.md","id":"R-03","fingerprint":"sha256:67a7a2f307b5a0bc78b8e490dd96f81b47d9ea1e2aba3d14529b3d88214e7d3a","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/infrastructure-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json","digest":"sha256:3b7fa2353dc7b50aab594fcb5707326a0a5908f71f881f2cf1b085e80ca3d440"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/security-design.md","id":"R-01","fingerprint":"sha256:36e0e17592393c098dc1f5cf3a5645da4938c616055e4f640cde77b1f9484da0","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/nfr-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json","digest":"sha256:ef92f42f26cebe2567c423dbdf14d1d6f987bde29251f4c149b6872cbd9bbb5f"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/security-design.md","id":"R-02","fingerprint":"sha256:52b848669b033402cb735fa49305110ec53f26fa1c8291e8da70fc3c2ad643a9","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/nfr-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json","digest":"sha256:ef92f42f26cebe2567c423dbdf14d1d6f987bde29251f4c149b6872cbd9bbb5f"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-design/security-design.md","id":"R-03","fingerprint":"sha256:afd7d15a67faeefc4cc5c606b2dc7d9085c71637e894c675f9de4d3865d7da4e","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/nfr-design/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json","digest":"sha256:ef92f42f26cebe2567c423dbdf14d1d6f987bde29251f4c149b6872cbd9bbb5f"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/security-requirements.md","id":"R-01","fingerprint":"sha256:697a82c2c8e975c07dd2908a0f9e670c701cc2f5a20afabac22a240376fdaafe","status":"Approved autonomously","decided_at_severity":"Major","reviewed_record":{"path":".aidlc-engine/reviews/nfr-requirements/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json","digest":"sha256:98f1d28848b6d38264795699402db97d558940b211138cce79806e5ff11fb3ae"}},{"artifact":"aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/nfr-requirements/security-requirements.md","id":"R-02","fingerprint":"sha256:9d1bbe1eac4733234a6ab65f1a5eaa6eeaf8502be7954f184e514be8b23062f2","status":"Approved autonomously","decided_at_severity":"Minor","reviewed_record":{"path":".aidlc-engine/reviews/nfr-requirements/units/u5-operations-and-recovery/6a9232c36f0fe5b7/1.json","digest":"sha256:98f1d28848b6d38264795699402db97d558940b211138cce79806e5ff11fb3ae"}}]}
+
+---

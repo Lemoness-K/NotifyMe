@@ -1,0 +1,134 @@
+{
+  "stage": "nfr-design",
+  "unit": "u5-operations-and-recovery",
+  "upstream_ids": [
+    "NFR5.1",
+    "NFR5.2",
+    "NFR1.1",
+    "NFR1.2",
+    "NFR1.3",
+    "NFR1.4",
+    "NFR2.1",
+    "NFR2.3",
+    "NFR5.3",
+    "NFR3.1",
+    "NFR3.2",
+    "NFR3.3",
+    "NFR3.4",
+    "NFR4.1",
+    "NFR10.1",
+    "NFR10.2",
+    "NFR7.4",
+    "NFR8.2",
+    "NFR9.1",
+    "NFR9.2",
+    "NFR9.3"
+  ],
+  "coverage": [
+    {
+      "id": "NFR5.1",
+      "status": "OK",
+      "target": "NFR5.1.5"
+    },
+    {
+      "id": "NFR5.2",
+      "status": "OK",
+      "target": "NFR5.2.5"
+    },
+    {
+      "id": "NFR1.1",
+      "status": "OK",
+      "target": "NFR1.1.5"
+    },
+    {
+      "id": "NFR1.2",
+      "status": "OK",
+      "target": "NFR1.2.5"
+    },
+    {
+      "id": "NFR1.3",
+      "status": "OK",
+      "target": "NFR1.3.5"
+    },
+    {
+      "id": "NFR1.4",
+      "status": "OK",
+      "target": "NFR1.4.5"
+    },
+    {
+      "id": "NFR2.1",
+      "status": "OK",
+      "target": "NFR2.1.5"
+    },
+    {
+      "id": "NFR2.3",
+      "status": "OK",
+      "target": "NFR2.3.5"
+    },
+    {
+      "id": "NFR5.3",
+      "status": "OK",
+      "target": "NFR5.3.5"
+    },
+    {
+      "id": "NFR3.1",
+      "status": "OK",
+      "target": "NFR3.1.5"
+    },
+    {
+      "id": "NFR3.2",
+      "status": "OK",
+      "target": "NFR3.2.5"
+    },
+    {
+      "id": "NFR3.3",
+      "status": "OK",
+      "target": "NFR3.3.5"
+    },
+    {
+      "id": "NFR3.4",
+      "status": "OK",
+      "target": "NFR3.4.5"
+    },
+    {
+      "id": "NFR4.1",
+      "status": "OK",
+      "target": "NFR4.1.5"
+    },
+    {
+      "id": "NFR10.1",
+      "status": "OK",
+      "target": "NFR10.1.5"
+    },
+    {
+      "id": "NFR10.2",
+      "status": "OK",
+      "target": "NFR10.2.5"
+    },
+    {
+      "id": "NFR7.4",
+      "status": "OK",
+      "target": "NFR7.4.5"
+    },
+    {
+      "id": "NFR8.2",
+      "status": "OK",
+      "target": "NFR8.2.5"
+    },
+    {
+      "id": "NFR9.1",
+      "status": "OK",
+      "target": "NFR9.1.5"
+    },
+    {
+      "id": "NFR9.2",
+      "status": "OK",
+      "target": "NFR9.2.5"
+    },
+    {
+      "id": "NFR9.3",
+      "status": "OK",
+      "target": "NFR9.3.5"
+    }
+  ]
+}

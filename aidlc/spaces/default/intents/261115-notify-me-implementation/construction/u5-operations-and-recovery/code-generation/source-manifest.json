@@ -1,0 +1,106 @@
+{
+  "stage": "code-generation",
+  "unit": "u5-operations-and-recovery",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".github/workflows/u1-app-ci.yml"
+    },
+    {
+      "path": "deploy/u5/README.md"
+    },
+    {
+      "path": "deploy/u5/notify-me-backup.service"
+    },
+    {
+      "path": "deploy/u5/notify-me-backup.timer"
+    },
+    {
+      "path": "deploy/u5/notify-me-observe.service"
+    },
+    {
+      "path": "deploy/u5/notify-me-observe.timer"
+    },
+    {
+      "path": "deploy/u5/notify-me.service"
+    },
+    {
+      "path": "deploy/u5/operations.env.example"
+    },
+    {
+      "path": "package.json"
+    },
+    {
+      "path": "src/server/delete-journal.ts"
+    },
+    {
+      "path": "src/server/household-runtime.ts"
+    },
+    {
+      "path": "src/server/http.ts"
+    },
+    {
+      "path": "src/server/main.ts"
+    },
+    {
+      "path": "src/server/operations-cli.ts"
+    },
+    {
+      "path": "src/server/operations/activation.ts"
+    },
+    {
+      "path": "src/server/operations/archive.ts"
+    },
+    {
+      "path": "src/server/operations/authority.ts"
+    },
+    {
+      "path": "src/server/operations/backup.ts"
+    },
+    {
+      "path": "src/server/operations/deletion-proof.ts"
+    },
+    {
+      "path": "src/server/operations/files.ts"
+    },
+    {
+      "path": "src/server/operations/reporting.ts"
+    },
+    {
+      "path": "src/server/operations/restore.ts"
+    },
+    {
+      "path": "src/server/operations/runtime.ts"
+    },
+    {
+      "path": "src/server/operations/settings.ts"
+    },
+    {
+      "path": "src/server/operations/socket.ts"
+    },
+    {
+      "path": "src/server/work-service.ts"
+    },
+    {
+      "path": "tests/u5/backup.test.ts"
+    },
+    {
+      "path": "tests/u5/fixture.ts"
+    },
+    {
+      "path": "tests/u5/journal.test.ts"
+    },
+    {
+      "path": "tests/u5/model.test.ts"
+    },
+    {
+      "path": "tests/u5/runner.test.ts"
+    },
+    {
+      "path": "tests/u5/runtime.test.ts"
+    },
+    {
+      "path": "vitest.config.ts"
+    }
+  ]
+}
