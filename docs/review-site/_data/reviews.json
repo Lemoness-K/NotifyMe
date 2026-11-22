@@ -672,5 +672,28 @@
         "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/code-generation/document-provenance.md"
       }
     ]
+  },
+  {
+    "id": "261115-notify-me-implementation/code-generation-u5-backup-retention/20261122-235946275985",
+    "intent": "261115-notify-me-implementation",
+    "stage": "code-generation-u5-backup-retention",
+    "stage_title": "U5 만료 백업 정리 수정 계획",
+    "created_at": "2026-11-22T23:59:46.275985+00:00",
+    "next_stage": "Build and Test",
+    "summary": "D-058의 최대 30일 보존을 충족하도록, 새 백업과 권위 원장 상태에 의존하지 않는 만료 사본 정리 경로를 추가하는 계획입니다. 인증 오류와 새 백업 동시 실행의 안전성을 검증합니다.",
+    "files": [
+      {
+        "title": "U5 운영·백업·복구 구현 계획",
+        "summary": "- Builds: 로컬 주간 요약·장애 기록, 일관된 암호화 백업, 삭제 원장을 재적용하는 격리 복원과 안전한 서비스 재개",
+        "url": "/reviews/261115-notify-me-implementation/code-generation-u5-backup-retention/20261122-235946275985/01-code-generation-plan/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md"
+      },
+      {
+        "title": "U5 단위 테스트 안내",
+        "summary": "```bash",
+        "url": "/reviews/261115-notify-me-implementation/code-generation-u5-backup-retention/20261122-235946275985/02-unit-test-instructions/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/unit-test-instructions.md"
+      }
+    ]
   }
 ]
