@@ -1,0 +1,38 @@
+---
+layout: review
+title: "U2 단위 테스트 안내"
+source_path: "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/unit-test-instructions.md"
+permalink: "/reviews/261115-notify-me-implementation/code-generation-u2-plan/20261122-111718078094/02-unit-test-instructions/"
+---
+
+# U2 단위 테스트 안내
+
+## 실행
+
+Node.js 24, 기존 npm 잠금 파일, Prisma Client 및 Chromium을 사용한다. 새 테스트를 만들기 전에 Vitest와 Playwright 설정이 U2 디렉터리를 탐색하는지 확인한다. 파일 부재는 동작의 Red 증거가 아니다. 기존 U1의 테스트 도움 함수는 필요한 경우 재사용한다.
+
+```bash
+npm exec -- vitest run tests/u2/
+npm exec -- playwright test tests/e2e/u2/
+```
+
+Red에서는 같은 테스트 경로 안에서 대상 파일을 좁힐 수 있다. 예를 들어 `npm exec -- vitest run tests/u2/storage-model.test.ts`로 먼저 실행한다. 브라우저 검증은 먼저 최신 앱을 빌드하고 CI용 또는 ARM64 로컬 Chromium 설정을 적용한 뒤 실행한다.
+
+## 테스트 범위
+
+| 대상 | 핵심 사례 |
+| --- | --- |
+| 초대와 구성원 | 검증된 새 신원, 계정 불일치, 단일 노출, GET 무효과, 중복 수락과 취소 경합, 만료·정리, 마지막 Admin, U1 실제 배정, 권한 회수 후 재접근 |
+| 설정과 언어 | 네 가지 범위, 가구·계정 읽기/쓰기 권한, locale 우선순위, 날짜 표현, 새·기존 규칙의 시간대, 잘못된 범위, 다른 계정·설치 간 일관성 |
+| API와 화면 | HTTP 상태·대기와 작업 키, Caddy 경계, 마이그레이션 이후 실제 DB, 신규 가구 가입과 반응형 관리, 기존 U1 사용 흐름 회귀 |
+
+단위, 통합, E2E를 포함하여 대표 컴포넌트별 10~15건 목표를 적용한다. 전체 라인 커버리지 80%는 Build and Test/전체 검증에서 전체 테스트로 확인한다. U2 전용 명령 결과와 전체 커버리지는 별도로 기록한다.
+
+## 시험 자원
+
+계정은 합성 신원과 예제 이메일만 사용한다. 정책·만료와 요청 제한의 시각은 통제 가능한 시계를 사용한다. 테스트 DB는 매 시험에 격리하고, 저장소 통합 테스트는 U1부터 실제 마이그레이션을 적용한다. U3/U4 계약 대역은 아직 존재하지 않는 설치·업무 효과에만 사용한다. 실제 Google/Firebase 연동은 승인된 비운영 환경에서 별도로 확인한다.
+
+## 현재 구현과 문서 이력 재검증
+
+- U2 구현 커밋 `8fc86d3`의 변경 경로를 기존 소스 매니페스트와 대조한다. 공통 [문서 변경 이력](../../code-generation/document-provenance.md)으로 제품 설계 문서의 변경 담당을 확인한다.
+- U2 전용 Vitest·Playwright와 승인된 Construction 전체 검증 명령으로 재검증한다. Caddy 초기화 오류나 테스트 시간 초과가 발생하면 실패 위치와 재실행 결과를 기록한다. 전체 라인 커버리지 기준은 80%를 적용한다.
