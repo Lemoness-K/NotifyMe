@@ -643,5 +643,34 @@
         "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u4-android-notifications/code-generation/unit-test-instructions.md"
       }
     ]
+  },
+  {
+    "id": "261115-notify-me-implementation/code-generation-u5-plan/20261122-153103406454",
+    "intent": "261115-notify-me-implementation",
+    "stage": "code-generation-u5-plan",
+    "stage_title": "U5 운영·복구 재검증 계획",
+    "created_at": "2026-11-22T15:31:03.406454+00:00",
+    "next_stage": "Build and Test",
+    "summary": "U5 운영·복구 문서와 D-098 변경을 담당 Unit 리뷰에 포함합니다. 구현 전 승인된 비실행 문서 5개만 Code Generation 소스 검사에서 제외하는 설정을 검토합니다. 합성 SQLite 복구와 앱 전체 회귀를 실행합니다.",
+    "files": [
+      {
+        "title": "U5 운영·백업·복구 구현 계획",
+        "summary": "- Builds: 로컬 주간 요약·장애 기록, 일관된 암호화 백업, 삭제 원장을 재적용하는 격리 복원과 안전한 서비스 재개",
+        "url": "/reviews/261115-notify-me-implementation/code-generation-u5-plan/20261122-153103406454/01-code-generation-plan/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/code-generation-plan.md"
+      },
+      {
+        "title": "U5 단위 테스트 안내",
+        "summary": "```bash",
+        "url": "/reviews/261115-notify-me-implementation/code-generation-u5-plan/20261122-153103406454/02-unit-test-instructions/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/unit-test-instructions.md"
+      },
+      {
+        "title": "Code Generation 문서 변경 이력",
+        "summary": "Delivery Planning 승인 커밋 `5eac07d`와 구현 커밋 `2035730`를 비교했다. 아래의 단위는 해당 문서 변경의 Git 이력을 나타낸다. 이 기록은 새 독립 검토나 완료 승인을 부여하지 않는다.",
+        "url": "/reviews/261115-notify-me-implementation/code-generation-u5-plan/20261122-153103406454/03-document-provenance/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/code-generation/document-provenance.md"
+      }
+    ]
   }
 ]

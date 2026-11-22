@@ -1,0 +1,31 @@
+---
+layout: review
+title: "U5 단위 테스트 안내"
+source_path: "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/unit-test-instructions.md"
+permalink: "/reviews/261115-notify-me-implementation/code-generation-u5-plan/20261122-153103406454/02-unit-test-instructions/"
+---
+
+# U5 단위 테스트 안내
+
+## 실행
+
+```bash
+npm exec -- vitest run tests/u5/
+npm exec -- vitest run tests/u3/http.test.ts
+```
+
+U5 경로 수집을 첫 Red 전에 확인한다. 전체 체크포인트는 기존 승인 검증 명령으로 실행한다. 테스트는 작업별 임시 SQLite, 별도 미디어를 모사한 경로, 테스트 키·시계·서비스를 사용한다.
+
+| 범위 | 필수 시나리오 |
+| --- | --- |
+| 모델 및 원장 | U1~U4 데이터 보존, 최초 요청 권한 경합과 과거 재시도, REQUESTED·종결·권위 증거 오류 순서, 동일 계보의 잘린 원장, 설치 정리와 원장 조정 실패 격리 |
+| 백업·복원 | WAL 일관 사본, 키·태그·지문·변조, 30일 보존, 보호 바닥 경쟁, 실제 오래된 사본 복원과 삭제 재적용, 원장 끝을 신뢰할 수 없을 때 차단 |
+| 운영·공개 | 증거 매체 검사, DB+epoch 활성화 재시작, 비공개 Caddy·직접 API 검증, 로컬 주간 중복과 장애 전이, 타이머·서비스 설정 검증 |
+
+전체 TypeScript 라인 커버리지는 기존 80% 기준을 유지한다. 합성 SQLite 리허설과 실제 Pi에서만 확인할 부팅·부하를 분리해 기록한다.
+
+## 현재 구현과 문서 이력 재검증
+
+- U5 커밋 `2035730` 및 공통 [문서 변경 이력](../../code-generation/document-provenance.md)을 대조해 운영·배포 설계와 D-098(운영 호스트의 주간 요약 및 장애 기록)이 소스 매니페스트에 포함되는지 확인한다.
+- Code Generation의 `.aidlc-source-paths.json`을 검증한다. 제외한 다섯 경로의 내용이 `7022058`과 동일한지 확인하고, 구현 중 변경된 문서 다섯 개가 U3~U5 매니페스트에 포함되는지 대조한다. 소스 경계 적용 결과와 단계 전체 완료 검사 결과를 각각 기록한다.
+- 위 U5·U3 전용 테스트와 승인된 Construction 전체 검증을 실행하고 실제 실행 결과를 남긴다. 합성 복구 리허설과 실제 Pi에서만 확인할 항목을 구분한다.
