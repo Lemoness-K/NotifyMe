@@ -1,0 +1,43 @@
+---
+layout: review
+title: "U1 테스트 지침"
+source_path: "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/code-generation/unit-test-instructions.md"
+permalink: "/reviews/261115-notify-me-implementation/code-generation-u1-checkpoint/20261122-094753626778/02-unit-test-instructions/"
+---
+
+# U1 테스트 지침
+
+## 실행 준비
+
+로컬 Node.js와 저장소 잠금 파일을 기준으로 Vitest·Playwright를 구성한다. 제품 소스가 아직 없는 설계 저장소이므로 첫 실행 단계에서 설정과 테스트 의존성을 준비한다. U1 테스트 파일은 `tests/u1/`, 웹 종단 테스트는 `tests/e2e/u1/`에 둔다. 서로 다른 U1 실행 사이에는 임시 SQLite를 분리한다.
+
+## U1 전용 명령
+
+```bash
+npm exec -- vitest run tests/u1/
+```
+
+```bash
+npm exec -- playwright test tests/e2e/u1/
+```
+
+Red에서는 대상 파일을 지정해 필요한 실패가 발생하는지 확인한다. 예를 들어 `npm exec -- vitest run tests/u1/auth-session.test.ts`를 실행한다. 테스트 파일을 찾지 못한 상태는 기능 테스트 실패 증거로 사용하지 않는다. 각 Green과 Refactor 뒤 관련 U1 검증을 반복한다.
+
+## 구성요소별 확인
+
+| 구성요소 | 주요 사례 | 검증 수준 |
+| --- | --- | --- |
+| 신원·세션과 가구 접근 | 검증된 사용자, 불일치한 증거, 로그아웃 후 재발급, 다른 가구 요청, 인증 장애, 쿠키와 출처 | 단위, 서버 통합, 웹 종단 |
+| 초기 설정과 업무 저장 | 첫 Admin, 두 초기화 요청 경합, 업무·회차 롤백, 키 재시도, 재시작 뒤 재조회 | 단위, 실제 임시 SQLite 통합, 웹 종단 |
+| 공유 웹 | 유동 레이아웃, 키보드·터치, 오류 원문 유지, 보호 화면과 현재 세션 | 단위, 상호작용 통합, 브라우저 종단 |
+
+Comprehensive 전략에 따라 구성요소마다 10~15개 핵심 사례를 계획한다. 승인된 프로젝트 전체 라인 기준은 80%이며 조립된 전체 제품 테스트가 실행되는 Build and Test에서 판단한다. U1 전용 실행 결과에는 테스트 성공과 전체 커버리지 판정을 구분해 기록한다.
+
+## 격리
+
+외부 공급자는 합성 identity·로그인 요청·증거를 내는 테스트 구현으로 대체하고 웹·인증 미들웨어·SQLite는 실제 경로를 사용한다. 테스트용 HTTPS의 신뢰와 자격은 해당 테스트 환경으로 제한한다. 운영 계정·데이터는 쓰지 않는다. Firebase·Google 실제 연동은 승인된 비운영 프로젝트에서 별도 확인한다.
+
+## 문서 변경 이력 재검토
+
+- U1 코드 생성 커밋과 기존 소스 매니페스트의 경로를 대조한다. 공통 [문서 변경 이력](../../code-generation/document-provenance.md)에서 구현 전 문서 5개와 U3~U5 담당 문서의 구분을 Git 이력으로 검증한다.
+- 현재 checkout에서 위 U1 전용 테스트와 기존 승인된 Construction 전체 검증 명령을 실행한다. 첫 구현의 Red/Green 증거와 재검토에서 실행한 결과를 구분한다. 특히 HTTPS 리마인더 재조회 테스트가 시간 초과하면 실행 결과와 재실행 여부를 그대로 기록한다.

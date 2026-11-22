@@ -539,5 +539,40 @@
         "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/inception/delivery-planning/external-dependency-map.md"
       }
     ]
+  },
+  {
+    "id": "261115-notify-me-implementation/code-generation-u1-checkpoint/20261122-094753626778",
+    "intent": "261115-notify-me-implementation",
+    "stage": "code-generation-u1-checkpoint",
+    "stage_title": "U1 기본 흐름 재검증 및 체크포인트",
+    "created_at": "2026-11-22T09:47:53.626778+00:00",
+    "next_stage": "Build and Test",
+    "summary": "U1 계획 20개 항목 완료. AI-DLC 체크포인트에서 승인된 전체 검증 명령이 종료 코드 0으로 통과했습니다. 라인 커버리지 87.26%, Playwright 4개 통과. 독립 리뷰는 READY이며, 독립 실행에서 관측된 후속 Unit 테스트 시간 초과 및 Caddy 준비 실패와 U1 테스트 종료 처리 지적을 남겼습니다. 다음으로 U2의 재검증을 진행합니다.",
+    "files": [
+      {
+        "title": "U1 코드 작성 계획",
+        "summary": "- Builds: 최초 가구·관리자 설정, 웹 로그인·가구 인가, 시간 리마인더 등록 및 SQLite 재조회",
+        "url": "/reviews/261115-notify-me-implementation/code-generation-u1-checkpoint/20261122-094753626778/01-code-generation-plan/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/code-generation/code-generation-plan.md"
+      },
+      {
+        "title": "U1 테스트 지침",
+        "summary": "로컬 Node.js와 저장소 잠금 파일을 기준으로 Vitest·Playwright를 구성한다. 제품 소스가 아직 없는 설계 저장소이므로 첫 실행 단계에서 설정과 테스트 의존성을 준비한다. U1 테스트 파일은 `tests/u1/`, 웹 종단 테스트는 `tests/e2e/u1/`에 둔다. 서로 다른 U1 실행 사이에는...",
+        "url": "/reviews/261115-notify-me-implementation/code-generation-u1-checkpoint/20261122-094753626778/02-unit-test-instructions/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/code-generation/unit-test-instructions.md"
+      },
+      {
+        "title": "U1 구현 결과",
+        "summary": "최초 가구와 관리자를 설정한 뒤, 공유 웹에서 로그인하고 시간 리마인더를 실제 SQLite에 등록·조회할 수 있다. 서버를 재시작해도 같은 리마인더와 회차가 남는다.",
+        "url": "/reviews/261115-notify-me-implementation/code-generation-u1-checkpoint/20261122-094753626778/03-code-summary/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/code-generation/code-summary.md"
+      },
+      {
+        "title": "Review 07",
+        "summary": "Verdict: READY",
+        "url": "/reviews/261115-notify-me-implementation/code-generation-u1-checkpoint/20261122-094753626778/04-review-07/",
+        "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u1-core-flow/code-generation/reviews/review-07.md"
+      }
+    ]
   }
 ]
