@@ -19,6 +19,25 @@ function directory(value: string) {
   return absolute;
 }
 
+function backupStorage(state: string, archivesPath: string, keyPath: string) {
+  const archives = directory(archivesPath);
+  const keyFile = realpathSync(keyPath);
+  if (contained(state, archives) || contained(archives, state) || contained(archives, keyFile)) {
+    throw new Error('OPERATIONS_STORAGE_OVERLAP');
+  }
+  return { archives, keyFile };
+}
+
+export function backupRetentionSettings(env: NodeJS.ProcessEnv = process.env) {
+  const { NOTIFY_OPS_STATE_DIRECTORY, NOTIFY_OPS_ARCHIVES, NOTIFY_OPS_KEY_FILE } = env;
+  if (!NOTIFY_OPS_STATE_DIRECTORY || !NOTIFY_OPS_ARCHIVES || !NOTIFY_OPS_KEY_FILE) {
+    throw new Error('OPERATIONS_CONFIG_INCOMPLETE');
+  }
+  const state = directory(NOTIFY_OPS_STATE_DIRECTORY);
+  const { archives, keyFile } = backupStorage(state, NOTIFY_OPS_ARCHIVES, NOTIFY_OPS_KEY_FILE);
+  return new Backups(archives, state, readKey(keyFile));
+}
+
 export function localOperationsSettings(env: NodeJS.ProcessEnv = process.env) {
   if (!env.NOTIFY_OPS_STATE_DIRECTORY) throw new Error('OPERATIONS_CONFIG_INCOMPLETE');
   const state = directory(env.NOTIFY_OPS_STATE_DIRECTORY);
@@ -41,11 +60,10 @@ export function operationsSettings(env: NodeJS.ProcessEnv = process.env) {
   })) as Record<typeof required[number], string>;
   const local = localOperationsSettings(env);
   const { state } = local;
-  const archives = directory(options.ARCHIVES);
+  const { archives, keyFile } = backupStorage(state, options.ARCHIVES, options.KEY_FILE);
   const media = directory(options.AUTHORITY_MOUNT);
-  const keyFile = realpathSync(options.KEY_FILE);
   const authorityKeyFile = realpathSync(options.AUTHORITY_KEY_FILE);
-  if ([[state, archives], [state, media], [archives, media]].some(([a, b]) => contained(a, b) || contained(b, a)) ||
+  if ([[state, media], [archives, media]].some(([a, b]) => contained(a, b) || contained(b, a)) ||
       keyFile === authorityKeyFile || [keyFile, authorityKeyFile].some((file) => contained(archives, file) || contained(media, file))) {
     throw new Error('OPERATIONS_STORAGE_OVERLAP');
   }

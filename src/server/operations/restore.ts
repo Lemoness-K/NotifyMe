@@ -81,7 +81,9 @@ export async function restoreBackup(options: {
   const clock = options.clock ?? (() => new Date());
   let directory: string | undefined;
   let journal: DeleteJournal | undefined;
+  let releaseArchives: (() => void) | undefined;
   try {
+    releaseArchives = options.archives.acquireArchiveLock();
     options.activation.block();
     journal = DeleteJournal.openRecovery(options.journalPath, options.authority);
     const item = options.archives.select(options.id, clock());
@@ -96,6 +98,8 @@ export async function restoreBackup(options: {
     directory = mkdtempSync(join(options.state, '.restore-job-'));
     const image = join(directory, 'candidate.sqlite');
     await options.archives.decrypt(item, image);
+    releaseArchives();
+    releaseArchives = undefined;
     if (await hashFile(image) !== item.digest || inspectSnapshot(image) !== item.schema) throw new Error('RECOVERY_FINGERPRINT_MISMATCH');
     await prepareCandidate(image, committed, journal, history);
     inspectSnapshot(image, committed);
@@ -112,8 +116,10 @@ export async function restoreBackup(options: {
     options.activation.verify(database, epoch, newest, digest, expiresAt);
     return { database, epoch };
   } finally {
-    journal?.close();
-    if (directory) rmSync(directory, { recursive: true, force: true });
-    release();
+    try {
+      releaseArchives?.();
+      journal?.close();
+      if (directory) rmSync(directory, { recursive: true, force: true });
+    } finally { release(); }
   }
 }

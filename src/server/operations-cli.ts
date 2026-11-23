@@ -4,16 +4,19 @@ import { DeleteJournal } from './delete-journal.js';
 import { Activation, acquireOwnership, bindGeneration, databaseGeneration } from './operations/activation.js';
 import { OperationsReporter, type Health } from './operations/reporting.js';
 import { restoreBackup } from './operations/restore.js';
-import { localOperationsSettings, operationsSettings } from './operations/settings.js';
+import { backupRetentionSettings, localOperationsSettings, operationsSettings } from './operations/settings.js';
 import { lastBackup, localRequest } from './operations/socket.js';
 import { openStore } from './storage.js';
 import { WorkService } from './work-service.js';
 
 const log = (record: unknown) => process.stdout.write(JSON.stringify(record) + '\n');
 
-try {
-  const [command, id, extra] = process.argv.slice(2);
-  if (extra || (command !== 'restore' && id)) throw new Error('OPERATIONS_COMMAND_INVALID');
+async function run(command: string | undefined, id: string | undefined) {
+  if (command === 'prune-backups') {
+    const expired = backupRetentionSettings().pruneExpired(new Date());
+    log({ event: 'BACKUP_RETENTION_FINISHED', state: 'SUCCEEDED', expired });
+    return;
+  }
   const local = localOperationsSettings();
   const journalPath = resolve(process.env.NOTIFY_DELETE_JOURNAL_PATH ?? join(local.state, 'delete-journal.sqlite'));
   if (dirname(journalPath) !== local.state) throw new Error('OPERATIONS_JOURNAL_INVALID');
@@ -69,8 +72,15 @@ try {
   } else {
     throw new Error('OPERATIONS_COMMAND_INVALID');
   }
+}
+
+const [command, id, extra] = process.argv.slice(2);
+try {
+  if (extra || (command !== 'restore' && id)) throw new Error('OPERATIONS_COMMAND_INVALID');
+  await run(command, id);
 } catch (error) {
   const code = error instanceof Error && /^[A-Z][A-Z_]{2,50}$/.test(error.message) ? error.message : 'OPERATIONS_FAILED';
-  process.stderr.write(JSON.stringify({ state: 'FAILED', code }) + '\n');
+  const event = command === 'prune-backups' ? 'BACKUP_RETENTION_FAILED' : undefined;
+  process.stderr.write(JSON.stringify({ event, state: 'FAILED', code }) + '\n');
   process.exitCode = 1;
 }

@@ -1,7 +1,7 @@
 import { readFileSync, unlinkSync, writeFileSync, copyFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { SessionService, type IdentityProvider } from '../../src/server/auth.js';
 import { DeleteJournal } from '../../src/server/delete-journal.js';
 import { InstallationRepository } from '../../src/server/installations.js';
@@ -10,6 +10,7 @@ import { JournalAuthority } from '../../src/server/operations/authority.js';
 import { Backups } from '../../src/server/operations/backup.js';
 import { restoreBackup } from '../../src/server/operations/restore.js';
 import { startManagedRuntime, type ServingGate } from '../../src/server/operations/runtime.js';
+import { backupRetentionSettings } from '../../src/server/operations/settings.js';
 import { openStore } from '../../src/server/storage.js';
 import { createWorkInput } from '../../src/server/work-input.js';
 import { WorkService } from '../../src/server/work-service.js';
@@ -234,4 +235,44 @@ it('keeps the evidence floor while a selectable archive needs it and removes exp
   const second = await backups.capture(fixture.database, work, later);
   expect(() => readFileSync(backups.path(first.id))).toThrow();
   expect(authority.read().floor.position).toBe(second.cutoff.position);
+});
+
+it('prunes authenticated archives at 30 days without the authority or operations socket', async () => {
+  const snapshot = await backups.capture(fixture.database, work, at);
+  const newer = await backups.capture(fixture.database, work, restoreAt);
+  const partial = join(fixture.archives, '.notify-archive-' + randomUUID());
+  const unlisted = backups.path(randomUUID());
+  writeFileSync(partial, 'synthetic partial', { mode: 0o600 });
+  writeFileSync(unlisted, 'synthetic unlisted archive', { mode: 0o600 });
+  unlinkSync(join(fixture.volume, 'delete-head.json'));
+  const keyFile = join(fixture.directory, 'fixture-backup-key');
+  writeFileSync(keyFile, key.toString('base64url'), { mode: 0o600 });
+  const retention = backupRetentionSettings({ NOTIFY_OPS_STATE_DIRECTORY: fixture.state,
+    NOTIFY_OPS_ARCHIVES: fixture.archives, NOTIFY_OPS_KEY_FILE: keyFile });
+  const expiresAt = at.getTime() + 30 * 86_400_000;
+  expect(retention.pruneExpired(new Date(expiresAt - 1))).toBe(0);
+  expect(retention.select(snapshot.id, new Date(expiresAt - 1))).toEqual(snapshot);
+  expect(retention.pruneExpired(new Date(expiresAt))).toBe(1);
+  expect(() => readFileSync(backups.path(snapshot.id))).toThrow();
+  expect(retention.select(newer.id, new Date(expiresAt))).toEqual(newer);
+  expect(readFileSync(partial, 'utf8')).toBe('synthetic partial');
+  expect(readFileSync(unlisted, 'utf8')).toBe('synthetic unlisted archive');
+  expect(retention.pruneExpired(new Date(expiresAt))).toBe(0);
+});
+
+it('preserves archives when retention cannot authenticate the catalogue', async () => {
+  const snapshot = await backups.capture(fixture.database, work, at);
+  const wrongKey = new Backups(fixture.archives, fixture.state, Buffer.alloc(key.length, 24));
+  expect(() => wrongKey.pruneExpired(new Date(at.getTime() + 30 * 86_400_000))).toThrow('BACKUP_CATALOGUE_INVALID');
+  expect(readFileSync(backups.path(snapshot.id)).length).toBeGreaterThan(0);
+});
+
+it('keeps independent retention out of an in-progress backup', async () => {
+  const snapshot = await backups.capture(fixture.database, work, at);
+  const concurrent = new Backups(fixture.archives, fixture.state, key);
+  const running = backups.capture(fixture.database, work, restoreAt);
+  try {
+    expect(() => concurrent.pruneExpired(new Date(at.getTime() + 30 * 86_400_000))).toThrow('OPERATIONS_BUSY');
+    expect(readFileSync(backups.path(snapshot.id)).length).toBeGreaterThan(0);
+  } finally { await running; }
 });

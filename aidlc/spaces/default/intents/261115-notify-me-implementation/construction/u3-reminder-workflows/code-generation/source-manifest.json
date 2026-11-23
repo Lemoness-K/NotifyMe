@@ -7,6 +7,15 @@
       "path": "deploy/u1/notify-me.service.example"
     },
     {
+      "path": "docs/00-master-design.md"
+    },
+    {
+      "path": "docs/01-product-requirements.md"
+    },
+    {
+      "path": "docs/decision-register.md"
+    },
+    {
       "path": "playwright.config.ts"
     },
     {

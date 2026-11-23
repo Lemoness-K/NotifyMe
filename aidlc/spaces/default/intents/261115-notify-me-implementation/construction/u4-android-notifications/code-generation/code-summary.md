@@ -37,6 +37,20 @@ test-first 기록에서 스키마·순수 규칙·공유 웹은 대응 코드가
 - R-06. 일반 복귀는 일시적 조회 실패에서도 유효한 기존 예약을 유지한다. API 35 시작 기록에 따른 강제 종료와 확인이 불가능한 최초 화면 진입은 인가된 FULL을 저장한 뒤에만 차단을 해제한다. 정지 해제 뒤 부팅 신호와 명시적 접근 회수도 검사한다.
 - 수정 전에 새 결정 규칙을 검증하는 네 건이 필요한 경계가 없어서 테스트 컴파일에서 실패했다. 수정 뒤 전체 ARM64 JVM 16건, U4 Vitest 17건과 Chromium 1건, 전체 Vitest 178건과 Chromium 4건이 통과했다.
 
+## 현재 소스와 문서 재검증
+
+- U4 구현 커밋 `5bf6785`의 변경 경로와 소스 매니페스트를 대조했다. `docs/04-notification-and-scheduling.md`와 `docs/decision-register.md` 두 경로를 추가한 뒤 AI-DLC 기록 이외의 변경 경로 103개가 모두 일치했다.
+- U4 커밋은 D-097 신규 설치의 장소 수용 한도와 Q-069의 답변을 기록한다. 결정 등록부의 완료 검증 결정 D-094~D-096은 앞선 U3 커밋 `b21d350`에, 운영 보고 결정 D-098은 이후 U5 커밋 `2035730`에 속한다. [문서 변경 이력](../../code-generation/document-provenance.md)
+
+| 검사 | 재검증 결과 |
+| --- | --- |
+| U4 Vitest | `npm exec -- vitest run tests/u4/`에서 5개 파일, 17건 통과 |
+| ARM64 Kotlin JVM | 기존 프로젝트 JDK 21과 Gradle 캐시로 `./android/gradlew -p android/schedule-core test --no-daemon --offline --rerun-tasks` 실행. 16건 통과 |
+| 승인된 전체 앱 명령 | 기본 환경에서 두 번 모두 타입 검사와 빌드 통과. Vitest 210건 통과, 1건 실패, 라인 87.26%. U4 저장소 마이그레이션 시험의 `beforeEach`가 90초 제한을 넘겨 Playwright 실행 전에 종료했다. |
+| 전체 앱 진단 실행 | 승인된 명령에 `VITEST_MAX_WORKERS=2`를 추가했다. 타입 검사와 빌드, Vitest 211건, Playwright 4건이 통과했고 라인 커버리지는 87.26%였다. U4 브라우저 시나리오는 약 0.6초에 통과했다. 테스트 범위와 타임아웃은 유지했다. |
+| x64 SDK·APK | 이전 CI의 `2035730`에서 SDK 확인, JVM·Android 앱 단위 시험 및 디버그 APK 조립 통과. `5bf6785` 이후 Android 소스와 Android CI 설정에 변경이 없다. [Android CI 44900053693](https://github.com/Lemoness-K/NotifyMe/actions/runs/44900053693) |
+| Android 실기기 | 재부팅·잠금 화면·Doze·지오펜스 및 실제 로그인·FCM은 실기기 인수 검증 대상으로 남아 있다. |
+
 ## Remaining verification
 
 - 실제 Google 로그인과 Firebase FCM의 권한·전달, 두 Android 실기기의 재부팅·잠금 화면·Doze·지오펜스 동작은 실기기 인수 검증 대상이다. APK 빌드에는 합성 구성을 사용했다.

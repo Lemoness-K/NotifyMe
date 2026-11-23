@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "paths": [
+    "deploy/u5/notify-me-backup-retention.service",
+    "deploy/u5/notify-me-backup-retention.timer"
+  ],
+  "exclude": [
+    "AGENT.md",
+    "docs/02-domain-and-data-design.md",
+    "docs/03-system-architecture.md",
+    "docs/05-settings-and-feature-configuration.md",
+    "docs/09-feature-design-coverage-and-backlog.md"
+  ]
+}

@@ -4,6 +4,7 @@ import { join, resolve } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import type { JournalEntry } from '../delete-journal.js';
 import type { WorkService } from '../work-service.js';
+import { acquireOwnership } from './activation.js';
 import { openArchive, sealArchive } from './archive.js';
 import { requireJournalPoint, samePoint, type JournalPoint } from './authority.js';
 import { atomicRecord, hashFile, readProtected, syncDirectory } from './files.js';
@@ -104,10 +105,30 @@ export class Backups {
 
   decrypt(item: BackupMetadata, output: string) { return openArchive(this.path(item.id), output, this.key, metadata(item)); }
 
-  private collect(now: Date, keep: string) {
+  acquireArchiveLock() { return acquireOwnership(this.archives, 'backups'); }
+
+  pruneExpired(now: Date) {
+    const release = this.acquireArchiveLock();
+    try { return this.expire(now).count; }
+    finally { release(); }
+  }
+
+  private expire(now: Date) {
     const entries = this.read().map((item) => ({ ...item, expired: !this.valid(item, now) }));
+    const expired = entries.filter((item) => item.expired);
+    if (!expired.length) return { ready: entries, count: 0 };
+
+    // Mark expiry durably first so an interrupted cleanup can retry the same entries.
     this.publish(entries);
     const ready = entries.filter(({ expired }) => !expired);
+    for (const { backup } of expired) rmSync(this.path(backup.id), { force: true });
+    syncDirectory(this.archives);
+    this.publish(ready);
+    return { ready, count: expired.length };
+  }
+
+  private collect(now: Date, keep: string) {
+    const { ready } = this.expire(now);
     const files = new Set(ready.map(({ backup }) => backup.id + '.notify-backup'));
     for (const name of readdirSync(this.archives)) {
       const path = join(this.archives, name);
@@ -117,7 +138,6 @@ export class Backups {
       }
     }
     syncDirectory(this.archives);
-    this.publish(ready);
     return ready;
   }
 
@@ -125,9 +145,10 @@ export class Backups {
     if (this.busy) throw new Error('BACKUP_IN_PROGRESS');
     const journal = work.journal;
     if (!journal?.authoritative) throw new Error('RECOVERY_AUTHORITY_UNAVAILABLE');
-    this.busy = true;
     const id = randomUUID();
     const partial = join(this.archives, '.notify-archive-' + id);
+    const release = this.acquireArchiveLock();
+    this.busy = true;
     let directory: string | undefined;
     try {
       const retention = journal.hold();
@@ -177,9 +198,13 @@ export class Backups {
       } finally { publish.release(); }
       return item;
     } finally {
-      this.busy = false;
-      rmSync(partial, { force: true });
-      if (directory) rmSync(directory, { force: true, recursive: true });
+      try {
+        rmSync(partial, { force: true });
+        if (directory) rmSync(directory, { force: true, recursive: true });
+      } finally {
+        this.busy = false;
+        release();
+      }
     }
   }
 }

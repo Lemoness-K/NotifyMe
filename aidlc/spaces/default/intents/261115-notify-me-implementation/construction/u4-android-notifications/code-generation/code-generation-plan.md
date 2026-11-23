@@ -12,25 +12,25 @@ U4 기능·비기능·인프라 설계, D-097, U2 소속 회수, U3 설치 계�
 
 ## Implementation Steps
 
-- [ ] Step 1 — 구조와 구성 확인. 기존 U1 인증·HTTPS 세션, U2 가구 소속과 설정, U3 설치 계획 참여자와 피드를 대조한다. ARM64 로컬 JDK와 x64 SDK 경로를 확인한다. **US1.7, US4.6, US6.1.**
-- [ ] Step 2 — 테스트 실행 준비. `vitest.config.ts`와 `playwright.config.ts`에 U4 경로를 추가한다. `android/gradlew`로 SDK 독립 `android/schedule-core`를 실행하고 Android 앱이 같은 모듈을 포함하게 한다. 첫 Red 전에 U4 수집을 확인한다. **US4.1~US4.7, US5.6.**
-- [ ] Step 3 — 모델 Red. `tests/u4/storage-model.test.ts`와 `android/schedule-core/src/test/`에 기존 DB 보존, 설치·가구·세대, 계획·제외·outbox 키 및 이벤트별 게시·업로드 상태를 재현한다. **US1.7, US4.4~US4.7.**
-- [ ] Step 4 — 모델 Green. `prisma/schema.prisma`와 순방향 마이그레이션에 설치·계획·제외·신호·보호 토큰 참조 및 비좌표 이벤트를 추가한다. Kotlin 모델에 저장된 타이머와 개별 이벤트 게시 ID·업로드 상태를 추가한다. **US1.7, US2.7, US4.4~US4.7.**
-- [ ] Step 5 — 모델 Refactor. 같은 범위 키와 보존 정책을 재사용한다. Android 보호 저장과 백업 제외, 삭제·로그아웃·회수 이후 정리, U1~U3 데이터 보존을 검증한다. **US1.7, US2.7, US4.4.**
-- [ ] Step 6 — 저장소 Red. `tests/u4/repository.test.ts`에서 99·100·101 슬롯, 최초 대기와 활성 설치 거절, 동시 쓰기, 여러 설치 격리, 예약 없는 설치 회수, 늦은 epoch·제외 복원 충돌을 재현한다. **US1.7, US2.2, US2.6~US2.7, US3.4, US4.5, US6.6.**
-- [ ] Step 7 — 저장소 Green. 서버에서 설치·계획·outbox 저장소와 U3 계획 포트를 연결한다. U2 회수 트랜잭션에서 보유 설치를 확보해 계획 유무와 독립적으로 회수 신호를 커밋한다. 한도 초과에서 관련 저장을 원자적으로 거부한다. **US1.7, US2.2, US2.6~US2.7, US3.4, US4.5, US6.6.**
-- [ ] Step 8 — 저장소 Refactor. 범위와 세대의 저장·키 사용을 통합하고 후보 페이지와 변경 인덱스, 만료·삭제 표지, 동일 슬롯 재집계를 검증한다. **US2.7, US4.5~US4.7.**
-- [ ] Step 9 — 규칙 Red. `tests/u4/notification-rules.test.ts`와 `android/schedule-core/src/test/`에서 이전 scope 제거, 권한 회수 및 더 최신 FULL, 24시간 경계, 정확 알람 fallback, 장소 타이머 재시작·중복 콜백, FCM 만료·재시도를 재현한다. **US4.1~US4.4, US4.6~US4.7.**
-- [ ] Step 10 — 규칙 Green. `android/schedule-core/src/main/`에 재조정·타이머·ID와 복구 규칙을, `android/app/src/main/`에 Kotlin OS 어댑터·보호 저장소·고정 API 브리지·FCM 수신을 둔다. 서버는 FCM 변경 신호를 커밋 후 발송하고 내구 점유, 잔여 TTL, 성공·실패·만료를 기록한다. **US4.1~US4.4, US4.6~US4.7, US5.6, US6.4.**
-- [ ] Step 11 — 규칙 Refactor. 이전 scope 정리를 재시작 가능하게 하고 정리 직후 인가된 HTTPS로 현재 권한과 epoch·revision을 확인한다. 회수나 더 최신 FULL에서 대기분을 폐기하고, 연결 오류에서는 확인될 때까지 대기한다. FCM 미수신·재부팅과 재실행을 시험한다. **US1.7, US4.3, US4.7.**
-- [ ] Step 12 — API Red. `tests/u4/http.test.ts`에 설치 소유권·가구 회수, 세대·커서, 위치 후보·제외 갱신, 이벤트 만료, 토큰 교체, 외부 origin과 잘못된 nonce, 기존 웹 로그인을 시험한다. **US1.7, US4.3~US4.7.**
-- [ ] Step 13 — API Green. `src/server/http.ts`와 새 U4 코드에 설치 등록·sync·위치 제외·이벤트를 연결한다. 공유 OpenAPI에 기존 challenge·session 교환과 실패 응답을 명시한다. 두 ID 토큰의 audience·subject·auth_time·nonce, 보호 쿠키와 챌린지의 일회 소비를 기존 U1 검증으로 처리한다. 네이티브 API를 고정 HTTPS 호스트와 허용 동작으로 한정하고 자격은 WebView에 넘기지 않는다. **US1.7, US4.4~US4.7.**
-- [ ] Step 14 — API Refactor. 기존 구조화 오류와 요청 ID를 재사용한다. 합성 계정과 FCM 대역으로 회귀를 실행한다. **US4.5~US4.7, US6.3.**
-- [ ] Step 15 — 웹 Red. `tests/u4/web-interactions.test.tsx`, `tests/e2e/u4/installation-notifications.spec.ts`에서 대기→제외 확인→감시, 다른 설치 격리, 저장 초안 재시도, OS 권한, ko/en과 화면 재배치를 시험한다. **US4.3, US4.5~US4.6, US5.6, US6.1~US6.4.**
-- [ ] Step 16 — 웹 Green. `src/web/`에 공유 설치 설정, 장소 용량 관리·제외·재시도, 번역과 플랫폼 기능 경계를 연결한다. **US4.3, US4.5~US4.6, US5.6, US6.1~US6.4.**
-- [ ] Step 17 — 웹 Refactor. 카탈로그와 기존 UI 상태·오류 현지화를 재사용하고 키보드·터치, 다른 기기 및 범위 변경 회귀를 확인한다. **US4.3, US5.6, US6.1~US6.4.**
-- [ ] Step 18 — 환경·CI. `package.json`에 별도 JVM 검증을 추가한다. 로컬 ARM64 JDK와 Gradle wrapper, Node와 Capacitor 패키지, SDK 버전은 잠금 파일·검증 설정과 체크섬으로 고정한다. 작업공간용 도구만 준비한다. `.github/workflows/android-u4-ci.yml`의 x64에서 APK 조립과 Android 단위 시험을 합성 구성으로 실행한다. 검증 브랜치는 이 실행에만 사용하며 기존 승인 경로로 master를 갱신한다. **US4.1~US4.7.**
-- [ ] Step 19 — 결과 기록. U4 전용 TS·브라우저·JVM, 전체 회귀·라인 80%, x64 SDK 조립을 구분해 기록한다. 두 실기기의 권한·부팅·잠금 화면·FCM·지오펜스 결과는 실행 증거를 확보한 항목만 통과로 기록한다. **US4.1~US4.7, US5.6, US6.6.**
+- [x] Step 1 — 구조와 구성 확인. 기존 U1 인증·HTTPS 세션, U2 가구 소속과 설정, U3 설치 계획 참여자와 피드를 대조한다. ARM64 로컬 JDK와 x64 SDK 경로를 확인한다. **US1.7, US4.6, US6.1.**
+- [x] Step 2 — 테스트 실행 준비. `vitest.config.ts`와 `playwright.config.ts`에 U4 경로를 추가한다. `android/gradlew`로 SDK 독립 `android/schedule-core`를 실행하고 Android 앱이 같은 모듈을 포함하게 한다. 첫 Red 전에 U4 수집을 확인한다. **US4.1~US4.7, US5.6.**
+- [x] Step 3 — 모델 Red. `tests/u4/storage-model.test.ts`와 `android/schedule-core/src/test/`에 기존 DB 보존, 설치·가구·세대, 계획·제외·outbox 키 및 이벤트별 게시·업로드 상태를 재현한다. **US1.7, US4.4~US4.7.**
+- [x] Step 4 — 모델 Green. `prisma/schema.prisma`와 순방향 마이그레이션에 설치·계획·제외·신호·보호 토큰 참조 및 비좌표 이벤트를 추가한다. Kotlin 모델에 저장된 타이머와 개별 이벤트 게시 ID·업로드 상태를 추가한다. **US1.7, US2.7, US4.4~US4.7.**
+- [x] Step 5 — 모델 Refactor. 같은 범위 키와 보존 정책을 재사용한다. Android 보호 저장과 백업 제외, 삭제·로그아웃·회수 이후 정리, U1~U3 데이터 보존을 검증한다. **US1.7, US2.7, US4.4.**
+- [x] Step 6 — 저장소 Red. `tests/u4/repository.test.ts`에서 99·100·101 슬롯, 최초 대기와 활성 설치 거절, 동시 쓰기, 여러 설치 격리, 예약 없는 설치 회수, 늦은 epoch·제외 복원 충돌을 재현한다. **US1.7, US2.2, US2.6~US2.7, US3.4, US4.5, US6.6.**
+- [x] Step 7 — 저장소 Green. 서버에서 설치·계획·outbox 저장소와 U3 계획 포트를 연결한다. U2 회수 트랜잭션에서 보유 설치를 확보해 계획 유무와 독립적으로 회수 신호를 커밋한다. 한도 초과에서 관련 저장을 원자적으로 거부한다. **US1.7, US2.2, US2.6~US2.7, US3.4, US4.5, US6.6.**
+- [x] Step 8 — 저장소 Refactor. 범위와 세대의 저장·키 사용을 통합하고 후보 페이지와 변경 인덱스, 만료·삭제 표지, 동일 슬롯 재집계를 검증한다. **US2.7, US4.5~US4.7.**
+- [x] Step 9 — 규칙 Red. `tests/u4/notification-rules.test.ts`와 `android/schedule-core/src/test/`에서 이전 scope 제거, 권한 회수 및 더 최신 FULL, 24시간 경계, 정확 알람 fallback, 장소 타이머 재시작·중복 콜백, FCM 만료·재시도를 재현한다. **US4.1~US4.4, US4.6~US4.7.**
+- [x] Step 10 — 규칙 Green. `android/schedule-core/src/main/`에 재조정·타이머·ID와 복구 규칙을, `android/app/src/main/`에 Kotlin OS 어댑터·보호 저장소·고정 API 브리지·FCM 수신을 둔다. 서버는 FCM 변경 신호를 커밋 후 발송하고 내구 점유, 잔여 TTL, 성공·실패·만료를 기록한다. **US4.1~US4.4, US4.6~US4.7, US5.6, US6.4.**
+- [x] Step 11 — 규칙 Refactor. 이전 scope 정리를 재시작 가능하게 하고 정리 직후 인가된 HTTPS로 현재 권한과 epoch·revision을 확인한다. 회수나 더 최신 FULL에서 대기분을 폐기하고, 연결 오류에서는 확인될 때까지 대기한다. FCM 미수신·재부팅과 재실행을 시험한다. **US1.7, US4.3, US4.7.**
+- [x] Step 12 — API Red. `tests/u4/http.test.ts`에 설치 소유권·가구 회수, 세대·커서, 위치 후보·제외 갱신, 이벤트 만료, 토큰 교체, 외부 origin과 잘못된 nonce, 기존 웹 로그인을 시험한다. **US1.7, US4.3~US4.7.**
+- [x] Step 13 — API Green. `src/server/http.ts`와 새 U4 코드에 설치 등록·sync·위치 제외·이벤트를 연결한다. 공유 OpenAPI에 기존 challenge·session 교환과 실패 응답을 명시한다. 두 ID 토큰의 audience·subject·auth_time·nonce, 보호 쿠키와 챌린지의 일회 소비를 기존 U1 검증으로 처리한다. 네이티브 API를 고정 HTTPS 호스트와 허용 동작으로 한정하고 자격은 WebView에 넘기지 않는다. **US1.7, US4.4~US4.7.**
+- [x] Step 14 — API Refactor. 기존 구조화 오류와 요청 ID를 재사용한다. 합성 계정과 FCM 대역으로 회귀를 실행한다. **US4.5~US4.7, US6.3.**
+- [x] Step 15 — 웹 Red. `tests/u4/web-interactions.test.tsx`, `tests/e2e/u4/installation-notifications.spec.ts`에서 대기→제외 확인→감시, 다른 설치 격리, 저장 초안 재시도, OS 권한, ko/en과 화면 재배치를 시험한다. **US4.3, US4.5~US4.6, US5.6, US6.1~US6.4.**
+- [x] Step 16 — 웹 Green. `src/web/`에 공유 설치 설정, 장소 용량 관리·제외·재시도, 번역과 플랫폼 기능 경계를 연결한다. **US4.3, US4.5~US4.6, US5.6, US6.1~US6.4.**
+- [x] Step 17 — 웹 Refactor. 카탈로그와 기존 UI 상태·오류 현지화를 재사용하고 키보드·터치, 다른 기기 및 범위 변경 회귀를 확인한다. **US4.3, US5.6, US6.1~US6.4.**
+- [x] Step 18 — 환경·CI. `package.json`에 별도 JVM 검증을 추가한다. 로컬 ARM64 JDK와 Gradle wrapper, Node와 Capacitor 패키지, SDK 버전은 잠금 파일·검증 설정과 체크섬으로 고정한다. 작업공간용 도구만 준비한다. `.github/workflows/android-u4-ci.yml`의 x64에서 APK 조립과 Android 단위 시험을 합성 구성으로 실행한다. 검증 브랜치는 이 실행에만 사용하며 기존 승인 경로로 master를 갱신한다. **US4.1~US4.7.**
+- [x] Step 19 — 결과 기록. U4 전용 TS·브라우저·JVM, 전체 회귀·라인 80%, x64 SDK 조립을 구분해 기록한다. 두 실기기의 권한·부팅·잠금 화면·FCM·지오펜스 결과는 실행 증거를 확보한 항목만 통과로 기록한다. **US4.1~US4.7, US5.6, US6.6.**
 
 ### 재검토에서 남은 세 건의 수정
 
@@ -40,6 +40,8 @@ U4 기능·비기능·인프라 설계, D-097, U2 소속 회수, U3 설치 계�
 - [x] Step 23 — Green R-05. 같은 부팅의 현재 권한·설치 범위·등록 ID를 확인해 저장한 위치 상태와 마감을 복구한다. 정상 프로세스 재생성에서는 유효한 콜백을 처리하고, 실제 감지 중단이나 범위가 바뀐 경우에는 이전 이벤트를 차단한다. **US4.2, US4.7.**
 - [x] Step 24 — Green R-06. 일반 화면 복귀에서는 연결 오류가 인가된 기존 예약을 차단하지 않게 한다. 강제 종료, 근거가 부족한 최초 화면 진입, 명시적 회수 및 범위 변경의 재인가 경계를 유지한다. API 35 이상 시작 증거, 이전 OS의 증거 부족, 정지 해제 뒤 부팅 신호를 각각 검증한다. **US4.1~US4.3, US4.7.**
 - [x] Step 25 — Refactor와 검증. 전체 앱 명령, U4 집중 테스트와 독립 리뷰를 실행하고, 정확히 같은 코드의 x64 SDK 단위 시험과 APK를 확인한다. 실제 기기로 확인할 항목은 별도 증거에 남긴다. **US4.1~US4.3, US4.7.**
+
+- [x] Step 26 — 현재 Android 알림 구현과 문서 변경 이력 재검증. U4 구현 커밋 `5bf6785`를 기준으로 알림·스케줄링 설계와 결정 등록부의 D-097(신규 설치의 장소 수용 한도)을 소스 매니페스트와 독립 리뷰에 포함한다. 결정 등록부의 U3·U5 변경분은 Git 이력으로 구분한다. U4 전용 서버·웹·Kotlin 검증과 승인된 전체 앱 검증을 실행한다. Android APK·SDK 및 실기기 검증은 현재 실행한 증거와 기존 실행 이력을 구분해 결과에 남긴다.
 
 ## Verification boundaries
 

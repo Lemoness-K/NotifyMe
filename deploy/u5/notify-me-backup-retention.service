@@ -1,0 +1,21 @@
+[Unit]
+Description=Remove expired Notify Me SQLite backups
+RequiresMountsFor=/var/lib/notify-me /var/lib/notify-backups
+StartLimitIntervalSec=5min
+StartLimitBurst=5
+
+[Service]
+Type=oneshot
+User=notify-me
+Group=notify-me
+WorkingDirectory=/opt/notify-me
+EnvironmentFile=/etc/notify-me/operations.env
+ExecStart=/usr/bin/node /opt/notify-me/dist/server/operations-cli.js prune-backups
+Restart=on-failure
+RestartSec=30s
+ReadWritePaths=/var/lib/notify-backups
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes

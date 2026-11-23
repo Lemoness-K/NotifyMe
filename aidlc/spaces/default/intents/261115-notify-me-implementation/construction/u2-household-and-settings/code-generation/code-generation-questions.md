@@ -10,13 +10,13 @@ Approve the code plan for u2-household-and-settings?
 - Builds: 가구 초대·역할·제거, 설정 카탈로그와 계정 언어·시간대, 관리 화면
 - Touches: 기존 인증·공유 웹·서버·SQLite 마이그레이션, U2 테스트와 API 계약
 - Tests: 구성요소별 10~15건의 단위·통합·종단 검증과 기존 U1 회귀 및 전체 라인 커버리지 80%
-- Already changed before you approved (916 files): .github/workflows/u1-app-ci.yml, .local/caddy-check/caddy_2.6.2-14_arm64.deb, .local/caddy-check/etc/caddy/Caddyfile, .local/caddy-check/usr/bin/caddy, .local/caddy-check/usr/lib/systemd/system/caddy-api.service, .local/caddy-check/usr/lib/systemd/system/caddy.service, .local/caddy-check/usr/share/bash-completion/completions/caddy, .local/caddy-check/usr/share/caddy/index.html, .local/caddy-check/usr/share/doc/caddy/README.Debian, .local/caddy-check/usr/share/doc/caddy/TODO.Debian (and 906 more).
+- Already changed before you approved (4 files): .u1-db-9kJhZ0/app.db, .u1-db-9kJhZ0/app.db.delete.sqlite, .u1-db-9kJhZ0/cert.pem, .u1-db-9kJhZ0/key.pem.
 
 Full plan: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/code-generation-plan.md
 Test instructions: aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u2-household-and-settings/code-generation/unit-test-instructions.md
 
-[Approval Fingerprint]: sha256:v3:e42c70ec1845e535a7cab79ba4bd37efd93a725f1d6cfb9eaa5036cad823ff86
-[Planned Source]: 700b442248f528901e44a3434b8f6ba9fd29c8f3d901da8f7f33c41b2e8c961f
+[Approval Fingerprint]: sha256:v3:ff4c8ad887ba90938956f15148fbc1b1b633717e23db8ace6b6d651c7ff8ba82
+[Planned Source]: 480929a897bacad224b23e0fd3a37e8bddd313200872c3007e1c4b6a416681e1
 
 - A. Approve Plan
 - B. Request Changes

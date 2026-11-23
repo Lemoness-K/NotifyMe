@@ -10,6 +10,12 @@
       "path": "deploy/u5/README.md"
     },
     {
+      "path": "deploy/u5/notify-me-backup-retention.service"
+    },
+    {
+      "path": "deploy/u5/notify-me-backup-retention.timer"
+    },
+    {
       "path": "deploy/u5/notify-me-backup.service"
     },
     {
@@ -26,6 +32,12 @@
     },
     {
       "path": "deploy/u5/operations.env.example"
+    },
+    {
+      "path": "docs/06-deployment-and-operations.md"
+    },
+    {
+      "path": "docs/decision-register.md"
     },
     {
       "path": "package.json"

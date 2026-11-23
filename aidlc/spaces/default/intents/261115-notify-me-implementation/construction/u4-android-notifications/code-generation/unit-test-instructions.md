@@ -28,3 +28,8 @@ npm exec -- playwright test tests/e2e/u4/
 | R-06 | 오프라인 일반 복귀 뒤에도 기존 인가 예약이 동작한다. 확인된 강제 종료·종료 원인 불명 콜드 화면 진입·회수에서는 FULL 전에 캐시를 게시하지 않으며 정지 해제 뒤 부팅 신호로도 우회하지 않는다. |
 
 ARM64 JVM은 실행 후 지속 Gradle 데몬을 남기지 않는다. 전체 회귀에는 인가된 Construction Verification Command를 사용한다. x64에서는 앱 어댑터 호출과 APK 조립을, 실기기에서는 동일 부팅 프로세스 재생성, 강제 종료와 일반 복귀의 실제 OS 동작을 각각 확인한다.
+
+## 현재 구현과 문서 이력 재검증
+
+- U4 커밋 `5bf6785`와 [문서 변경 이력](../../code-generation/document-provenance.md)을 매니페스트와 대조한다. `docs/04-notification-and-scheduling.md`와 `docs/decision-register.md`의 D-097(신규 설치의 장소 수용 한도) 변경이 U4 검토에 포함되는지 확인한다.
+- 위 U4 전용 명령과 승인된 전체 앱 검증 결과를 기록한다. Android JVM, SDK·APK, 실기기 결과는 검증 환경과 실행 커밋을 적고, 이번 시도에서 실행하지 못한 항목의 이유를 남긴다.

@@ -9,8 +9,8 @@ type Verified = Candidate & { phase: 'VERIFIED'; head: JournalHead; expiresAt: n
 type LiveActivation = (Candidate & { phase: 'ACTIVE' }) | Verified;
 const generationPattern = /^[A-Za-z0-9_-]{1,128}$/;
 
-export function acquireOwnership(stateDirectory: string, kind: 'operations' | 'observer' = 'operations') {
-  const path = join(stateDirectory, kind + '-lock.sqlite');
+export function acquireOwnership(directory: string, kind: 'operations' | 'observer' | 'backups' = 'operations') {
+  const path = join(directory, kind + '-lock.sqlite');
   closeSync(openSync(path, constants.O_CREAT | constants.O_NOFOLLOW | constants.O_RDWR, 0o600));
   const file = new DatabaseSync(path);
   try { file.exec('PRAGMA busy_timeout = 0; BEGIN EXCLUSIVE'); }
