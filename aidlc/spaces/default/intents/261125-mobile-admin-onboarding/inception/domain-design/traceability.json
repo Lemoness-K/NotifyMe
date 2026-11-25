@@ -1,0 +1,43 @@
+{
+  "stage": "domain-design",
+  "upstream_ids": [
+    "FR11.1",
+    "FR11.2",
+    "FR11.3",
+    "FR11.4",
+    "FR11.5",
+    "FR11.6"
+  ],
+  "coverage": [
+    {
+      "id": "FR11.1",
+      "status": "OK",
+      "target": "FirstAdminOnboarding"
+    },
+    {
+      "id": "FR11.2",
+      "status": "OK",
+      "target": "SetupWeb"
+    },
+    {
+      "id": "FR11.3",
+      "status": "OK",
+      "target": "SetupCompletion"
+    },
+    {
+      "id": "FR11.4",
+      "status": "OK",
+      "target": "SetupCandidate"
+    },
+    {
+      "id": "FR11.5",
+      "status": "OK",
+      "target": "HouseholdMembership"
+    },
+    {
+      "id": "FR11.6",
+      "status": "OK",
+      "target": "OperationsLifecycle"
+    }
+  ]
+}
