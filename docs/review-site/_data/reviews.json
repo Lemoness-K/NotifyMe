@@ -807,5 +807,28 @@
         "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/reverse-engineering-timestamp.md"
       }
     ]
+  },
+  {
+    "id": "261125-mobile-admin-onboarding/requirements-analysis/20261125-122715139075",
+    "intent": "261125-mobile-admin-onboarding",
+    "stage": "requirements-analysis",
+    "stage_title": "Requirements Analysis",
+    "created_at": "2026-11-25T12:27:15.139075+00:00",
+    "next_stage": "Domain Design",
+    "summary": "모바일 최초 관리자 등록의 요구사항과 수용 기준을 검토합니다.",
+    "files": [
+      {
+        "title": "Notify Me 모바일 최초 관리자 등록 요구사항",
+        "summary": "운영자가 안드로이드 Chrome에서 Notify Me에 처음 로그인한 뒤, 화면에서 계정을 확인하고 바로 첫 리마인더를 저장할 수 있게 한다. 적용 범위는 Raspberry Pi에서 Tailscale HTTPS로 접근하는 단일 가구 설치다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/requirements-analysis/20261125-122715139075/01-requirements/",
+        "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/inception/requirements-analysis/requirements.md"
+      },
+      {
+        "title": "Review 01",
+        "summary": "Verdict: READY",
+        "url": "/reviews/261125-mobile-admin-onboarding/requirements-analysis/20261125-122715139075/02-review-01/",
+        "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/inception/requirements-analysis/reviews/review-01.md"
+      }
+    ]
   }
 ]
