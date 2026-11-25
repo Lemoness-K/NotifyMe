@@ -1,26 +1,28 @@
 # API 문서
 
-## 현황
+## 현재 로그인, 초대와 최초 관리자 경로
 
-구현된 HTTP endpoint, GraphQL operation, OpenAPI/AsyncAPI 명세가 없다. 저장소에는 서버 코드 및 API contract 파일도 없다. 따라서 method/path, request·response schema, status code, middleware chain을 구현 사실로 기록할 수 없다.
+다음 HTTP 경로는 `src/server/http.ts`의 `/api/v1` 아래에 있다.
 
-## 문서화된 목표 API 경계
+| 경로 | 입력·인증 | 결과·접근 경계 |
+|---|---|---|
+| `GET /client-config` | 로그인 전 구성 조회 | 웹 공개 SDK 설정 또는 로컬 합성 모드 |
+| `POST /sessions/challenges` | 동일 출처 | 난수, 발행 시각, Secure/HttpOnly/SameSite=Strict 챌린지 쿠키 |
+| `POST /sessions` | Firebase Bearer, Google 토큰, 챌린지 쿠키 | 앱 세션 쿠키·만료 시각. 검증 실패 또는 미연결 사용자는 401, 인증 공급자 장애는 503 |
+| `GET /me` | Firebase Bearer 및 앱 세션 쿠키 | 내부 사용자 ID·표시 이름, 활성 소속이 있을 때 가구 ID·역할·시간대 |
+| `DELETE /sessions/current` | 앱 세션, Firebase Bearer, 멱등 키 | 세션 종료 및 쿠키 삭제, 204 |
+| `POST /invitations/accept` | 코드, 검증된 Google/Firebase 이메일, 멱등 키 | 가입 가능 여부 검증 및 구성원 등록. 로그인 전 호출하며 이후 일반 세션을 발급 |
+| `GET/POST /households/:householdId/invitations` 및 `DELETE /households/:householdId/invitations/:invitationId` | 세션, 가구·역할 확인 | 초대 조회·발행·회수 |
+| `GET/POST /households/:householdId/reminders` | 세션, 가구 소속, POST 멱등 키 | 목록 또는 생성 결과 |
 
-설계상 NestJS API는 Firebase Authentication token을 검증하고 내부 User identity 및 활성 Household membership으로 인가한다. 모든 household 자원 접근은 서버가 household 소속을 확인해야 하며 client가 전달한 역할·소유자 값은 권한 근거가 아니다. API는 다음 업무 영역을 지원하도록 계획되어 있다.
+- 최초 등록은 `admin:bootstrap`이 담당한다. 최초 후보·확인·취소용 웹 경로는 현재 조사에서 확인되지 않았다.
+- `GET /internal/health`는 직접 접속용 내부 경로다. Caddy 프록시 예제에서 404로 차단한다.
+- 상태 변경은 정확한 요청 출처와 크기 제한을 적용한다. 오류는 코드와 요청 ID를 반환한다. 초대와 관리 작업에는 별도 요청 제한이 적용된다.
 
-- 초기 Household와 Admin을 한 번 생성하는 서버 bootstrap 명령
-- 초대 발급·취소·가입 확인 및 일회용 수락
-- Reminder 생성·조회·수정·보관·복원·영구 삭제와 Occurrence 완료/취소
-- 구성원·역할 관리 및 설정 조회·수정
-- DeviceInstallation 등록, revision 동기화 및 기기 Trigger 상태 조정
-- Worker의 회차 생성, 작업 lease, outbox 및 재시도
+## 기존 설계의 다른 API 경계
 
-정확한 HTTP method/path, pagination, 오류 code/envelope, DTO validation, versioning, API 문서 생성 방식은 미정이다. 보안 설계는 상태 변경을 GET으로 처리하지 말고 인증·초대 같은 endpoint에 요청 제한을 적용하라고 요구한다. 구체 API 계약은 구현 전에 작성되어야 한다.
+회차 처리·이력, 설정, 기기 등록·동기화, outbox 및 작업 임대·재시도를 기존 문서에서 정의한다. 이번 표는 최초 등록 변경과 맞닿은 API만 상세히 표시한다.
 
 ## 외부 서비스 경계
 
-- Firebase Authentication은 사용자 로그인 identity를 제공하며 서버가 ID token을 확인한다.
-- FCM은 업무 본문이나 위치 좌표를 담지 않는 ChangeSignal 전송 경계다. 앱이 신호 뒤에 API로 최신 revision을 가져오도록 설계됐다.
-- Caddy는 API를 외부에 직접 노출하지 않고 HTTPS 종료 및 내부 NestJS reverse proxy를 맡도록 정해졌다.
-
-이 계약들은 구현 endpoint나 외부 API 호출 코드를 뜻하지 않는다.
+Google Identity Services, Firebase Authentication과 서버 SDK가 로그인 증명을 제공·검증한다. FCM은 Android 변경 동기화의 기존 외부 경계다.

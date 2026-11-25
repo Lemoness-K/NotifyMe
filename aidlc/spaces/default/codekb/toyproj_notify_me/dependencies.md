@@ -2,29 +2,18 @@
 
 ## 외부 패키지 의존성
 
-코드 manifest와 lockfile이 없어 실제 외부 패키지 dependency graph는 없다. 문서상 예정된 외부 기술 및 역할은 다음과 같다.
+버전 및 역할은 [기술 스택](technology-stack.md)에 정리했다. 인증과 배포의 연결은 다음과 같다.
 
-| 이름 | 계획된 사용 | 상태 |
-|---|---|---|
-| React Router, Vite | 공유 SPA UI | 선택됨, 미구현 |
-| Capacitor | Android WebView 앱 셸 | 계획, 미구현 |
-| NestJS, Node.js | API 및 Worker | 선택됨, 미구현 |
-| Prisma ORM 7, `@prisma/adapter-better-sqlite3` | SQLite 접근과 migration | 선택됨, 미구현 |
-| SQLite | 로컬 영속 저장소 | 선택됨, 미구현 |
-| Firebase Authentication | Google 로그인 | 선택됨, 미구현 |
-| Firebase Cloud Messaging | 비사용자용 변경 동기화 신호 | 선택됨, 미구현 |
-| Caddy | HTTPS ingress·정적 파일·reverse proxy | 선택됨, 미구현 |
-| Android SDK / Kotlin | 알람·알림·geofence adapter | 기술 경계 계획, 미구현 |
-| Raspberry Pi OS `systemd`/`journald` | process supervision·운영 로그 | 선택됨, 미구현 |
+- `src/web/client.ts`는 Google Identity Services로 Google credential을 받고 Firebase Web SDK로 교환한다. PC와 모바일 브라우저가 공유하는 흐름이다.
+- `src/server/provider.ts`는 Firebase Admin으로 Firebase 증명을, Google Auth Library에 설정한 OAuth 클라이언트로 Google 증명을 검증한다. 테스트 제공자는 별도 격리 모드로 연결한다.
+- `src/server/storage.ts`는 Prisma와 better-sqlite3 기반 adapter를 사용한다. 로컬·복구 SQL 실행은 Node의 `node:sqlite`에 의존한다.
+- `src/server/config.ts`는 인증 설정을 분리한다. 대상 모드의 API는 loopback에 바인딩하고 단일 HTTPS origin을 요구한다.
+- Caddy 예제는 내부 API 프록시와 정적 웹 배포를 제공한다. 모바일 가이드는 동일 tailnet의 Serve를 앞에 둔다.
 
-정확한 패키지 버전, transitive dependency, license, lockfile, 취약점 상태는 확인할 수 없다.
+## 내부 의존 방향
 
-## 문서화된 의존 방향
+부트스트랩·일반 로그인 → 인증 제공자와 Prisma 저장소. 보호된 API → 활성 사용자·세션 → 가구 역할·소속. 초대 → 검증된 이메일·가구 멤버십 결과 → 일반 로그인. 관리형 기동 → 활성화 파일·DB 세대·권위 원장 검사 → API와 작업 기동.
 
-- 공유 UI는 HTTP API와 platform-neutral capability ports에 의존하도록 계획됐다.
-- NestJS application은 도메인 규칙을 ORM과 framework 타입에서 분리하도록 설계됐다.
-- Prisma repository가 SQLite에 접근하며 API와 단일 Worker가 persistence를 공유한다.
-- 플랫폼 adapter가 OS API, FCM/identity provider와 연결되는 경계를 맡는다.
-- Caddy가 인터넷 ingress를 단일화하고 API·DB 포트를 외부에 직접 노출하지 않는 방향이다.
+## 이전 설계의 외부 경계
 
-이는 설계 의존 방향이며 실제 import adjacency list가 아니다. 현재 package 간 참조·순환 의존성은 없음(코드 부재로 미관찰).
+Android SDK/Kotlin은 알람·권한·지오펜스를, FCM은 변경 신호를 담당한다. 그 경계의 전이 의존성이나 런타임 검증은 이번 조사 범위에 포함하지 않았다.
