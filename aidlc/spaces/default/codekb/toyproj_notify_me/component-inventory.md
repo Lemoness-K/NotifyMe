@@ -1,55 +1,38 @@
 # 구성요소 목록
 
-이 저장소의 아래 항목은 코드에서 발견한 구현 구성요소가 아니라 설계에 기록된 제품·운영 경계다. 배포 가능한 소프트웨어는 아직 확인되지 않았다.
-
 ## 설계 문서 저장소
 
-- **책임**: 요구사항·도메인·아키텍처·운영·보안·검증 정책과 ADR을 관리한다.
-- **의존성**: 안정 ID와 문서 간 링크를 통해 상위 기준과 세부 설계를 연결한다.
-- **상태**: 구현 산출물 없음.
+제품 기준, 안정 ID, ADR과 운영 안내가 있다. 제품 추적표는 이번 후속 작업에서 실제 구현·테스트를 연결할 대상이다.
 
 ## 공유 Web UI
 
-- **책임**: 브라우저와 Capacitor WebView에서 Reminder·목록·이력·설정 UI 제공.
-- **기술 계획**: React Router + Vite SPA, TypeScript.
-- **의존성 계획**: NestJS HTTP API와 platform-neutral capability ports.
-- **상태**: 설계만 존재.
+- `src/web/client.ts`가 웹 Google/Firebase 인증과 동일 출처 요청을 연결한다.
+- 결과를 공유 React UI에 전달한다. 브라우저의 Firebase 인증은 메모리 지속성을 쓰며, Android bridge 경로가 따로 있다.
 
 ## Android 앱 셸 및 플랫폼 adapter
 
-- **책임**: 공유 UI를 담고 로컬 알람·시스템 알림·geofence·권한 기능 제공.
-- **기술 계획**: Capacitor shell 및 capability별 Kotlin adapter.
-- **의존성 계획**: Android OS 기능, 공유 UI bridge, 서버 동기화.
-- **상태**: 설계만 존재.
+이전 설계에서 공유 UI, 알람·시스템 알림·지오펜스와 권한 기능을 담당한다. 이번 집중 분석에서는 웹 클라이언트의 경계만 확인했다.
 
 ## NestJS API 및 업무 모듈
 
-- **책임**: 인증·인가, 가구와 Reminder 업무, 설정, API 계약 제공.
-- **기술 계획**: Node.js runtime, NestJS feature modules, 모듈형 모놀리스.
-- **의존성 계획**: identity provider, domain/application 경계, persistence repository.
-- **상태**: 설계만 존재; endpoint 구현은 없음.
+`src/server/auth.ts`는 인증 증명과 내부 사용자 연결을 처리한다. `provider.ts`가 Google/Firebase 검증을 수행한다. `bootstrap-admin.ts`는 최초 등록 CLI를 연결하고 `http.ts`는 브라우저 세션·가구 작업·초대 API를 제공한다.
 
 ## 단일 Worker 및 동기화 경계
 
-- **책임**: 반복 회차 생성, due 작업 점유, outbox/retry, 변경 revision 및 기기 동기화 지원.
-- **의존성 계획**: 업무 모듈, SQLite job lease/outbox, FCM ChangeSignal adapter.
-- **상태**: 설계만 존재.
+이전 설계에서 반복 회차, 작업 점유, 변경 revision과 전달 재시도를 담당한다. 관리형 앱 시작에서 작업은 서빙 상태 발행 이후 기동한다.
 
 ## Prisma 저장소 및 SQLite
 
-- **책임**: 서버 데이터와 migration을 관리하는 persistence boundary.
-- **기술 계획**: Prisma ORM 7, `@prisma/adapter-better-sqlite3`, SQLite.
-- **의존성 계획**: NestJS API 및 Worker. Prisma 타입은 domain에 노출하지 않도록 설계됨.
-- **상태**: schema·migration·DB 파일 없음.
+`storage.ts`, Prisma schema와 SQL migration이 저장 경계다. 최초 가구의 `singleton` 값 제약과 고유 인덱스, 사용자·가구 조합의 멤버십 기본 키를 사용한다.
 
 ## Caddy ingress
 
-- **책임**: HTTPS 종료, React 정적 build 제공, NestJS API reverse proxy.
-- **의존성 계획**: DDNS hostname, 외부 TCP 80/443 도달성, RPi 내부 API.
-- **상태**: 설계만 존재; 실제 hostname·route 설정 없음.
+`deploy/u1/Caddyfile.example`은 같은 출처의 정적 SPA·API를 제공하고 내부 경로를 차단한다. Tailscale 가이드는 Serve가 이 Caddy 앞에서 TLS를 종료하는 구성을 설명한다.
 
 ## Raspberry Pi 운영 환경
 
-- **책임**: API/Worker 자동 시작과 재시작, 로그·상태 점검, 백업 및 복구.
-- **기술 계획**: systemd, journald, 로컬 헬스체크, 암호화된 외부 백업.
-- **상태**: 문서상 체크리스트이며 실제 호스트 설정은 발견되지 않음.
+U5 운영 예제는 systemd, 로컬 소켓, 별도 권위 원장, 백업과 복구를 설명한다. 현재 분석은 설정·예제·운영 코드에 한정하며 운영 환경의 설정 및 계정은 열지 않았다.
+
+## 관리형 활성화와 복구
+
+`src/server/operations/activation.ts`, `runtime.ts`, `restore.ts`가 상태 파일과 SQLite 세대, 검증된 후보 DB, 권위 원장 조건을 연결한다. 복구 중 API와 작업 기동이 보류된다.
