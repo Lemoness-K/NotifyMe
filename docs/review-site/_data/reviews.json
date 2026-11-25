@@ -742,5 +742,70 @@
         "source_path": "aidlc/spaces/default/intents/261115-notify-me-implementation/construction/u5-operations-and-recovery/code-generation/reviews/review-04.md"
       }
     ]
+  },
+  {
+    "id": "261125-mobile-admin-onboarding/reverse-engineering/20261125-094006524030",
+    "intent": "261125-mobile-admin-onboarding",
+    "stage": "reverse-engineering",
+    "stage_title": "Reverse Engineering",
+    "created_at": "2026-11-25T09:40:06.524030+00:00",
+    "next_stage": "Requirements Analysis",
+    "summary": "검토가 필요한 AI-DLC 단계 산출물입니다.",
+    "files": [
+      {
+        "title": "사업 개요",
+        "summary": "Notify Me는 가족·동거인·파트너가 부탁과 반복 할 일을 함께 기록하고, 적절한 시간 또는 장소에서 담당자에게 알려 주며, 완료 결과를 공유하는 가구용 리마인더 서비스다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/reverse-engineering/20261125-094006524030/01-business-overview/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/business-overview.md"
+      },
+      {
+        "title": "아키텍처 분석",
+        "summary": "공유 React SPA와 NestJS API가 단일 Raspberry Pi 배포에서 SQLite를 사용한다. 모바일 접속 가이드의 HTTPS 종단은 Tailscale Serve이며, Caddy는 loopback에서 정적 파일을 제공하고 API를 loopback NestJS로 전달한다. 실제 운영 호스트에는 접속하지...",
+        "url": "/reviews/261125-mobile-admin-onboarding/reverse-engineering/20261125-094006524030/02-architecture/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/architecture.md"
+      },
+      {
+        "title": "코드 구조 분석",
+        "summary": "| 경로 | 분류 | 역할 |",
+        "url": "/reviews/261125-mobile-admin-onboarding/reverse-engineering/20261125-094006524030/03-code-structure/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/code-structure.md"
+      },
+      {
+        "title": "API 문서",
+        "summary": "다음 HTTP 경로는 `src/server/http.ts`의 `/api/v1` 아래에 있다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/reverse-engineering/20261125-094006524030/04-api-documentation/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/api-documentation.md"
+      },
+      {
+        "title": "구성요소 목록",
+        "summary": "제품 기준, 안정 ID, ADR과 운영 안내가 있다. 제품 추적표는 이번 후속 작업에서 실제 구현·테스트를 연결할 대상이다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/reverse-engineering/20261125-094006524030/05-component-inventory/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/component-inventory.md"
+      },
+      {
+        "title": "기술 스택",
+        "summary": "| 영역 | 명시 버전 또는 설정 | 역할 |",
+        "url": "/reviews/261125-mobile-admin-onboarding/reverse-engineering/20261125-094006524030/06-technology-stack/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/technology-stack.md"
+      },
+      {
+        "title": "의존성 분석",
+        "summary": "버전 및 역할은 [기술 스택](technology-stack.md)에 정리했다. 인증과 배포의 연결은 다음과 같다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/reverse-engineering/20261125-094006524030/07-dependencies/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/dependencies.md"
+      },
+      {
+        "title": "코드 품질 평가",
+        "summary": "인증·최초 등록·SQLite·복원과 모바일 운영 경로를 정적으로 확인했다. 테스트 실행과 운영 접근은 이번 단계에 포함하지 않았다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/reverse-engineering/20261125-094006524030/08-code-quality-assessment/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/code-quality-assessment.md"
+      },
+      {
+        "title": "Reverse Engineering Timestamp",
+        "summary": "- Date: 2026-11-25",
+        "url": "/reviews/261125-mobile-admin-onboarding/reverse-engineering/20261125-094006524030/09-reverse-engineering-timestamp/",
+        "source_path": "aidlc/spaces/default/codekb/toyproj_notify_me/reverse-engineering-timestamp.md"
+      }
+    ]
   }
 ]
