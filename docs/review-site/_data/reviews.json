@@ -830,5 +830,34 @@
         "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/inception/requirements-analysis/reviews/review-01.md"
       }
     ]
+  },
+  {
+    "id": "261125-mobile-admin-onboarding/domain-design/20261125-142046114448",
+    "intent": "261125-mobile-admin-onboarding",
+    "stage": "domain-design",
+    "stage_title": "Domain Design",
+    "created_at": "2026-11-25T14:20:46.114448+00:00",
+    "next_stage": "Units Generation",
+    "summary": "설치 주기와 복원 안전성, 운영자 전용 Tailscale 및 최초 관리자 후보 정책을 검토합니다.",
+    "files": [
+      {
+        "title": "모바일 최초 관리자 등록 구성요소",
+        "summary": "입력은 [모바일 최초 관리자 등록 요구사항](../requirements-analysis/requirements.md), 기존 코드 분석 `architecture.md`와 `component-inventory.md`다. 설계의 소유권과 상태 경계를 여기에서 정하고 화면·API·스키마의 상세 계약은 기능 설계로 이어간다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/domain-design/20261125-142046114448/01-components/",
+        "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/inception/domain-design/components.md"
+      },
+      {
+        "title": "모바일 최초 관리자 등록 아키텍처 결정",
+        "summary": "완료된 `D-074` 최초 관리자 CLI는 현재 가구의 존재를 검사한다. 사용자 요구사항 `FR11.1`과 `NFR12`는 신규 설치나 승인된 재설정의 의도와 장애·복원·가구 종료를 구분해야 한다. 기존 운영 런타임은 일반 DB 설정 경로와 별도 활성화 세대를 구분하고 복원을 새 세대로 게시한다. 요구사항 검토 R-...",
+        "url": "/reviews/261125-mobile-admin-onboarding/domain-design/20261125-142046114448/02-decisions/",
+        "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/inception/domain-design/decisions.md"
+      },
+      {
+        "title": "Review 01",
+        "summary": "Verdict: READY",
+        "url": "/reviews/261125-mobile-admin-onboarding/domain-design/20261125-142046114448/03-review-01/",
+        "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/inception/domain-design/reviews/review-01.md"
+      }
+    ]
   }
 ]
