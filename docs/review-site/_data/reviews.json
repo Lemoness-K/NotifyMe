@@ -859,5 +859,34 @@
         "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/inception/domain-design/reviews/review-01.md"
       }
     ]
+  },
+  {
+    "id": "261125-mobile-admin-onboarding/units-generation/20261126-000439077438",
+    "intent": "261125-mobile-admin-onboarding",
+    "stage": "units-generation",
+    "stage_title": "Units Generation",
+    "created_at": "2026-11-26T00:04:39.077438+00:00",
+    "next_stage": "Functional Design",
+    "summary": "단일 서비스 구현 범위와 요구사항 연결을 검토합니다.",
+    "files": [
+      {
+        "title": "모바일 최초 관리자 등록 구현 단위",
+        "summary": "[요구사항](../requirements-analysis/requirements.md), [구성요소](../domain-design/components.md), [설계 결정](../domain-design/decisions.md)에 따른 단일 서비스 변경이다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/units-generation/20261126-000439077438/01-unit-of-work/",
+        "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/inception/units-generation/unit-of-work.md"
+      },
+      {
+        "title": "구현 단위 의존 관계",
+        "summary": "[구성요소](../domain-design/components.md)와 [요구사항](../requirements-analysis/requirements.md), [설계 결정](../domain-design/decisions.md)의 변경 경계는 한 서비스 안에서 내부 계약으로 연결한다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/units-generation/20261126-000439077438/02-unit-of-work-dependency/",
+        "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/inception/units-generation/unit-of-work-dependency.md"
+      },
+      {
+        "title": "구현 단위 요구사항 연결",
+        "summary": "[요구사항](../requirements-analysis/requirements.md)과 [구성요소](../domain-design/components.md), [설계 결정](../domain-design/decisions.md)에 따라 수용 기준 전체를 한 단위에 배정한다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/units-generation/20261126-000439077438/03-unit-of-work-story-map/",
+        "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/inception/units-generation/unit-of-work-story-map.md"
+      }
+    ]
   }
 ]
