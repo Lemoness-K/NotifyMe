@@ -28,10 +28,12 @@ import type { InstallationPlanParticipant } from './work-scheduling.js';
 import { InstallationRepository } from './installations.js';
 import { exclusionInput, installationId, installationQueryInteger, locationEventInput, locationPageQuery, registrationInput } from './installation-input.js';
 import { startSignalDelivery, type SignalSender } from './notification-outbox.js';
+import type { FirstAdminOnboarding } from './admin-onboarding.js';
 
 const services = Symbol('U1 services');
 const challengeName = '__Host-notify-login';
 const sessionName = '__Host-notify-session';
+const setupName = '__Host-notify-setup';
 const secureCookie = { secure: true, httpOnly: true, sameSite: 'strict', path: '/' } as const;
 
 export interface AppOptions {
@@ -57,6 +59,7 @@ export interface AppOptions {
   onWorkService?: (service: WorkService) => void;
   servingGate?: { isPublished: () => boolean; deferWorkers: (start: () => void) => void };
   trustedProxy?: boolean;
+  onboarding?: FirstAdminOnboarding;
   log?: (record: { requestId: string; route: string; status: number; durationMs: number; code?: string }) => void;
 }
 type Services = AppOptions & {
@@ -152,10 +155,41 @@ class CoreController {
     if (typeof token !== 'string' || token.length === 0 || token.length > 12000) {
       throw new AppError(422, 'INVALID_FIELD', { field: 'googleToken' });
     }
-    const result = await this.runtime.auth.issue(cookie(request, challengeName), bearer(request), token);
+    const setup = body && typeof body === 'object' && 'setup' in body && body.setup === true;
+    const result = await this.runtime.auth.issue(cookie(request, challengeName), bearer(request), token, !!setup);
     response.clearCookie(challengeName, secureCookie);
+    if (result.setup) {
+      response.cookie(setupName, result.secret, { ...secureCookie, expires: result.expiresAt });
+      return { setup: { displayAccount: result.setup.displayAccount, expiresAt: result.expiresAt.toISOString() } };
+    }
+    if (cookie(request, setupName)) response.clearCookie(setupName, secureCookie);
     response.cookie(sessionName, result.secret, { ...secureCookie, expires: result.expiresAt });
     return { expiresAt: result.expiresAt.toISOString() };
+  }
+
+  private setup() {
+    if (!this.runtime.onboarding) throw new AppError(401, 'UNAUTHENTICATED');
+    return this.runtime.onboarding;
+  }
+
+  @Get('setup/candidate')
+  setupStatus(@Req() request: Request) {
+    return this.setup().status(cookie(request, setupName), bearer(request));
+  }
+
+  @Post('setup/confirm')
+  async confirmSetup(@Req() request: Request, @Res({ passthrough: true }) response: Response) {
+    const result = await this.setup().confirm(cookie(request, setupName), bearer(request));
+    response.clearCookie(setupName, secureCookie);
+    response.cookie(sessionName, result.secret, { ...secureCookie, expires: result.expiresAt });
+    return { expiresAt: result.expiresAt.toISOString() };
+  }
+
+  @Delete('setup/candidate')
+  @HttpCode(204)
+  async cancelSetup(@Req() request: Request, @Res({ passthrough: true }) response: Response) {
+    await this.setup().cancel(cookie(request, setupName), bearer(request));
+    response.clearCookie(setupName, secureCookie);
   }
 
   @Delete('sessions/current')
@@ -386,7 +420,7 @@ export async function createApp(options: AppOptions) {
   @Module({
     controllers: [CoreController],
     providers: [{ provide: services, useValue: {
-      ...options, auth: new SessionService(options.db, options.provider, options.clock),
+      ...options, auth: new SessionService(options.db, options.provider, options.clock, options.onboarding),
       households: new HouseholdRepository(options.db, options.origin, options.clock, workEffects(plans, {
         ...options.householdEffects,
         async beforeRemoveTargets(tx, home, user, now) {

@@ -144,6 +144,8 @@ MVP의 NestJS API·Worker 장기 실행 프로세스는 호스트 `systemd` 서�
 로그인 뒤 사용자가 가입을 확정하면 서버가 인증된 사용자, 유효 토큰, household Membership 생성을
 하나의 transaction으로 처리한다. 동시 클릭이나 재전송에도 토큰은 한 번만 성공한다(`D-023`).
 
+운영자 전용 Tailscale 배포의 모바일 최초 등록은 기존 인증·가구 경계와 관리형 운영의 활성 DB 세대를 사용한다. 설정 주기 자격과 완료는 서로 다른 저장 경계에 보존하며 앱이 자동으로 신규 DB를 준비하지 않는다. [모바일 최초 관리자 등록 설계](./designs/account-and-household-onboarding.md#모바일-최초-관리자-등록).
+
 ### 3.3 Port 경계
 
 | Port | 책임 | 초기 Adapter 후보 |

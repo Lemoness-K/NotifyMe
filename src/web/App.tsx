@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link, Route, Routes, useLocation, useNavigate } from 'react-router';
-import { api, ApiError, deviceError, openSession, type ClientConfig, type Me, type Preferences, type Reminder } from './client.js';
+import { api, ApiError, deviceError, openSession, type ClientConfig, type LoginCredential, type Me, type Preferences,
+  type Reminder, type SetupAccount } from './client.js';
 import { errorText, localeFor, retryAfterText, words } from './messages.js';
 import { HouseholdPreferences, Invitations, Members, PersonalPreferences, SettingsHome } from './Settings.js';
 import { WorkBadge, WorkOptions, workFormFields, type TriggerMode } from './work-form.js';
@@ -30,10 +31,27 @@ function readInvitation(path: string, hash: string) {
   return { code: hash.slice(1), key: '' };
 }
 
+const setupHintKey = 'notify-me-setup-pending';
+function getSetupHint() {
+  try { return sessionStorage.getItem(setupHintKey) === '1'; }
+  catch { return false; }
+}
+
+function writeSetupHint(active: boolean) {
+  try {
+    if (active) sessionStorage.setItem(setupHintKey, '1');
+    else sessionStorage.removeItem(setupHintKey);
+  } catch { /* Optional guidance for refresh; credentials stay in the browser session. */ }
+}
+
 export function App() {
   const [deviceLocale] = useState(() => localeFor(typeof navigator === 'undefined' ? 'ko-KR' : navigator.language));
   const [config, setConfig] = useState<ClientConfig>();
   const [session, setSession] = useState<Session>();
+  const [setup, setSetup] = useState<{ account: SetupAccount; credential: LoginCredential }>();
+  const [setupHint, setSetupHint] = useState(getSetupHint);
+  const setupSubmit = useRef(false);
+  const setupHeading = useRef<HTMLHeadingElement>(null);
   const [profile, setProfile] = useState<Me>();
   const [preferences, setPreferences] = useState<Preferences>();
   const [installation, setInstallation] = useState<DeviceStatus>();
@@ -64,6 +82,7 @@ export function App() {
   useEffect(() => {
     void loadConfig();
   }, []);
+  useEffect(() => { if (setup) setupHeading.current?.focus(); }, [setup]);
   useEffect(() => {
     document.documentElement.lang = locale;
     if (session) void androidDevice()?.locale({ locale: locale === 'en-US' ? 'en' : 'ko' }).catch(() => {});
@@ -115,44 +134,10 @@ export function App() {
       const device = androidDevice();
       credential = restore && device ? { token: async () => undefined, signOut: () => device.clearSession() } :
         await openSession(loginConfig, 'google-button', join);
-      const me = await api<Me>('/me', await credential.token());
-      const { token, signOut } = credential;
-      const controller = new AbortController();
-      const signal = controller.signal;
-      const current: Session = {
-        me, signOut, end: () => controller.abort(), pendingCreates: new Map(), pendingWrites: new Map(),
-        async request<T>(path: string, init?: RequestInit, key?: string) {
-          try {
-            signal.throwIfAborted();
-            const bearer = await token();
-            signal.throwIfAborted();
-            const result = await api<T>(path, bearer, { ...init, signal }, key);
-            signal.throwIfAborted();
-            return result;
-          } catch (failure) {
-            if (!signal.aborted && failure instanceof ApiError && failure.status === 401) {
-              closeSession(current, 'UNAUTHENTICATED');
-              signOutPending.current = signOut().catch(() => {});
-            } else if (!signal.aborted && path.startsWith('/households/') &&
-                failure instanceof ApiError && ['HOUSEHOLD_ACCESS_DENIED', 'HOUSEHOLD_ACCESS_REVOKED'].includes(failure.code)) {
-              void refreshProfile(current).catch(() => {});
-            }
-            throw failure;
-          }
-        },
-      };
-      activeSession.current = current;
-      setSession(current);
-      setProfile(me);
-      if (device) void bindInstallation(current);
-      setInvitation(undefined);
-      navigate('/reminders', { replace: true });
-      // Account settings are optional on older servers and use the same session as the app.
-      void current.request<Preferences>('/me/settings').then((saved) => {
-        if (activeSession.current === current && Number.isInteger(saved.revision)) {
-          setPreferences((existing) => existing && existing.revision > saved.revision ? existing : saved);
-        }
-      }).catch(() => {});
+      if (credential.setup) {
+        setSetup({ account: credential.setup, credential });
+        rememberSetup(true);
+      } else await activateSession(credential);
     } catch (failure) {
       if (credential && (!restore || failure instanceof ApiError && failure.status === 401)) await credential.signOut().catch(() => {});
       if (failure instanceof ApiError) setRetryAt(failure.retryAt);
@@ -160,6 +145,90 @@ export function App() {
         ? failure.status === 401 ? 'UNAUTHENTICATED' : failure.code
         : 'UNAVAILABLE');
     } finally {
+      setBusy(false);
+    }
+  }
+
+  function rememberSetup(active: boolean) {
+    setSetupHint(active);
+    writeSetupHint(active);
+  }
+
+  async function activateSession({ token, signOut }: LoginCredential) {
+    const me = await api<Me>('/me', await token());
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const current: Session = {
+      me, signOut, end: () => controller.abort(), pendingCreates: new Map(), pendingWrites: new Map(),
+      async request<T>(path: string, init?: RequestInit, key?: string) {
+        try {
+          signal.throwIfAborted();
+          const bearer = await token();
+          signal.throwIfAborted();
+          const result = await api<T>(path, bearer, { ...init, signal }, key);
+          signal.throwIfAborted();
+          return result;
+        } catch (failure) {
+          if (!signal.aborted && failure instanceof ApiError && failure.status === 401) {
+            closeSession(current, 'UNAUTHENTICATED');
+            signOutPending.current = signOut().catch(() => {});
+          } else if (!signal.aborted && path.startsWith('/households/') &&
+              failure instanceof ApiError && ['HOUSEHOLD_ACCESS_DENIED', 'HOUSEHOLD_ACCESS_REVOKED'].includes(failure.code)) {
+            void refreshProfile(current).catch(() => {});
+          }
+          throw failure;
+        }
+      },
+    };
+    activeSession.current = current;
+    setSession(current);
+    setProfile(me);
+    setSetup(undefined);
+    rememberSetup(false);
+    if (androidDevice()) void bindInstallation(current);
+    setInvitation(undefined);
+    navigate('/reminders', { replace: true });
+    // Account settings are optional on older servers and use the same session as the app.
+    void current.request<Preferences>('/me/settings').then((saved) => {
+      if (activeSession.current === current && Number.isInteger(saved.revision)) {
+        setPreferences((existing) => existing && existing.revision > saved.revision ? existing : saved);
+      }
+    }).catch(() => {});
+  }
+
+  async function finishSetup(action: 'confirm' | 'cancel') {
+    if (!setup || setupSubmit.current) return;
+    setupSubmit.current = true;
+    setBusy(true);
+    setError('');
+    setRetryAt(undefined);
+    const { credential } = setup;
+    let confirmed = false;
+    try {
+      const token = await credential.token();
+      if (action === 'confirm') {
+        await api('/setup/confirm', token, { method: 'POST' });
+        confirmed = true;
+        await activateSession(credential);
+      } else {
+        await api('/setup/candidate', token, { method: 'DELETE' });
+        setSetup(undefined);
+        rememberSetup(false);
+        await credential.signOut().catch(() => {});
+      }
+    } catch (failure) {
+      if (failure instanceof ApiError) setRetryAt(failure.retryAt);
+      const reauthenticate = confirmed || (failure instanceof ApiError &&
+        (failure.status === 401 || failure.code === 'SETUP_EXPIRED'));
+      if (reauthenticate) {
+        setSetup(undefined);
+        rememberSetup(true);
+        await credential.signOut().catch(() => {});
+      }
+      setError(action === 'cancel' ? 'SETUP_CANCEL_UNKNOWN' :
+        failure instanceof ApiError && failure.code === 'SETUP_EXPIRED' ? failure.code : 'SETUP_RESULT_UNKNOWN');
+    } finally {
+      setupSubmit.current = false;
       setBusy(false);
     }
   }
@@ -222,8 +291,20 @@ export function App() {
     </header>
     {error && <p role="alert">{errorText(locale, error)}</p>}
     {retryAt !== undefined && <p role="status">{retryAfterText(locale, retryAt)}</p>}
-    {!session ? <section className="panel">
+    {setup ? <section className="panel" aria-labelledby="setup-heading" aria-busy={busy}>
+      <h2 id="setup-heading" ref={setupHeading} tabIndex={-1}>{text.setupHeading}</h2>
+      <p className="setup-account">{text.setupAccount} <strong>{setup.account.displayAccount}</strong></p>
+      <p>{text.setupExplanation}</p>
+      <div className="form-actions">
+        <button type="button" className="primary" data-testid="setup-confirm" onClick={() => void finishSetup('confirm')} disabled={busy}>
+          {text.setupStart}
+        </button>
+        <button type="button" data-testid="setup-cancel" onClick={() => void finishSetup('cancel')} disabled={busy}>{text.cancel}</button>
+      </div>
+      {busy && <p role="status">{text.loading}</p>}
+    </section> : !session ? <section className="panel">
       <h2>{inviting ? text.inviteJoin : text.login}</h2>
+      {!inviting && setupHint && <p>{text.setupReauthenticate}</p>}
       {inviting && !invitation ? <p role="alert">{text.INVITATION_INVALID}</p> :
         <button type="button" className="primary" onClick={() => void login()} disabled={busy || !config}>
           {inviting ? config?.mode === 'synthetic' ? text.localJoin : text.googleJoin
