@@ -1,0 +1,20 @@
+---
+layout: review
+title: "모바일 최초 관리자 실기기 검증"
+source_path: "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/operation/deployment-execution/smoke-test-results.md"
+permalink: "/reviews/261125-mobile-admin-onboarding/deployment-execution/20261126-225743383635/02-smoke-test-results/"
+---
+
+# 모바일 최초 관리자 실기기 검증
+
+[빌드·테스트 결과](../../construction/build-and-test/test-results.md)의 합성 인증 자동 검증 후, 별도 SQLite를 사용하는 Raspberry Pi ARM64 테스트 설치에서 실제 사용 경로를 확인했다.
+
+| 확인 항목 | 결과 |
+|---|---|
+| Android Chrome, Wi-Fi 끔, 모바일 데이터와 Tailscale 경유 | 운영자에게 이 조건으로 진행하도록 안내했고, 재조회까지 정상이라고 응답했다. 망과 기기 조건은 운영자 확인에 따른다. |
+| Google 로그인·최초 설정 확인 | 서버에서 세션 요청과 최초 설정 확인 요청 각각 201 한 건을 확인했다. |
+| 리마인더 저장·재조회 | 서버에서 저장 201 한 건과 목록 조회 200을 확인했다. 운영자가 목록 재조회 결과를 확인했다. |
+| 중복 생성 방지 | 읽기 전용 집계에서 완료 기록 1건, 가구 1건, ADMIN 1건, 리마인더 1건, 남은 후보 0건을 확인했다. |
+| 설정 종료 | 보호된 설정 기록은 `SEALED`였다. |
+
+NFR14 실제 Android 모바일 수용 검증을 통과했다. 테스트 DB는 기록 검증을 위해 보존했다. 결과에 계정 정보, 토큰, 사용자 작성 제목은 포함하지 않는다.

@@ -888,5 +888,34 @@
         "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/inception/units-generation/unit-of-work-story-map.md"
       }
     ]
+  },
+  {
+    "id": "261125-mobile-admin-onboarding/deployment-execution/20261126-225743383635",
+    "intent": "261125-mobile-admin-onboarding",
+    "stage": "deployment-execution",
+    "stage_title": "Deployment Execution",
+    "created_at": "2026-11-26T22:57:43.383635+00:00",
+    "next_stage": "",
+    "summary": "Pi의 격리 환경에서 Android Chrome의 최초 관리자 등록과 리마인더 저장·재조회를 검증했습니다.",
+    "files": [
+      {
+        "title": "모바일 최초 관리자 배포 검증 진행 기록",
+        "summary": "- Raspberry Pi 5 ARM64에서 개발 후보의 빌드와 임시 상태 디렉터리를 사용하는 설치 준비 명령을 확인했다. 실제 Chromium에서 합성 Google/Firebase 인증, 취소·새로고침·재인증, 최초 등록, 저장·재조회를 실행한 마지막 개별 검증은 종료 코드 0이었다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/deployment-execution/20261126-225743383635/01-deployment-log/",
+        "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/operation/deployment-execution/deployment-log.md"
+      },
+      {
+        "title": "모바일 최초 관리자 실기기 검증",
+        "summary": "[빌드·테스트 결과](../../construction/build-and-test/test-results.md)의 합성 인증 자동 검증 후, 별도 SQLite를 사용하는 Raspberry Pi ARM64 테스트 설치에서 실제 사용 경로를 확인했다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/deployment-execution/20261126-225743383635/02-smoke-test-results/",
+        "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/operation/deployment-execution/smoke-test-results.md"
+      },
+      {
+        "title": "배포 확인과 서비스 상태",
+        "summary": "[빌드·테스트 결과](../../construction/build-and-test/test-results.md)를 기준으로 Pi의 기존 앱과 별도 테스트 인스턴스를 확인했다.",
+        "url": "/reviews/261125-mobile-admin-onboarding/deployment-execution/20261126-225743383635/03-health-check-report/",
+        "source_path": "aidlc/spaces/default/intents/261125-mobile-admin-onboarding/operation/deployment-execution/health-check-report.md"
+      }
+    ]
   }
 ]
