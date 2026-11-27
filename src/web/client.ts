@@ -9,6 +9,12 @@ export type Role = 'ADMIN' | 'MEMBER';
 export type Me = { userId: string; householdId?: string; defaultTimeZone?: string; householdRole?: Role };
 export type Preferences = { revision: number; locale?: 'ko-KR' | 'en-US'; timeZone?: string };
 type LoginProof = { firebaseToken: string; googleToken: string };
+export type SetupAccount = { displayAccount: string; expiresAt: string };
+export type LoginCredential = {
+  token: () => Promise<string | undefined>;
+  signOut: () => Promise<void>;
+  setup?: SetupAccount;
+};
 type ReminderTrigger = { kind?: 'TIME' | 'LOCATION'; scheduledAt?: string; timeZone?: string; placeName?: string; latitude?: number;
   longitude?: number; radiusM?: number; durationMinutes?: number; event?: string };
 export type Reminder = {
@@ -125,7 +131,8 @@ async function googleProof(clientId: string, nonce: string, elementId: string): 
   }
 }
 
-export async function openSession(config: ClientConfig, buttonId: string, invitation?: { code: string; key: string }) {
+export async function openSession(config: ClientConfig, buttonId: string,
+  invitation?: { code: string; key: string }): Promise<LoginCredential> {
   if (config.mode === 'android') {
     const device = androidDevice();
     if (!device) throw new ApiError('UNAVAILABLE');
@@ -172,8 +179,10 @@ export async function openSession(config: ClientConfig, buttonId: string, invita
     if (invitation) {
       await api('/invitations/accept', bearer, { method: 'POST', body: JSON.stringify({ code: invitation.code }) }, invitation.key);
     }
-    await api('/sessions', bearer, { method: 'POST', body: JSON.stringify({ googleToken }) });
-    return { token, signOut };
+    const result = await api<{ setup?: SetupAccount }>('/sessions', bearer, {
+      method: 'POST', body: JSON.stringify({ googleToken, ...(!invitation ? { setup: true } : {}) }),
+    });
+    return { token, signOut, setup: result?.setup };
   } catch (error) {
     await signOut();
     throw error;

@@ -102,6 +102,8 @@ MVP에서는 household 하나만 생성하고 앱이 이를 기본 context로 �
 | `Membership` | `household_id`, `user_id`, `role: ADMIN \| MEMBER`, `status`, `joined_at`, `left_at`, `removed_by_user_id` | User와 Household 사이의 다대다 연결이다. 활성 membership만 `D-010` 권한을 얻는다. Admin의 제거 뒤에는 상태를 비활성으로 바꿔 접근을 차단하고 이력 참조를 유지한다(`D-059`). household 안에서 사용자는 역할 하나만 가진다(`D-020`). 활성 household는 Admin 1명 이상, Member 0명 이상을 둔다(`D-021`). MVP UI는 household 하나로 제한한다(`D-022`). |
 | `Invitation` | `id`, `household_id`, `token_hash`, `target_email`, `created_by_user_id`, `expires_at`, `consumed_at`, `consumed_by_user_id`, `revoked_at`, `created_at` | Admin이 생성한 가입 권한이다(`D-023`). `target_email`은 대기 중인 초대의 대상 Google 이메일로, 수락·취소·만료 후 삭제한다. 발급 후 24시간이 지나면 만료한다(`D-028`, `D-029`). 원문 token은 발급 때만 보여주고 DB에는 hash만 저장한다. 수락하면 항상 `MEMBER` Membership를 생성한다(`D-027`). Admin 승격은 기존 Admin의 별도 구성원 관리 작업이다. |
 
+최초 등록의 설치 주기·후보·완료 기록은 각 가구의 수명과 분리한다. 보호된 운영 기록과 현재 DB의 설치 식별자가 일치할 때만 후보 예약을 허용한다. 사용자가 확인하면 내부 User 연결, Household, 첫 ADMIN Membership 및 완료 기록을 같은 트랜잭션에서 다룬다. 가구 종료나 복원은 새 설치 의도를 만들지 않는다. [계정·가구 온보딩 설계](./designs/account-and-household-onboarding.md#모바일-최초-관리자-등록), [ADR-039](./decisions/ADR-039-installation-setup-cycle.md).
+
 ### 4.1.1 HouseholdSettings와 UserSettings
 
 - `HouseholdSettings`: household 구성원에게 공통 적용되는 정책과 기본값이다. 장소 반경 최소·최대·기본값(`D-018`), `max_location_duration_min`(초기 60분, 10~1,440분, `D-085`), `weekly_calendar_convention`(초기 `MONDAY_START`, `D-086`)을 포함한다. Admin만 수정할 수 있다(`D-020`). `Household.default_time_zone`도 `HOUSEHOLD` 소유지만 Household 프로필에 기존 필드로 저장한다(`D-065`).

@@ -9,6 +9,7 @@ import { acquireOwnership, bindGeneration, type Activation } from './activation.
 import { sameHead, samePoint, type JournalAuthority } from './authority.js';
 import { backupExpiresAt, inspectSnapshot, type Backups } from './backup.js';
 import { hashFile, syncDirectory } from './files.js';
+import { SetupAuthority } from './setup-authority.js';
 
 function settledAfter(rows: JournalEntry[], cutoff: number) {
   const requests = new Map<string, JournalEntry>();
@@ -65,6 +66,7 @@ async function prepareCandidate(image: string, entries: JournalEntry[], journal:
         data: { active: false, tokenCiphertext: null } });
       await tx.session.deleteMany();
       await tx.loginChallenge.deleteMany();
+      await tx.setupCandidate.deleteMany();
     });
     // Verify existing authorization joins without opening a listener or invoking a provider.
     await database.membership.findFirst({ where: { active: true }, include: { user: true, household: true } });
@@ -84,6 +86,7 @@ export async function restoreBackup(options: {
   let releaseArchives: (() => void) | undefined;
   try {
     releaseArchives = options.archives.acquireArchiveLock();
+    SetupAuthority.closeForRestore(options.state);
     options.activation.block();
     journal = DeleteJournal.openRecovery(options.journalPath, options.authority);
     const item = options.archives.select(options.id, clock());

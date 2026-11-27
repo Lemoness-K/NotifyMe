@@ -118,6 +118,36 @@ model HouseholdCommandResult {
   @@id([scope, key])
 }
 
+model InstallationSetup {
+  id               Int               @id @default(1)
+  setupCycle       String            @unique
+  databaseIdentity String            @unique
+  candidate        SetupCandidate?
+  completion       SetupCompletion?
+}
+
+model SetupCandidate {
+  candidateId        String            @id
+  setupCycle         String            @unique
+  verifiedIssuer     String
+  verifiedSubject    String
+  verifiedGoogleSubject String
+  credentialDigest   String            @unique
+  authenticationTime Int
+  expiresAt          DateTime
+  installation       InstallationSetup @relation(fields: [setupCycle], references: [setupCycle], onDelete: Restrict)
+}
+
+model SetupCompletion {
+  setupCycle   String            @id
+  candidateId  String
+  householdId  String
+  userId       String
+  committedAt  DateTime
+  replayUntil  DateTime
+  installation InstallationSetup @relation(fields: [setupCycle], references: [setupCycle], onDelete: Restrict)
+}
+
 model LoginChallenge {
   digest     String   @id
   nonce      String   @unique

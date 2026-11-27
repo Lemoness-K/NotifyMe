@@ -2,6 +2,7 @@ import { createHash, randomBytes } from 'node:crypto';
 import type { Prisma, PrismaClient } from './generated/client.js';
 import { AppError } from './errors.js';
 import { prismaCode } from './repository.js';
+import type { FirstAdminOnboarding } from './admin-onboarding.js';
 
 export interface FirebaseIdentity {
   issuer: string;
@@ -22,28 +23,44 @@ export interface IdentityProvider {
 
 const challengeLifetimeMs = 5 * 60_000;
 const sessionLifetimeMs = 12 * 60 * 60_000;
-const randomSecret = () => randomBytes(32).toString('base64url');
-const digest = (secret: string) => createHash('sha256').update(secret).digest('hex');
-const denied = () => new AppError(401, 'UNAUTHENTICATED');
+export const randomSecret = () => randomBytes(32).toString('base64url');
+export const digest = (secret: string) => createHash('sha256').update(secret).digest('hex');
+export const denied = () => new AppError(401, 'UNAUTHENTICATED');
+
+export async function createInitialAdmin(tx: Prisma.TransactionClient, identity: FirebaseIdentity) {
+  if (await tx.household.findUnique({ where: { singleton: 1 } })) {
+    throw new AppError(409, 'ALREADY_INITIALIZED');
+  }
+  const issuer_subject = { issuer: identity.issuer, subject: identity.subject };
+  const link = await tx.authIdentity.findUnique({
+    where: { issuer_subject }, include: { user: true },
+  });
+  if (link && !link.user.active) throw denied();
+  const user = link?.user ?? await tx.user.create({
+    data: { displayName: identity.displayName, identities: { create: issuer_subject } },
+  });
+  const household = await tx.household.create({ data: {} });
+  await tx.membership.create({ data: { householdId: household.id, userId: user.id, role: 'ADMIN' } });
+  return { householdId: household.id, userId: user.id, role: 'ADMIN' as const };
+}
+
+export async function createSession(tx: Prisma.TransactionClient, userId: string, identity: FirebaseIdentity,
+  now: Date, secret = randomSecret()) {
+  const expiresAt = new Date(now.getTime() + sessionLifetimeMs);
+  const { issuer, subject, authTime } = identity;
+  await tx.session.deleteMany({ where: { expiresAt: { lte: now } } });
+  await tx.session.create({ data: { digest: digest(secret), userId, issuer, subject, authTime, expiresAt } });
+  return { secret, expiresAt };
+}
 
 export async function bootstrapAdmin(db: PrismaClient, provider: IdentityProvider, token: string) {
   const identity = await provider.verifyFirebase(token);
   try {
     return await db.$transaction(async (tx) => {
-      if (await tx.household.findUnique({ where: { singleton: 1 } })) {
+      if (await tx.installationSetup.count()) {
         throw new AppError(409, 'ALREADY_INITIALIZED');
       }
-      const issuer_subject = { issuer: identity.issuer, subject: identity.subject };
-      const link = await tx.authIdentity.findUnique({
-        where: { issuer_subject }, include: { user: true },
-      });
-      if (link && !link.user.active) throw denied();
-      const user = link?.user ?? await tx.user.create({
-        data: { displayName: identity.displayName, identities: { create: issuer_subject } },
-      });
-      const household = await tx.household.create({ data: {} });
-      await tx.membership.create({ data: { householdId: household.id, userId: user.id, role: 'ADMIN' } });
-      return { householdId: household.id, userId: user.id, role: 'ADMIN' as const };
+      return createInitialAdmin(tx, identity);
     });
   } catch (error) {
     if (prismaCode(error) === 'P2002') throw new AppError(409, 'ALREADY_INITIALIZED');
@@ -56,6 +73,7 @@ export class SessionService {
     private readonly db: PrismaClient,
     private readonly provider: IdentityProvider,
     private readonly clock: () => Date = () => new Date(),
+    private readonly onboarding?: FirstAdminOnboarding,
   ) {}
 
   async start() {
@@ -70,7 +88,7 @@ export class SessionService {
     return { secret, nonce, issuedAt, expiresAt };
   }
 
-  async issue(challengeSecret: string, firebaseToken: string, googleToken: string) {
+  async issue(challengeSecret: string, firebaseToken: string, googleToken: string, allowSetup = false) {
     if (!challengeSecret) throw denied();
     const challenge = await this.db.loginChallenge.findUnique({ where: { digest: digest(challengeSecret) } });
     const initialNow = this.clock();
@@ -78,41 +96,41 @@ export class SessionService {
     const budget = this.provider.createVerificationBudget?.();
     const identity = await this.provider.verifyFirebase(firebaseToken, budget);
     const proof = await this.provider.verifyGoogle(googleToken, budget);
-    const now = this.clock();
+    const verifiedAt = this.clock();
     if (proof.nonce !== challenge.nonce || proof.subject !== identity.googleSubject ||
         !Number.isSafeInteger(identity.authTime) ||
         identity.authTime * 1000 <= challenge.issuedAt.getTime() ||
-        identity.authTime * 1000 > now.getTime() + 1000 ||
-        proof.expiresAt <= now) throw denied();
+        identity.authTime * 1000 > verifiedAt.getTime() + 1000 ||
+        proof.expiresAt <= verifiedAt) throw denied();
 
-    const secret = randomSecret();
-    const expiresAt = new Date(now.getTime() + sessionLifetimeMs);
     const { issuer, subject, authTime } = identity;
-    try {
-      await this.db.$transaction(async (tx) => {
-        const link = await tx.authIdentity.findUnique({
-          where: { issuer_subject: { issuer, subject } }, include: { user: true },
-        });
-        if (!link?.user.active) throw denied();
-        const consumed = await tx.loginChallenge.updateMany({
-          where: { digest: challenge.digest, consumedAt: null, expiresAt: { gt: now } },
-          data: { consumedAt: now },
-        });
-        if (consumed.count !== 1) throw denied();
-        await tx.loginProof.deleteMany({ where: { expiresAt: { lte: now } } });
-        await tx.loginProof.create({
-          data: { issuer, subject, authTime, expiresAt: proof.expiresAt > expiresAt ? proof.expiresAt : expiresAt },
-        });
-        await tx.session.deleteMany({ where: { expiresAt: { lte: now } } });
-        await tx.session.create({
-          data: { digest: digest(secret), userId: link.userId, issuer, subject, authTime, expiresAt },
-        });
+    const setup = allowSetup ? this.onboarding : undefined;
+    const issue = () => this.db.$transaction(async (tx) => {
+      const now = this.clock();
+      if (proof.expiresAt <= now) throw denied();
+      const link = await tx.authIdentity.findUnique({
+        where: { issuer_subject: { issuer, subject } }, include: { user: true },
       });
+      if (link ? !link.user.active : !setup) throw denied();
+      const consumed = await tx.loginChallenge.updateMany({
+        where: { digest: challenge.digest, consumedAt: null, expiresAt: { gt: now } },
+        data: { consumedAt: now },
+      });
+      if (consumed.count !== 1) throw denied();
+      const retention = new Date(now.getTime() + sessionLifetimeMs);
+      await tx.loginProof.deleteMany({ where: { expiresAt: { lte: now } } });
+      await tx.loginProof.create({
+        data: { issuer, subject, authTime, expiresAt: proof.expiresAt > retention ? proof.expiresAt : retention },
+      });
+      if (link) return { ...await createSession(tx, link.userId, identity, now), setup: undefined };
+      return setup!.reserve(tx, identity, now);
+    });
+    try {
+      return await (setup ? setup.serial(issue) : issue());
     } catch (error) {
       if (prismaCode(error) === 'P2002') throw denied();
       throw error;
     }
-    return { secret, expiresAt };
   }
 
   async principal(firebaseToken: string, secret: string) {

@@ -1,0 +1,112 @@
+{
+  "stage": "code-generation",
+  "unit": "u1-mobile-admin-onboarding",
+  "version": 1,
+  "writes": [
+    {
+      "path": "deploy/u5/README.md"
+    },
+    {
+      "path": "deploy/u5/operations.env.example"
+    },
+    {
+      "path": "docs/00-master-design.md"
+    },
+    {
+      "path": "docs/01-product-requirements.md"
+    },
+    {
+      "path": "docs/02-domain-and-data-design.md"
+    },
+    {
+      "path": "docs/03-system-architecture.md"
+    },
+    {
+      "path": "docs/06-deployment-and-operations.md"
+    },
+    {
+      "path": "docs/07-security-and-privacy.md"
+    },
+    {
+      "path": "docs/08-test-strategy.md"
+    },
+    {
+      "path": "docs/09-feature-design-coverage-and-backlog.md"
+    },
+    {
+      "path": "docs/decision-register.md"
+    },
+    {
+      "path": "docs/decisions/ADR-039-installation-setup-cycle.md"
+    },
+    {
+      "path": "docs/decisions/ADR-040-mobile-admin-candidate.md"
+    },
+    {
+      "path": "docs/designs/account-and-household-onboarding.md"
+    },
+    {
+      "path": "docs/u1-local-run.md"
+    },
+    {
+      "path": "prisma/migrations/202611260001_mobile_admin_onboarding/migration.sql"
+    },
+    {
+      "path": "prisma/schema.prisma"
+    },
+    {
+      "path": "src/server/admin-onboarding.ts"
+    },
+    {
+      "path": "src/server/auth.ts"
+    },
+    {
+      "path": "src/server/bootstrap-admin.ts"
+    },
+    {
+      "path": "src/server/config.ts"
+    },
+    {
+      "path": "src/server/http.ts"
+    },
+    {
+      "path": "src/server/main.ts"
+    },
+    {
+      "path": "src/server/operations-cli.ts"
+    },
+    {
+      "path": "src/server/operations/restore.ts"
+    },
+    {
+      "path": "src/server/operations/setup-authority.ts"
+    },
+    {
+      "path": "src/server/storage.ts"
+    },
+    {
+      "path": "src/web/App.tsx"
+    },
+    {
+      "path": "src/web/client.ts"
+    },
+    {
+      "path": "src/web/messages.ts"
+    },
+    {
+      "path": "src/web/styles.css"
+    },
+    {
+      "path": "tests/e2e/u1/core-flow.spec.ts"
+    },
+    {
+      "path": "tests/u1/mobile-admin-onboarding-web.test.tsx"
+    },
+    {
+      "path": "tests/u1/mobile-admin-onboarding.test.ts"
+    },
+    {
+      "path": "tests/u5/mobile-admin-onboarding-operations.test.ts"
+    }
+  ]
+}

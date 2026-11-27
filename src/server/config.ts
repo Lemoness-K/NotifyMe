@@ -19,6 +19,17 @@ function boundedInteger(env: NodeJS.ProcessEnv, key: string, fallback: number, m
   return value;
 }
 
+export function setupIngressAllowed(env: NodeJS.ProcessEnv) {
+  if (env.NOTIFY_SETUP_INGRESS !== 'tailnet-operator-only') return false;
+  try {
+    const origin = new URL(env.NOTIFY_ORIGIN ?? '');
+    if (origin.protocol !== 'https:' || origin.origin !== env.NOTIFY_ORIGIN) return false;
+    if (env.NOTIFY_MODE === 'target') return origin.hostname.endsWith('.ts.net');
+    return env.NOTIFY_MODE === 'local' && env.NOTIFY_SYNTHETIC_AUTH === '1' &&
+      ['localhost', '127.0.0.1', '[::1]'].includes(origin.hostname);
+  } catch { return false; }
+}
+
 export function getRuntime(env: NodeJS.ProcessEnv = process.env) {
   const mode = env.NOTIFY_MODE;
   if (mode !== 'local' && mode !== 'target') throw new Error('NOTIFY_MODE must be local or target');

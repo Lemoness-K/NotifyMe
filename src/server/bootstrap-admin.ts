@@ -1,26 +1,20 @@
 import { AppError } from './errors.js';
 import { bootstrapAdmin } from './auth.js';
 import { getRuntime } from './config.js';
+import { databaseGeneration } from './operations/activation.js';
 import { openStore } from './storage.js';
 
-async function readToken() {
-  if (process.stdin.isTTY) throw new Error('Receive the identity proof on stdin, not in CLI arguments');
-  let data = '';
-  for await (const chunk of process.stdin) {
-    data += String(chunk);
-    if (data.length > 12_000) throw new Error('Invalid input');
-  }
-  return data.trim();
-}
-
 try {
+  if (process.env.NOTIFY_MODE !== 'local' || process.argv.slice(2).join(' ') !== '--synthetic' ||
+      Object.keys(process.env).some((name) => name.startsWith('NOTIFY_OPS_'))) {
+    throw new AppError(409, 'BOOTSTRAP_CLI_DISABLED');
+  }
   const runtime = getRuntime();
-  const token = process.argv[2] === '--synthetic' && 'localSignIn' in runtime && runtime.localSignIn
-    ? runtime.localSignIn('').firebaseToken : await readToken();
-  if (!token) throw new Error('Identity proof missing');
+  if (!('localSignIn' in runtime) || !runtime.localSignIn) throw new AppError(409, 'BOOTSTRAP_CLI_DISABLED');
+  if (databaseGeneration(runtime.path) !== undefined) throw new AppError(409, 'BOOTSTRAP_CLI_DISABLED');
   const db = await openStore(runtime.path);
   try {
-    await bootstrapAdmin(db, runtime.provider, token);
+    await bootstrapAdmin(db, runtime.provider, runtime.localSignIn('').firebaseToken);
     process.stdout.write('Notify Me household initialized.\n');
   } finally { await db.$disconnect(); }
 } catch (error) {

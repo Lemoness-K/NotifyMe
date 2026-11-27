@@ -8,6 +8,15 @@
 
 운영 전환 시 기존 서비스 중지 후 마이그레이션 상태를 점검하고, 서비스 계정과 운영 설정을 사용해 `npm run operations -- initialize`를 한 번 실행한다. 현재의 검증된 원장만 기준 원장으로 초기화할 수 있다. 중단된 초기화나 알 수 없는 최신점은 기존 파일을 지우거나 복사해 해결하지 않는다. 해당 증거를 대조한 뒤 복구 절차를 수행한다.
 
+## 신규 설치의 모바일 최초 설정
+
+1. 운영자만 접근할 수 있는 HTTPS Tailscale Serve 주소를 준비한다. Caddy와 API는 loopback에 두고 Funnel은 사용하지 않는다. Google OAuth 등록 주소, `runtime.env`의 `NOTIFY_ORIGIN` 및 실제 브라우저 주소가 같아야 한다. [모바일 접속 안내](../../docs/u1-local-run.md#tailscale로-모바일-웹-접속).
+2. 서비스 계정의 보호된 상태·백업 디렉터리, 별도의 권위 볼륨과 키를 위 절에 따라 준비한다. 새 인스턴스의 `NOTIFY_DATABASE_PATH`는 상태 디렉터리 안의 아직 존재하지 않는 절대 `.sqlite` 경로여야 한다. `DATABASE_URL`도 같은 경로를 가리킨다. 운영 설정에 `NOTIFY_SETUP_INGRESS=tailnet-operator-only`를 추가한다.
+3. 새 인스턴스의 설정을 로드한 서비스 계정으로 배포 키와 DB 경로를 확인하고, 서비스 시작 **전** 저장소의 빌드된 릴리스 디렉터리에서 `npm run operations -- prepare-new-installation`을 실행한다. 명령이 새 DB 생성·마이그레이션·설정 허용 기록을 준비한다. 기존 SQLite나 이전 운영 기록과 함께 실행하면 거부된다. 준비가 완료되면 새 서비스를 시작하고 폰으로 첫 계정을 확인한다.
+4. 일반 업그레이드에는 기존 활성 DB와 설치 상태를 보존한다. 운영자가 의도한 재설정은 별도 승인 뒤 기존 DB를 남기고 새 상태·백업·권위 위치에서 위 절차를 실행한다. [격리 검증 및 재설정](../../docs/u1-local-run.md#격리-검증과-의도적인-재설정).
+
+새 등록을 여는 조건은 명시적으로 준비한 운영 기록과 활성 SQLite 세대의 일치다. 상태 파일을 수정하거나 지워서 초기 등록을 다시 열지 않는다. 복원은 후보와 최초 등록 자격을 닫으며, 이전 빈 스냅샷을 복원해도 등록이 열리지 않는다.
+
 ## 상태와 백업
 
 - `systemctl status notify-me.service` 및 `journalctl -u notify-me.service -u notify-me-observe.service`는 서비스와 구조화 기록을 확인한다.

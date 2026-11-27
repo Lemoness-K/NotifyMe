@@ -1,0 +1,104 @@
+{
+  "stage": "code-generation",
+  "unit": "u1-mobile-admin-onboarding",
+  "upstream_ids": [
+    "FR11.1",
+    "FR11.2",
+    "FR11.3",
+    "FR11.4",
+    "FR11.5",
+    "FR11.6",
+    "NFR11",
+    "NFR12",
+    "NFR13",
+    "NFR14",
+    "BR11.1",
+    "BR11.2",
+    "BR11.3",
+    "BR11.4",
+    "BR11.5",
+    "BR11.6"
+  ],
+  "coverage": [
+    {
+      "id": "FR11.1",
+      "status": "OK",
+      "target": "src/server/admin-onboarding.ts"
+    },
+    {
+      "id": "FR11.2",
+      "status": "OK",
+      "target": "src/web/App.tsx"
+    },
+    {
+      "id": "FR11.3",
+      "status": "OK",
+      "target": "src/server/admin-onboarding.ts"
+    },
+    {
+      "id": "FR11.4",
+      "status": "OK",
+      "target": "tests/u1/mobile-admin-onboarding.test.ts"
+    },
+    {
+      "id": "FR11.5",
+      "status": "OK",
+      "target": "tests/u2/http.test.ts"
+    },
+    {
+      "id": "FR11.6",
+      "status": "OK",
+      "target": "docs/u1-local-run.md"
+    },
+    {
+      "id": "NFR11",
+      "status": "OK",
+      "target": "tests/u1/mobile-admin-onboarding.test.ts"
+    },
+    {
+      "id": "NFR12",
+      "status": "OK",
+      "target": "tests/u5/mobile-admin-onboarding-operations.test.ts"
+    },
+    {
+      "id": "NFR13",
+      "status": "OK",
+      "target": "src/server/http.ts"
+    },
+    {
+      "id": "NFR14",
+      "status": "Deferred",
+      "target": "Deployment Execution에서 실제 안드로이드 Chrome·모바일 데이터 검증. 절차는 docs/u1-local-run.md."
+    },
+    {
+      "id": "BR11.1",
+      "status": "OK",
+      "target": "src/server/auth.ts"
+    },
+    {
+      "id": "BR11.2",
+      "status": "OK",
+      "target": "src/server/admin-onboarding.ts"
+    },
+    {
+      "id": "BR11.3",
+      "status": "OK",
+      "target": "src/server/admin-onboarding.ts"
+    },
+    {
+      "id": "BR11.4",
+      "status": "OK",
+      "target": "tests/u1/mobile-admin-onboarding.test.ts"
+    },
+    {
+      "id": "BR11.5",
+      "status": "OK",
+      "target": "src/server/auth.ts"
+    },
+    {
+      "id": "BR11.6",
+      "status": "OK",
+      "target": "src/server/operations/setup-authority.ts"
+    }
+  ]
+}

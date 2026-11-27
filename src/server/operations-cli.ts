@@ -1,15 +1,34 @@
 import { randomUUID } from 'node:crypto';
+import { execFile } from 'node:child_process';
+import { lstatSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { promisify } from 'node:util';
+import { setupIngressAllowed } from './config.js';
 import { DeleteJournal } from './delete-journal.js';
+import type { PrismaClient } from './generated/client.js';
 import { Activation, acquireOwnership, bindGeneration, databaseGeneration } from './operations/activation.js';
 import { OperationsReporter, type Health } from './operations/reporting.js';
 import { restoreBackup } from './operations/restore.js';
+import { isMissing } from './operations/files.js';
+import { prepareNewInstallation } from './operations/setup-authority.js';
 import { backupRetentionSettings, localOperationsSettings, operationsSettings } from './operations/settings.js';
 import { lastBackup, localRequest } from './operations/socket.js';
 import { openStore } from './storage.js';
 import { WorkService } from './work-service.js';
 
 const log = (record: unknown) => process.stdout.write(JSON.stringify(record) + '\n');
+const execFileAsync = promisify(execFile);
+
+async function initializeOperationalStores(db: PrismaClient, journalPath: string,
+  operations: NonNullable<ReturnType<typeof operationsSettings>>) {
+  const journal = await DeleteJournal.open(db, journalPath);
+  try {
+    await new WorkService(db, undefined, undefined, journal).reconcileCommittedDeletes();
+    await journal.initializeAuthority(operations.authority, db);
+    operations.archives.initialize();
+  } finally { journal.close(); }
+}
 
 async function run(command: string | undefined, id: string | undefined) {
   if (command === 'prune-backups') {
@@ -21,7 +40,24 @@ async function run(command: string | undefined, id: string | undefined) {
   const journalPath = resolve(process.env.NOTIFY_DELETE_JOURNAL_PATH ?? join(local.state, 'delete-journal.sqlite'));
   if (dirname(journalPath) !== local.state) throw new Error('OPERATIONS_JOURNAL_INVALID');
   const activation = new Activation(local.state);
-  if (command === 'initialize') {
+  if (command === 'prepare-new-installation') {
+    if (!setupIngressAllowed(process.env)) throw new Error('SETUP_INGRESS_REQUIRED');
+    const operations = operationsSettings()!;
+    const database = resolve(process.env.NOTIFY_DATABASE_PATH ?? '');
+    if (database === journalPath || !process.env.NOTIFY_DATABASE_PATH) throw new Error('SETUP_PREPARATION_REFUSED');
+    await prepareNewInstallation(operations.state, database, async (db) => {
+      try {
+        lstatSync(journalPath);
+        throw new Error('SETUP_PREPARATION_REFUSED');
+      } catch (error) { if (!isMissing(error)) throw error; }
+      await initializeOperationalStores(db, journalPath, operations);
+    }, async (path) => {
+      await execFileAsync(process.execPath, ['node_modules/prisma/build/index.js', 'migrate', 'deploy'], {
+        env: { ...process.env, DATABASE_URL: pathToFileURL(path).href },
+      });
+    });
+    log({ state: 'SETUP_PREPARED' });
+  } else if (command === 'initialize') {
     const operations = operationsSettings()!;
     const release = acquireOwnership(operations.state);
     try {
@@ -30,13 +66,9 @@ async function run(command: string | undefined, id: string | undefined) {
         throw new Error('OPERATIONS_INITIALIZATION_REFUSED');
       }
       const db = await openStore(database);
-      let journal: DeleteJournal | undefined;
       try {
-        journal = await DeleteJournal.open(db, journalPath);
-        await new WorkService(db, undefined, undefined, journal).reconcileCommittedDeletes();
-        await journal.initializeAuthority(operations.authority, db);
-        operations.archives.initialize();
-      } finally { journal?.close(); await db.$disconnect(); }
+        await initializeOperationalStores(db, journalPath, operations);
+      } finally { await db.$disconnect(); }
       const epoch = randomUUID();
       bindGeneration(database, epoch);
       activation.initialize(database, epoch);
